@@ -41,15 +41,24 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: More background
+    uniqueID: 4069446709
+    locked: 0
   - name: Background
     uniqueID: 3490767737
     locked: 0
-  - name: Foreground
-    uniqueID: 888726887
+  - name: Less background
+    uniqueID: 122314741
     locked: 0
   - name: Solid objects
     uniqueID: 275933197
     locked: 0
+  - name: Foreground back
+    uniqueID: 793527609
+    locked: 0
   - name: Player
     uniqueID: 1920797993
+    locked: 0
+  - name: Foreground front
+    uniqueID: 888726887
     locked: 0
