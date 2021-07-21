@@ -8,12 +8,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Solid objects
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Grass pokemon
+  - Cave pokemon
+  - Water pokemon
   - 
   - 
   - 
