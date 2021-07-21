@@ -56,7 +56,10 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Porkedex\PokemonBasic.cs" />
     <Compile Include="Assets\_scripts\PlayerController.cs" />
+    <Compile Include="Assets\Porkedex\Porkemon.cs" />
+    <Compile Include="Assets\_scripts\Moves\MoveBasic.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
