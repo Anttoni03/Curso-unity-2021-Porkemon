@@ -10,13 +10,13 @@ public class Move
     public MoveBasic Base
     {
         get => _base;
-        set => Base = _base;
+        set => _base = value;
     }
 
     public int PP
     {
         get => _pp;
-        set => PP = _pp;
+        set => _pp = value;
     }
 
     public Move(MoveBasic mBase)

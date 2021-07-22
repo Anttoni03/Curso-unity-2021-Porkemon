@@ -6,8 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Porkemon", menuName = "Porkemon/New porkemon")]
 public class PokemonBasic : ScriptableObject
 {
-    [SerializeField] private string name;
-    public string Name => name;
+    [SerializeField] private string pName;
+    public string Name => pName;
     [TextArea] [SerializeField] private string description;
     public string Description => description;
 

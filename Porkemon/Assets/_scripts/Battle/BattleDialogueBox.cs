@@ -11,9 +11,9 @@ public class BattleDialogueBox : MonoBehaviour
     [SerializeField] private GameObject movementSelect;
     [SerializeField] private GameObject movementDescription;
 
-    public float charactersPerSecond;
+    public float charactersPerSecond = 10F;
 
-    public IEnumerator SetDialogue(string message)
+    public IEnumerator SetDialog(string message)
     {
         dialogueText.text = "";
         foreach (var character in message)

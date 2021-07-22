@@ -25,7 +25,7 @@ public class Porkemon
     public int Level
     {
         get => _level;
-        set => Level = _level;
+        set => _level = value;
     }
     /// <summary>
     /// Lista de movimientos del porkémon
@@ -41,7 +41,7 @@ public class Porkemon
     public List<Move> Moves
     {
         get => _moves;
-        set => Moves = _moves;
+        set => _moves = value;
     }
     /// <summary>
     /// Puntos de vida en tiempo real del porkémon
@@ -49,7 +49,7 @@ public class Porkemon
     public int HP
     {
         get => _hp;
-        set => HP = _hp;
+        set => _hp = value;
     }
 
     /// <summary>

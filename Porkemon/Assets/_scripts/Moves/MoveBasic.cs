@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Move", menuName = "Porkemon/New movement")]
 public class MoveBasic : ScriptableObject
 {
-    [SerializeField] private string name;
-    public string Name => name;
+    [SerializeField] private string mName;
+    public string Name => mName;
     [TextArea] [SerializeField] private string description;
     public string Description => description;
 

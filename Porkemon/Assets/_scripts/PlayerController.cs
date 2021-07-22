@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour

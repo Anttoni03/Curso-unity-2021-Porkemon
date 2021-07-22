@@ -16,6 +16,6 @@ public class BattleUnit : MonoBehaviour
     {
         new Porkemon(_base,_level);
 
-        GetComponent<Image>().sprite = (isPlayer) ? Porkemon.Base.BackSprite : Porkemon.Base.FrontSprite;
+        GetComponent<Image>().sprite = (isPlayer ? Porkemon.Base.BackSprite : Porkemon.Base.FrontSprite);
     }
 }
