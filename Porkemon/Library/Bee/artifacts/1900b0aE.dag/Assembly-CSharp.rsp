@@ -341,10 +341,16 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
-"Assets/Porkedex/PokemonBasic.cs"
-"Assets/Porkedex/Porkemon.cs"
+"Assets/_scripts/Battle/BattleDialogueBox.cs"
+"Assets/_scripts/Battle/BattleHUD.cs"
+"Assets/_scripts/Battle/BattleManager.cs"
+"Assets/_scripts/Battle/BattleUnit.cs"
+"Assets/_scripts/Battle/HealthBar.cs"
+"Assets/_scripts/Moves/Move.cs"
 "Assets/_scripts/Moves/MoveBasic.cs"
 "Assets/_scripts/PlayerController.cs"
+"Assets/_scripts/Porkedex/PokemonBasic.cs"
+"Assets/_scripts/Porkedex/Porkemon.cs"
 -langversion:8.0
 
 /deterministic
