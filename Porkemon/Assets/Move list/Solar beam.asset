@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702a0f6c9db230f4cbdf08f8cf96e29a, type: 3}
   m_Name: Solar beam
   m_EditorClassIdentifier: 
-  name: Rayo solar
+  mName: Rayo solar
   description: "Ataca usando un rayo de fotones. Debe hacer la fotos\xEDntesis antes"
   type: 3
   category: 1

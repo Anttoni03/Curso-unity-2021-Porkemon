@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702a0f6c9db230f4cbdf08f8cf96e29a, type: 3}
   m_Name: Scratch
   m_EditorClassIdentifier: 
-  name: "Ara\xF1azo"
+  mName: "Ara\xF1azo"
   description: "Ataca ara\xF1ando con garras"
   type: 0
+  category: 0
   power: 40
   accuracy: 100
   pp: 35

@@ -24,7 +24,4 @@ public class Move
         Base = mBase;
         PP = mBase.PP;
     }
-
-
-
 }

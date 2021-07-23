@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 007_Squirtle
   m_EditorClassIdentifier: 
-  name: Squirtle
+  pName: Squirtle
   description: Porkemon que calma
   ID: 7
   frontSprite: {fileID: 21300000, guid: 80ac39c27e67aee44941a64ac62b8c5c, type: 3}
@@ -22,8 +22,8 @@ MonoBehaviour:
   maxHP: 44
   attack: 48
   defense: 65
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 40
+  sPDefense: 40
   speed: 43
   learnableMoves:
   - move: {fileID: 11400000, guid: e7cf3103089c90942bb16570acdd4e4a, type: 2}

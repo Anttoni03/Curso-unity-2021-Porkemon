@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702a0f6c9db230f4cbdf08f8cf96e29a, type: 3}
   m_Name: Growl
   m_EditorClassIdentifier: 
-  name: "Gru\xF1ido"
+  mName: "Gru\xF1ido"
   description: "Gru\xF1e para bajar la defensa"
   type: 0
   category: 2

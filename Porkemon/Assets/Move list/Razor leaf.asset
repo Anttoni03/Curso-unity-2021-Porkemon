@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702a0f6c9db230f4cbdf08f8cf96e29a, type: 3}
   m_Name: Razor leaf
   m_EditorClassIdentifier: 
-  name: Hoja afilada
+  mName: Hoja afilada
   description: Hojas muy afiladas cortan al rival
   type: 3
   category: 0

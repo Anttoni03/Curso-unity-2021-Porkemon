@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 002_Ivysaur
   m_EditorClassIdentifier: 
-  name: Ivysaur
+  pName: Ivysaur
   description: "Te hace l\xE1tigo cepa m\xE1s fuerte"
   ID: 2
   frontSprite: {fileID: 21300000, guid: e1210078b0e045a43aaa84562024b540, type: 3}

@@ -85,4 +85,33 @@ public class Porkemon
     public int SPAttack => Mathf.FloorToInt((_base.SPAttack * _level) / 100f) + 2;
     public int SPDefense => Mathf.FloorToInt((_base.SPDefense * _level) / 100f) + 2;
     public int Speed => Mathf.FloorToInt((_base.Speed * _level) / 100f) + 2;
+
+
+    public bool ReceiveDamage(Porkemon attacker, Move move)
+    {
+        //TODO: Acabar fórmula de daño
+        float modifiers = Random.Range(0.85f, 1f);
+        float baseDamage = ((2 * attacker.Level / 5f + 2) * move.Base.Power 
+            * (attacker.Attack / (float)Defense)) / 50f + 2;
+
+        int totalDamage = Mathf.FloorToInt(baseDamage * modifiers);
+
+        HP -= totalDamage;
+        if (HP <= 0)
+        {
+            HP = 0;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public Move RandomMove()
+    {
+        int randID = Random.Range(0, Moves.Count);
+        return Moves[randID];
+    }
+
 }

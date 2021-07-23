@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702a0f6c9db230f4cbdf08f8cf96e29a, type: 3}
   m_Name: Tackle
   m_EditorClassIdentifier: 
-  name: Placaje
+  mName: Placaje
   description: Embiste al enemigo con el cuepo. Es un placaje
   type: 0
   category: 0
