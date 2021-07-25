@@ -15,11 +15,13 @@ public class BattleUnit : MonoBehaviour
 
     private Image porkemonImage;
     private Vector3 initialPosition;
+    private Color initialColor;
 
     private void Awake()
     {
         porkemonImage = GetComponent<Image>();
         initialPosition = porkemonImage.transform.localPosition;
+        initialColor = porkemonImage.color;
     }
 
 
@@ -34,15 +36,20 @@ public class BattleUnit : MonoBehaviour
     public void PlayStartAnimation()
     {
 
-        porkemonImage.transform.localPosition = new Vector3(initialPosition.x + (isPlayer ? -1 : 1) * 400,
+        porkemonImage.transform.localPosition = new Vector3(initialPosition.x + (isPlayer ? -1 : 1) * 500,
             initialPosition.y);
 
-        porkemonImage.transform.DOLocalMoveX(initialPosition.x, .8f);
+        porkemonImage.transform.DOLocalMoveX(initialPosition.x, 1f);
     }
 
     public void PlayAttackAnimation()
     {
+        //DOTween ???
+        Sequence attackSequence;
+        attackSequence = DOTween.Sequence();
 
+        attackSequence.Append(porkemonImage.DOColor(Color.gray, .2f));
+        attackSequence.Append(porkemonImage.DOColor(initialColor, .2f));
     }
 
     public void PlayFaintAnimation()

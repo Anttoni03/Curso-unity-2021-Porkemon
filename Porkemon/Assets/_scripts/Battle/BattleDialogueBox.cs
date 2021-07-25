@@ -15,6 +15,7 @@ public class BattleDialogueBox : MonoBehaviour
     [SerializeField] private List<Text> actionTexts;
 
     [SerializeField] private Text ppText;
+    [SerializeField] private Text powerText;
     [SerializeField] private Text typeText;
 
     [SerializeField] private Color selectedColor = Color.yellow;
@@ -57,14 +58,13 @@ public class BattleDialogueBox : MonoBehaviour
     {
         for (int i = 0; i < actionTexts.Count; i++)
         {
-
             actionTexts[i].color = ((i == selectedAction) ? selectedColor : Color.black);
         }
     }
 
     public void SetPorkemonsMovements(List<Move> moves)
     {
-        Debug.Log(moves.Count);
+        //Debug.Log(moves.Count);
         for (int i = 0; i < movementTexts.Count; i++)
         {
             if (i < moves.Count)
@@ -82,12 +82,15 @@ public class BattleDialogueBox : MonoBehaviour
     {
         for (int i = 0; i < movementTexts.Count; i++)
         {
-
             movementTexts[i].color = ((i == selectedMovement) ? selectedColor : Color.black);
         }
-
         ppText.text = $"PP {move.PP}/{move.Base.PP}";
-        typeText.text = move.Base.Type.ToString().ToUpper();
+        
+        if (move.Base.Category == MoveBasic.MovementCategory.Status)
+            powerText.text = $"Poder ---".ToUpper();
+        else
+            powerText.text = $"Poder {move.Base.Power}".ToUpper();
 
+        typeText.text = move.Base.Type.ToString().ToUpper();
     }
 }

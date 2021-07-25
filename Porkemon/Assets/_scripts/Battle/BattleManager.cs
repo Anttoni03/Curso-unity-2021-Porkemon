@@ -47,7 +47,7 @@ public class BattleManager : MonoBehaviour
 
         if (enemyUnit.Porkemon.Speed > playerUnit.Porkemon.Speed)
         {
-            StartCoroutine(battleDialogueBox.SetDialog("El enemigo ataca primero"));
+            //StartCoroutine(battleDialogueBox.SetDialog("El enemigo ataca primero"));
             EnemyAction();
         }
         else

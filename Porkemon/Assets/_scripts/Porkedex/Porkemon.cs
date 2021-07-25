@@ -91,10 +91,15 @@ public class Porkemon
     {
         //TODO: Acabar fórmula de daño
         float modifiers = Random.Range(0.85f, 1f);
+
+
         float baseDamage = ((2 * attacker.Level / 5f + 2) * move.Base.Power 
             * (attacker.Attack / (float)Defense)) / 50f + 2;
 
         int totalDamage = Mathf.FloorToInt(baseDamage * modifiers);
+
+        if (move.Base.Category == MoveBasic.MovementCategory.Status)
+            totalDamage = 0;
 
         HP -= totalDamage;
         if (HP <= 0)
@@ -113,5 +118,4 @@ public class Porkemon
         int randID = Random.Range(0, Moves.Count);
         return Moves[randID];
     }
-
 }
