@@ -52,21 +52,21 @@ public enum pokemonType
     Normal,
     Fire,
     Water,
-    Grass,
     Electric,
+    Grass,
     Ice,
     Fight,
     Poisson,
     Ground,
     Flying,
-    Ghost,
     Psychic,
+    Bug,
     Rock,
-    Steel,
+    Ghost,
     Dragon,
-    Fairy,
     Dark,
-    Bug
+    Steel,
+    Fairy
 }
 
 public class TypeMatrix
