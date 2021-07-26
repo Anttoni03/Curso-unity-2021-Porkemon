@@ -25,7 +25,13 @@ public class BattleManager : MonoBehaviour
 
     public BattleState state;
 
+    public event Action<bool> OnBattleFinish;
     private void Start()
+    {
+        StartCoroutine(SetupBattle());
+    }
+
+    public void HandleStartBattle()
     {
         StartCoroutine(SetupBattle());
     }
@@ -81,15 +87,30 @@ public class BattleManager : MonoBehaviour
     {
         state = BattleState.EnemyMove;
         Move move = enemyUnit.Porkemon.RandomMove();
+        move.PP--;
         yield return battleDialogueBox.SetDialog($"{enemyUnit.Porkemon.Base.Name} ha usado {move.Base.Name}.");
 
-        bool porkemonFainted = playerUnit.Porkemon.ReceiveDamage(enemyUnit.Porkemon, move);
+        var oldHpValue = playerUnit.Porkemon.HP;
 
-        playerHUD.UpdatePokemonData();
 
-        if (porkemonFainted)
+
+        enemyUnit.PlayAttackAnimation();
+
+        yield return new WaitForSeconds(1f);
+
+        playerUnit.PlayReceiveAttackAnimation();
+
+        var damageDesc = playerUnit.Porkemon.ReceiveDamage(enemyUnit.Porkemon, move);
+
+        playerHUD.UpdatePokemonData(oldHpValue);
+        yield return ShowDamageDescription(damageDesc);
+
+        if (damageDesc.Fainted)
         {
             yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} se ha debilitado");
+            playerUnit.PlayFaintAnimation();
+            yield return new WaitForSeconds(1.5f);
+            OnBattleFinish(false);
         }
         else
         {
@@ -98,7 +119,7 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    private void Update()
+    public void HandleUpdate()
     {
         timeSinceLastClick += Time.deltaTime;
 
@@ -200,19 +221,47 @@ public class BattleManager : MonoBehaviour
     IEnumerator PerformPlayerMovement()
     {
         Move move = playerUnit.Porkemon.Moves[currentSelectedMovement];
+        move.PP--;
         yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha usado {move.Base.Name}");
 
-        bool pokemonFainted = enemyUnit.Porkemon.ReceiveDamage(playerUnit.Porkemon, move);
+        var oldHpValue = playerUnit.Porkemon.HP;
 
-        enemyHUD.UpdatePokemonData();
+        playerUnit.PlayAttackAnimation();
 
-        if (pokemonFainted)
+        yield return new WaitForSeconds(1f);
+
+        enemyUnit.PlayReceiveAttackAnimation();
+
+        var damageDesc = enemyUnit.Porkemon.ReceiveDamage(playerUnit.Porkemon, move);
+        enemyHUD.UpdatePokemonData(oldHpValue);
+        yield return ShowDamageDescription(damageDesc);
+
+        if (damageDesc.Fainted)
         {
             yield return battleDialogueBox.SetDialog($"{enemyUnit.Porkemon.Base.Name} se ha debilitado.");
+            enemyUnit.PlayFaintAnimation();
+            yield return new WaitForSeconds(1.5f);
+            OnBattleFinish(true);
         }
         else
         {
             StartCoroutine(EnemyAction());
+        }
+    }
+
+    IEnumerator ShowDamageDescription(DamageDescription desc)
+    {
+        if (desc.Critical > 1f)
+        {
+            yield return battleDialogueBox.SetDialog("¡Un golpe crítico!");
+        }
+        if (desc.Type > 1)
+        {
+            yield return battleDialogueBox.SetDialog("¡Es súper efectivo!");
+        }
+        else if (true)
+        {
+
         }
     }
 }

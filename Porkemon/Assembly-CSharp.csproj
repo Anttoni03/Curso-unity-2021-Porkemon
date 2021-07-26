@@ -61,11 +61,12 @@
     <Compile Include="Assets\_scripts\Moves\Move.cs" />
     <Compile Include="Assets\_scripts\Battle\BattleUnit.cs" />
     <Compile Include="Assets\_scripts\Battle\BattleDialogueBox.cs" />
-    <Compile Include="Assets\_scripts\PlayerController.cs" />
+    <Compile Include="Assets\_scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\_scripts\Porkedex\Porkemon.cs" />
     <Compile Include="Assets\_scripts\Battle\BattleHUD.cs" />
     <Compile Include="Assets\_scripts\Battle\HealthBar.cs" />
     <Compile Include="Assets\_scripts\Moves\MoveBasic.cs" />
+    <Compile Include="Assets\_scripts\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

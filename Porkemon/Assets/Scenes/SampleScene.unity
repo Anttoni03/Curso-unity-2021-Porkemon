@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26948285, g: 0.8301887, b: 0.24592379, a: 1}
+  m_Color: {r: 0.38431373, g: 0.69803923, b: 0.23921569, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12197,7 +12197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &240032413
 Transform:
   m_ObjectHideFlags: 0
@@ -34999,7 +34999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &519420029
 AudioListener:
   m_ObjectHideFlags: 0
@@ -35116,8 +35116,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _base: {fileID: 11400000, guid: f5f346823380edf4393ca597732afc98, type: 2}
-  _level: 6
+  _level: 5
   isPlayer: 0
+  startTimeAnim: 1
+  attackTimeAnim: 0.3
+  dieTimeAnim: 0.7
+  hitTimeAnim: 0.1
 --- !u!114 &617553670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36263,7 +36267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26948285, g: 0.8301887, b: 0.24592379, a: 1}
+  m_Color: {r: 0.38431373, g: 0.69803923, b: 0.23921569, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -40728,8 +40732,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _base: {fileID: 11400000, guid: 1f973ec90600b5143982e3b017017130, type: 2}
-  _level: 10
+  _level: 700
   isPlayer: 1
+  startTimeAnim: 1
+  attackTimeAnim: 0.3
+  dieTimeAnim: 0.7
+  hitTimeAnim: 0.1
 --- !u!1 &1902363761
 GameObject:
   m_ObjectHideFlags: 0
@@ -42076,3 +42084,49 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2028947686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2028947687}
+  - component: {fileID: 2028947688}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2028947687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028947686}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2028947688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028947686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51dd3ccd45a3ec64cb3146e877c50569, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1252666824}
+  battleManager: {fileID: 240032414}
+  worldMainCamera: {fileID: 519420031}

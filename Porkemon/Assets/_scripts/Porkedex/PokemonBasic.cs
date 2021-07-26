@@ -48,6 +48,7 @@ public class PokemonBasic : ScriptableObject
 
 public enum pokemonType
 {
+    None,
     Normal,
     Fire,
     Water,
@@ -65,8 +66,46 @@ public enum pokemonType
     Dragon,
     Fairy,
     Dark,
-    Bug,
-    None
+    Bug
+}
+
+public class TypeMatrix
+{
+    static float[][] matrix =
+    {
+        //               NOR  FIR  WAT  ELE  GRA  ICE  FIG  POI  GRO  FLY  PSY  BUG  ROC  GHO  DRA  DAR  STE  FAI
+    /*NOR*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , .5F, 1F , 1F , 1F , .5F, 1F },
+    /*FIR*/new float [] { 1F , .5F, .5F, 1F , 2F , 2F , 1F , 1F , 1F , 1F , 1F , 2F , .5F, 1F , .5F, 1F , 2F , 1F },
+    /*WAT*/new float [] { 1F , 2F , .5F, 1F , .5F, 1F , 1F , 1F , 2F , 1F , 1F , 1F , 2F , 1F , .5F, 1F , 1F , 1F },
+    /*ELE*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*GRA*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*ICE*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*FIG*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*POI*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*GRO*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*FLY*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*PSY*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*BUG*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*ROC*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*GHO*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*DRA*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*DAR*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*STE*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
+    /*FAI*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F }
+    };
+    //TODO: Tabla de tipos
+
+    public static float GetMultiplierEffectiveness(pokemonType attackType, pokemonType porkemonDefenderType)
+    {
+        if (attackType == pokemonType.None || porkemonDefenderType == pokemonType.None)
+        {
+            return 1f;
+        }
+        int row = (int)attackType;
+        int col = (int)porkemonDefenderType;
+
+        return matrix[row - 1][col - 1];
+    }
 }
 
 [Serializable]

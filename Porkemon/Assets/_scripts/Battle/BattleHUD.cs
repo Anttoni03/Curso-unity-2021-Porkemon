@@ -23,12 +23,24 @@ public class BattleHUD : MonoBehaviour
 
         StartCoroutine(healthBar.SetSmoothHP(porkemon.HP/porkemon.MaxHP));
         pokemonHealth.text = $"{porkemon.HP} / {porkemon.MaxHP}";
-        UpdatePokemonData();
+        healthBar.SetHP(1);
+        UpdatePokemonData(porkemon.HP);
     }
 
-    public void UpdatePokemonData()
+    public void UpdatePokemonData(int hpValue)
     {
         StartCoroutine(healthBar.SetSmoothHP((float)_porkemon.HP / _porkemon.MaxHP));
+        pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
+    }
+
+    public IEnumerator DecreaseHealthPoints(int oldHpValue)
+    {
+        while (oldHpValue < _porkemon.HP)
+        {
+            oldHpValue--;
+            pokemonHealth.text = $"{oldHpValue}/{_porkemon.HP}";
+            yield return new WaitForSeconds(.1f);
+        }
         pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
     }
 }

@@ -17,6 +17,9 @@ public class BattleUnit : MonoBehaviour
     private Vector3 initialPosition;
     private Color initialColor;
 
+    [SerializeField] private float startTimeAnim = 1f, attackTimeAnim = .3f, 
+        dieTimeAnim = 1f, hitTimeAnim = .1f;
+
     private void Awake()
     {
         porkemonImage = GetComponent<Image>();
@@ -30,6 +33,8 @@ public class BattleUnit : MonoBehaviour
         Porkemon = new Porkemon(_base,_level);
 
         porkemonImage.sprite = (isPlayer ? Porkemon.Base.BackSprite : Porkemon.Base.FrontSprite);
+        porkemonImage.color = initialColor;
+        porkemonImage.transform.position = initialPosition;
         PlayStartAnimation();
     }
 
@@ -39,21 +44,30 @@ public class BattleUnit : MonoBehaviour
         porkemonImage.transform.localPosition = new Vector3(initialPosition.x + (isPlayer ? -1 : 1) * 500,
             initialPosition.y);
 
-        porkemonImage.transform.DOLocalMoveX(initialPosition.x, 1f);
+        porkemonImage.transform.DOLocalMoveX(initialPosition.x, startTimeAnim);
     }
 
     public void PlayAttackAnimation()
     {
-        //DOTween ???
-        Sequence attackSequence;
-        attackSequence = DOTween.Sequence();
+        var seq = DOTween.Sequence();
+        seq.Append(porkemonImage.transform.DOLocalMoveX(initialPosition.x + (isPlayer ? 1 : -1) * 60,attackTimeAnim));
+        seq.Append(porkemonImage.transform.DOLocalMoveX(initialPosition.x, attackTimeAnim));
+    }
 
-        attackSequence.Append(porkemonImage.DOColor(Color.gray, .2f));
-        attackSequence.Append(porkemonImage.DOColor(initialColor, .2f));
+    public void PlayReceiveAttackAnimation()
+    {
+        var seq = DOTween.Sequence();
+        for (int i = 0; i < 3; i++)
+        {
+            seq.Append(porkemonImage.DOColor(Color.red, hitTimeAnim));
+            seq.Append(porkemonImage.DOColor(initialColor, hitTimeAnim));
+        }
     }
 
     public void PlayFaintAnimation()
     {
-        
+        var seq = DOTween.Sequence();
+        seq.Append(porkemonImage.transform.DOLocalMoveY(initialPosition.y-100,dieTimeAnim));
+        seq.Join(porkemonImage.DOFade(0, dieTimeAnim));
     }
 }

@@ -87,30 +87,46 @@ public class Porkemon
     public int Speed => Mathf.FloorToInt((_base.Speed * _level) / 100f) + 2;
 
 
-    public bool ReceiveDamage(Porkemon attacker, Move move)
+    public DamageDescription ReceiveDamage(Porkemon attacker, Move move)
     {
+        float critical = 1f;
+        if (Random.Range(0, 100f) < 8)
+            critical = 2f;
+
+        float type1 = TypeMatrix.GetMultiplierEffectiveness(move.Base.Type, this.Base.Type1);
+        float type2 = TypeMatrix.GetMultiplierEffectiveness(move.Base.Type, this.Base.Type2);
+
+        var damageDesc = new DamageDescription()
+        {
+            Critical = critical,
+            Type = type1 * type2,
+            Fainted = false
+        };
+
+        float attack = (move.Base.IsSpecialMove ? attacker.SPAttack : attacker.Attack);
+        float defense = (move.Base.IsSpecialMove ? this.SPDefense : this.Attack);
+
         //TODO: Acabar fórmula de daño
-        float modifiers = Random.Range(0.85f, 1f);
+        float modifiers = Random.Range(0.85f, 1f) * type1 * type2 * critical;
 
-
-        float baseDamage = ((2 * attacker.Level / 5f + 2) * move.Base.Power 
-            * (attacker.Attack / (float)Defense)) / 50f + 2;
+        float baseDamage = (2 * attacker.Level / 5f + 2) * move.Base.Power 
+            * (attack / (float)defense) / 50f + 2;
 
         int totalDamage = Mathf.FloorToInt(baseDamage * modifiers);
 
+        #region Cosa mía(sin daño si movimiento de estado)
         if (move.Base.Category == MoveBasic.MovementCategory.Status)
             totalDamage = 0;
+        #endregion
 
         HP -= totalDamage;
         if (HP <= 0)
         {
             HP = 0;
-            return true;
+            damageDesc.Fainted = true;
         }
-        else
-        {
-            return false;
-        }
+
+        return damageDesc;
     }
 
     public Move RandomMove()
@@ -118,4 +134,11 @@ public class Porkemon
         int randID = Random.Range(0, Moves.Count);
         return Moves[randID];
     }
+}
+
+public class DamageDescription
+{
+    public float Critical { get; set; }
+    public float Type { get; set; }
+    public bool Fainted { get; set; }
 }
