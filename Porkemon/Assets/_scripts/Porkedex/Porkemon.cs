@@ -5,22 +5,22 @@ using UnityEngine;
 public class Porkemon
 {
     /// <summary>
-    /// Referencia a la base de cualquier porkÈmon
+    /// Referencia a la base de cualquier pork√©mon
     /// </summary>
     private PokemonBasic _base;
     /// <summary>
-    /// Referencia a la base de cualquier porkÈmon
+    /// Referencia a la base de cualquier pork√©mon
     /// </summary>
     public PokemonBasic Base
     {
         get => _base;
     }
     /// <summary>
-    /// Nivel actual del porkÈmon
+    /// Nivel actual del pork√©mon
     /// </summary>
     private int _level;
     /// <summary>
-    /// Nivel actual del porkÈmon
+    /// Nivel actual del pork√©mon
     /// </summary>
     public int Level
     {
@@ -28,15 +28,15 @@ public class Porkemon
         set => _level = value;
     }
     /// <summary>
-    /// Lista de movimientos del porkÈmon
+    /// Lista de movimientos del pork√©mon
     /// </summary>
     private List<Move> _moves;
     /// <summary>
-    /// Puntos de vida en tiempo real del porkÈmon
+    /// Puntos de vida en tiempo real del pork√©mon
     /// </summary>
     private int _hp;
     /// <summary>
-    /// Lista de movimientos del porkÈmon
+    /// Lista de movimientos del pork√©mon
     /// </summary>
     public List<Move> Moves
     {
@@ -44,7 +44,7 @@ public class Porkemon
         set => _moves = value;
     }
     /// <summary>
-    /// Puntos de vida en tiempo real del porkÈmon
+    /// Puntos de vida en tiempo real del pork√©mon
     /// </summary>
     public int HP
     {
@@ -71,13 +71,13 @@ public class Porkemon
             if (movement.Level <= _level)
                 _moves.Add(new Move(movement.Move));
 
-            if (_moves.Count > 4)
+            if (_moves.Count >= 4)
                 break;
         }
     }
 
     /// <summary>
-    /// Puntos de vida m·ximos del porkÈmon
+    /// Puntos de vida m√°ximos del pork√©mon
     /// </summary>
     public int MaxHP => Mathf.FloorToInt((_base.MaxHP * _level) / 20f) + 10;
     public int Attack => Mathf.FloorToInt((_base.Attack * _level) / 100f) + 2;
@@ -106,7 +106,7 @@ public class Porkemon
         float attack = (move.Base.IsSpecialMove ? attacker.SPAttack : attacker.Attack);
         float defense = (move.Base.IsSpecialMove ? this.SPDefense : this.Attack);
 
-        //TODO: Acabar fÛrmula de daÒo
+        //TODO: Acabar f√≥rmula de da√±o
         float modifiers = Random.Range(0.85f, 1f) * type1 * type2 * critical;
 
         float baseDamage = (2 * attacker.Level / 5f + 2) * move.Base.Power 
@@ -114,7 +114,7 @@ public class Porkemon
 
         int totalDamage = Mathf.FloorToInt(baseDamage * modifiers);
 
-        #region Cosa mÌa(sin daÒo si movimiento de estado)
+        #region Cosa m√≠a(sin da√±o si movimiento de estado)
         if (move.Base.Category == MoveBasic.MovementCategory.Status)
             totalDamage = 0;
         #endregion
