@@ -54,5 +54,9 @@ public class GameManager : MonoBehaviour
         _gameState = GameState.Travel;
         battleManager.gameObject.SetActive(false);
         worldMainCamera.gameObject.SetActive(true);
+        if (!playerHasWon)
+        {
+            //TODO: Victoria y derrota
+        }
     }
 }
