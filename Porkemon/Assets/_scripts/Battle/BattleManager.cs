@@ -26,6 +26,7 @@ public class BattleManager : MonoBehaviour
     public BattleState state;
 
     public event Action<bool> OnBattleFinish;
+    
     private void Start()
     {
         StartCoroutine(SetupBattle());
@@ -49,7 +50,7 @@ public class BattleManager : MonoBehaviour
         enemyUnit.SetUpPorkemon();
         enemyHUD.SetPorkemonData(enemyUnit.Porkemon);
 
-        yield return battleDialogueBox.SetDialog($"Un porkémon salvaje apareció. Es un {enemyUnit.Porkemon.Base.Name}!");
+        yield return battleDialogueBox.SetDialog($"Un porkÃ©mon salvaje apareciÃ³. Es un {enemyUnit.Porkemon.Base.Name}!");
 
         if (enemyUnit.Porkemon.Speed > playerUnit.Porkemon.Speed)
         {
@@ -65,7 +66,7 @@ public class BattleManager : MonoBehaviour
     void PlayerAction()
     {
         state = BattleState.PlayerSelectAction;
-        StartCoroutine(battleDialogueBox.SetDialog("Selecciona una acción"));
+        StartCoroutine(battleDialogueBox.SetDialog("Selecciona una acciÃ³n"));
         battleDialogueBox.ToggleDialogText(true);
         battleDialogueBox.ToggleActions(true);
         battleDialogueBox.ToggleMovements(false);
@@ -92,16 +93,11 @@ public class BattleManager : MonoBehaviour
 
         var oldHpValue = playerUnit.Porkemon.HP;
 
-
-
         enemyUnit.PlayAttackAnimation();
-
         yield return new WaitForSeconds(1f);
-
         playerUnit.PlayReceiveAttackAnimation();
 
         var damageDesc = playerUnit.Porkemon.ReceiveDamage(enemyUnit.Porkemon, move);
-
         playerHUD.UpdatePokemonData(oldHpValue);
         yield return ShowDamageDescription(damageDesc);
 
@@ -109,6 +105,7 @@ public class BattleManager : MonoBehaviour
         {
             yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} se ha debilitado");
             playerUnit.PlayFaintAnimation();
+            
             yield return new WaitForSeconds(1.5f);
             OnBattleFinish(false);
         }
@@ -141,9 +138,9 @@ public class BattleManager : MonoBehaviour
     private int currentSelectedAction;
     private float timeSinceLastClick;
     public float TimeBetweenClicks = .15f;
+    
     private void HandlePlayerActionSelection()
     {
-
         if (timeSinceLastClick < TimeBetweenClicks)
         {
             return;
@@ -172,6 +169,7 @@ public class BattleManager : MonoBehaviour
     }
 
     private int currentSelectedMovement;
+    
     void HandlePlayerMovementSelection()
     {
         if (timeSinceLastClick < TimeBetweenClicks)
@@ -200,7 +198,7 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                currentSelectedMovement = (currentSelectedMovement - 1) % 2 + 2;
+                currentSelectedMovement = (currentSelectedMovement + 1) % 2 + 2;
             }
             if (currentSelectedMovement >= playerUnit.Porkemon.Moves.Count)
             {
@@ -227,9 +225,7 @@ public class BattleManager : MonoBehaviour
         var oldHpValue = playerUnit.Porkemon.HP;
 
         playerUnit.PlayAttackAnimation();
-
         yield return new WaitForSeconds(1f);
-
         enemyUnit.PlayReceiveAttackAnimation();
 
         var damageDesc = enemyUnit.Porkemon.ReceiveDamage(playerUnit.Porkemon, move);
@@ -241,6 +237,7 @@ public class BattleManager : MonoBehaviour
             yield return battleDialogueBox.SetDialog($"{enemyUnit.Porkemon.Base.Name} se ha debilitado.");
             enemyUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(1.5f);
+            
             OnBattleFinish(true);
         }
         else
@@ -253,15 +250,15 @@ public class BattleManager : MonoBehaviour
     {
         if (desc.Critical > 1f)
         {
-            yield return battleDialogueBox.SetDialog("¡Un golpe crítico!");
+            yield return battleDialogueBox.SetDialog("Â¡Un golpe crÃ­tico!");
         }
         if (desc.Type > 1)
         {
-            yield return battleDialogueBox.SetDialog("¡Es súper efectivo!");
+            yield return battleDialogueBox.SetDialog("Â¡Es sÃºper efectivo!");
         }
-        else if (true)
+        else if (desc.Type < 1)
         {
-
+            yield return battleDialogueBox.SetDialog("No es muy efectivo.");
         }
     }
 }
