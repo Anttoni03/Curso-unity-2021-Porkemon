@@ -26,11 +26,6 @@ public class BattleManager : MonoBehaviour
     public BattleState state;
 
     public event Action<bool> OnBattleFinish;
-    
-    private void Start()
-    {
-        StartCoroutine(SetupBattle());
-    }
 
     public void HandleStartBattle()
     {
