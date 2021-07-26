@@ -20,25 +20,31 @@ public class BattleHUD : MonoBehaviour
 
         pokemonName.text = porkemon.Base.Name;
         pokemonLevel.text = $"lv. {porkemon.Level}";
-
-        StartCoroutine(healthBar.SetSmoothHP(porkemon.HP/porkemon.MaxHP));
-        pokemonHealth.text = $"{porkemon.HP} / {porkemon.MaxHP}";
-        healthBar.SetHP(1);
+        
+        healthbar.SetHP((float) _porkemon.HP / _porkemon.MaxHP);
         UpdatePokemonData(porkemon.HP);
+        
+        //Quitar si innecesario
+        /*StartCoroutine(healthBar.SetSmoothHP(porkemon.HP/porkemon.MaxHP));
+        pokemonHealth.text = $"{porkemon.HP} / {porkemon.MaxHP}";
+        UpdatePokemonData(porkemon.HP);*/
     }
 
-    public void UpdatePokemonData(int hpValue)
+    public void UpdatePokemonData(int oldHPVal)
     {
         StartCoroutine(healthBar.SetSmoothHP((float)_porkemon.HP / _porkemon.MaxHP));
-        pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
+        StartCoroutine(DecreaseHealthPoints(oldHPVal));
+        
+        //Quitar si innecesario
+        //pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
     }
 
     public IEnumerator DecreaseHealthPoints(int oldHpValue)
     {
-        while (oldHpValue < _porkemon.HP)
+        while (oldHpValue > _porkemon.HP)
         {
             oldHpValue--;
-            pokemonHealth.text = $"{oldHpValue}/{_porkemon.HP}";
+            pokemonHealth.text = $"{oldHpValue}/{_porkemon.MaxHP}";
             yield return new WaitForSeconds(.1f);
         }
         pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
