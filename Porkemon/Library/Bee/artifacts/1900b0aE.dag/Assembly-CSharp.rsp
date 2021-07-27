@@ -348,12 +348,16 @@
 "Assets/_scripts/Battle/BattleManager.cs"
 "Assets/_scripts/Battle/BattleUnit.cs"
 "Assets/_scripts/Battle/HealthBar.cs"
+"Assets/_scripts/Battle/PartyHUD.cs"
+"Assets/_scripts/Battle/PartyMemberHUD.cs"
 "Assets/_scripts/GameManager.cs"
 "Assets/_scripts/Moves/Move.cs"
 "Assets/_scripts/Moves/MoveBasic.cs"
 "Assets/_scripts/Player/PlayerController.cs"
 "Assets/_scripts/Porkedex/PokemonBasic.cs"
 "Assets/_scripts/Porkedex/Porkemon.cs"
+"Assets/_scripts/Porkedex/PorkemonMapArea.cs"
+"Assets/_scripts/Porkedex/PorkemonParty.cs"
 -langversion:8.0
 
 /deterministic

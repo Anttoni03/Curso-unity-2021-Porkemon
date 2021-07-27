@@ -28,9 +28,9 @@ public class BattleUnit : MonoBehaviour
     }
 
 
-    public void SetUpPorkemon()
+    public void SetUpPorkemon(Porkemon porkemon)
     {
-        Porkemon = new Porkemon(_base,_level);
+        Porkemon = porkemon;
 
         porkemonImage.sprite = (isPlayer ? Porkemon.Base.BackSprite : Porkemon.Base.FrontSprite);
         porkemonImage.color = initialColor;

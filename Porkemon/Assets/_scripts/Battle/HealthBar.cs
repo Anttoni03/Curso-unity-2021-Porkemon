@@ -37,7 +37,7 @@ public class HealthBar : MonoBehaviour
     public void SetHP(float normilizedValue)
     {
         healthBar.transform.localScale = new Vector3(-normilizedValue, 1f);
-        healthBar.GetComponent<Image>():Color = barColor;
+        healthBar.GetComponent<Image>().color = barColor;
         
         //Quitar si innecesario
         //_barImage.color = barColor;

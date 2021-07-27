@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Porkemon
 {
     /// <summary>
     /// Referencia a la base de cualquier porkémon
     /// </summary>
-    private PokemonBasic _base;
+    [SerializeField] private PokemonBasic _base;
     /// <summary>
     /// Referencia a la base de cualquier porkémon
     /// </summary>
@@ -18,7 +20,7 @@ public class Porkemon
     /// <summary>
     /// Nivel actual del porkémon
     /// </summary>
-    private int _level;
+    [SerializeField] private int _level;
     /// <summary>
     /// Nivel actual del porkémon
     /// </summary>
@@ -57,11 +59,8 @@ public class Porkemon
     /// </summary>
     /// <param name="porkemonBase"></param>
     /// <param name="porkemonLevel"></param>
-    public Porkemon(PokemonBasic porkemonBase, int porkemonLevel)
+    public void InitPorkemon()
     {
-        _base = porkemonBase;
-        _level = porkemonLevel;
-
         _hp = MaxHP;
 
         _moves = new List<Move>();
@@ -90,7 +89,7 @@ public class Porkemon
     public DamageDescription ReceiveDamage(Porkemon attacker, Move move)
     {
         float critical = 1f;
-        if (Random.Range(0, 100f) < 8)
+        if (UnityEngine.Random.Range(0, 100f) < 8)
             critical = 2f;
 
         float type1 = TypeMatrix.GetMultiplierEffectiveness(move.Base.Type, this.Base.Type1);
@@ -107,7 +106,7 @@ public class Porkemon
         float defense = (move.Base.IsSpecialMove ? this.SPDefense : this.Attack);
 
         //TODO: Acabar fórmula de daño
-        float modifiers = Random.Range(0.85f, 1f) * type1 * type2 * critical;
+        float modifiers = UnityEngine.Random.Range(0.85f, 1f) * type1 * type2 * critical;
 
         float baseDamage = (2 * attacker.Level / 5f + 2) * move.Base.Power 
             * (attack / (float)defense) / 50f + 2;
@@ -131,7 +130,7 @@ public class Porkemon
 
     public Move RandomMove()
     {
-        int randID = Random.Range(0, Moves.Count);
+        int randID = UnityEngine.Random.Range(0, Moves.Count);
         return Moves[randID];
     }
 }

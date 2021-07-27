@@ -27,8 +27,14 @@ public class BattleManager : MonoBehaviour
 
     public event Action<bool> OnBattleFinish;
 
-    public void HandleStartBattle()
+    private PorkemonParty playerParty;
+
+    private Porkemon wildPorkemon;
+
+    public void HandleStartBattle(PorkemonParty playerParty, Porkemon wildPorkemon)
     {
+        this.playerParty = playerParty;
+        this.wildPorkemon = wildPorkemon;
         StartCoroutine(SetupBattle());
     }
 
@@ -37,12 +43,12 @@ public class BattleManager : MonoBehaviour
 
         state = BattleState.StartBattle;
 
-        playerUnit.SetUpPorkemon();
+        playerUnit.SetUpPorkemon(playerParty.GetFirstNonFaintedPorkemon());
         playerHUD.SetPorkemonData(playerUnit.Porkemon);
 
         battleDialogueBox.SetPorkemonsMovements(playerUnit.Porkemon.Moves);
 
-        enemyUnit.SetUpPorkemon();
+        enemyUnit.SetUpPorkemon(wildPorkemon);
         enemyHUD.SetPorkemonData(enemyUnit.Porkemon);
 
         yield return battleDialogueBox.SetDialog($"Un porkémon salvaje apareció. Es un {enemyUnit.Porkemon.Base.Name}!");
@@ -102,7 +108,23 @@ public class BattleManager : MonoBehaviour
             playerUnit.PlayFaintAnimation();
             
             yield return new WaitForSeconds(1.5f);
-            OnBattleFinish(false);
+
+            var nextPorkemon = playerParty.GetFirstNonFaintedPorkemon();
+            if (nextPorkemon == null)
+            {
+                //No quedan porkémons sanos
+                OnBattleFinish(false);
+            }
+            else
+            {
+                //Quedan porkémons sanos. Sacar otro
+                playerUnit.SetUpPorkemon(nextPorkemon);
+                playerHUD.SetPorkemonData(nextPorkemon);
+                battleDialogueBox.SetPorkemonsMovements(nextPorkemon.Moves);
+                yield return battleDialogueBox.SetDialog($"Adelante {nextPorkemon.Base.Name}!");
+
+                PlayerAction();
+            }
         }
         else
         {
@@ -145,8 +167,14 @@ public class BattleManager : MonoBehaviour
         {
             timeSinceLastClick = 0;
 
-            currentSelectedAction = (currentSelectedAction + 1) % 2;
+            currentSelectedAction = (currentSelectedAction + 2) % 4;
 
+            battleDialogueBox.SelectedAction(currentSelectedAction);
+        }
+        else if (Input.GetAxisRaw("Horizontal") != 0)
+        {
+            timeSinceLastClick = 0;
+            currentSelectedAction = (currentSelectedAction + 1) % 2 + 2 * Mathf.FloorToInt(currentSelectedAction / 2);
             battleDialogueBox.SelectedAction(currentSelectedAction);
         }
         if (Input.GetAxisRaw("Submit") != 0)
@@ -157,6 +185,15 @@ public class BattleManager : MonoBehaviour
                 PlayerMovement();
             }
             else if (currentSelectedAction == 1)
+            {
+                OpenPartySelectionScreen();
+                //TODO: Implementar los porkémon
+            }
+            else if (currentSelectedMovement == 2)
+            {
+                //TODO: Implementar mochila
+            }
+            else if (currentSelectedMovement == 3)
             {
                 //TODO: Implementar la huida
             }
@@ -189,12 +226,9 @@ public class BattleManager : MonoBehaviour
             var oldSelectedMovement = currentSelectedMovement;
             if (currentSelectedMovement <= 1)
             {
-                currentSelectedMovement = (currentSelectedMovement + 1) % 2;
+                currentSelectedMovement = (currentSelectedMovement + 1) % 2 + 2*Mathf.FloorToInt(currentSelectedMovement/2);
             }
-            else
-            {
-                currentSelectedMovement = (currentSelectedMovement + 1) % 2 + 2;
-            }
+
             if (currentSelectedMovement >= playerUnit.Porkemon.Moves.Count)
             {
                 currentSelectedMovement = oldSelectedMovement;
@@ -208,6 +242,11 @@ public class BattleManager : MonoBehaviour
             battleDialogueBox.ToggleMovements(false);
             battleDialogueBox.ToggleDialogText(true);
             StartCoroutine(PerformPlayerMovement());
+        }
+
+        if (Input.GetAxisRaw("Cancel") != 0)
+        {
+            PlayerAction();
         }
     }
 
@@ -254,6 +293,16 @@ public class BattleManager : MonoBehaviour
         else if (desc.Type < 1)
         {
             yield return battleDialogueBox.SetDialog("No es muy efectivo.");
+        }
+    }
+
+    void OpenPartySelectionScreen()
+    {
+        print("Sacar porkémon");
+
+        if (Input.GetAxisRaw("Cancel") != 0)
+        {
+            PlayerAction();
         }
     }
 }

@@ -46,7 +46,9 @@ public class GameManager : MonoBehaviour
         battleManager.gameObject.SetActive(true);
         worldMainCamera.gameObject.SetActive(false);
 
-        battleManager.HandleStartBattle();
+        var playerParty = playerController.GetComponent<PorkemonParty>();
+        var wildPorkemon = FindObjectOfType<PorkemonMapArea>().GetComponent<PorkemonMapArea>().GetRandomWildPorkemon();
+        battleManager.HandleStartBattle(playerParty, wildPorkemon);
     }
 
     public void FinishPorkemonBattle(bool playerHasWon)

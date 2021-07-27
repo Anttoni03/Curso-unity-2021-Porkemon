@@ -21,7 +21,7 @@ public class BattleHUD : MonoBehaviour
         pokemonName.text = porkemon.Base.Name;
         pokemonLevel.text = $"lv. {porkemon.Level}";
         
-        healthbar.SetHP((float) _porkemon.HP / _porkemon.MaxHP);
+        healthBar.SetHP((float) _porkemon.HP / _porkemon.MaxHP);
         UpdatePokemonData(porkemon.HP);
         
         //Quitar si innecesario
