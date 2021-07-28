@@ -8,9 +8,10 @@ public enum BattleState
 {
     StartBattle,
     PlayerSelectAction,
-    PlayerMove,
+    PlayerSelectMove,
     EnemyMove,
-    Busy
+    Busy,
+    PartySelectScreen
 }
 
 public class BattleManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private BattleHUD enemyHUD;
 
     [SerializeField] private BattleDialogueBox battleDialogueBox;
+
+    [SerializeField] private PartyHUD partyHUD;
 
     public BattleState state;
 
@@ -51,6 +54,8 @@ public class BattleManager : MonoBehaviour
         enemyUnit.SetUpPorkemon(wildPorkemon);
         enemyHUD.SetPorkemonData(enemyUnit.Porkemon);
 
+        partyHUD.InitPartyHUD();
+
         yield return battleDialogueBox.SetDialog($"Un porkémon salvaje apareció. Es un {enemyUnit.Porkemon.Base.Name}!");
 
         if (enemyUnit.Porkemon.Speed > playerUnit.Porkemon.Speed)
@@ -77,7 +82,7 @@ public class BattleManager : MonoBehaviour
 
     void PlayerMovement()
     {
-        state = BattleState.PlayerMove;
+        state = BattleState.PlayerSelectMove;
         battleDialogueBox.ToggleDialogText(false);
         battleDialogueBox.ToggleActions(false);
         battleDialogueBox.ToggleMovements(true);
@@ -146,9 +151,13 @@ public class BattleManager : MonoBehaviour
         {
             HandlePlayerActionSelection();
         }
-        else if (state == BattleState.PlayerMove)
+        else if (state == BattleState.PlayerSelectMove)
         {
             HandlePlayerMovementSelection();
+        }
+        else if (state == BattleState.PartySelectScreen)
+        {
+            HandlePlayerPartySelection();
         }
     }
 
@@ -189,11 +198,11 @@ public class BattleManager : MonoBehaviour
                 OpenPartySelectionScreen();
                 //TODO: Implementar los porkémon
             }
-            else if (currentSelectedMovement == 2)
+            else if (currentSelectedAction == 2)
             {
                 //TODO: Implementar mochila
             }
-            else if (currentSelectedMovement == 3)
+            else if (currentSelectedAction == 3)
             {
                 //TODO: Implementar la huida
             }
@@ -298,11 +307,84 @@ public class BattleManager : MonoBehaviour
 
     void OpenPartySelectionScreen()
     {
-        print("Sacar porkémon");
+        state = BattleState.PartySelectScreen;
+        partyHUD.SetPartyData(playerParty.Porkemons);
+        partyHUD.gameObject.SetActive(true);
+        currentSelectedPorkemon = 0;
+        for (int i = 0; i < playerParty.Porkemons.Count; i++)
+        {
+            if (playerUnit.Porkemon == playerParty.Porkemons[i])
+            {
+                currentSelectedPorkemon = i;
+            }
+        }
+
+        /*if (Input.GetAxisRaw("Cancel") != 0)
+        {
+            PlayerAction();
+        }*/                                     //Borrar???
+    }
+
+    private int currentSelectedPorkemon;
+    void HandlePlayerPartySelection()
+    {
+        if (timeSinceLastClick < TimeBetweenClicks)
+        {
+            return;
+        }
+
+        if (Input.GetAxisRaw("Vertical") != 0)
+        {
+            timeSinceLastClick = 0;
+            currentSelectedPorkemon -= 2*(int)Input.GetAxisRaw("Vertical");
+        }
+        else if (Input.GetAxisRaw("Horizontal") != 0)
+        {
+            timeSinceLastClick = 0;
+            currentSelectedPorkemon += (int)Input.GetAxisRaw("Horizontal");
+        }
+
+        currentSelectedPorkemon = Mathf.Clamp(currentSelectedPorkemon, 0, playerParty.Porkemons.Count - 1);
+        partyHUD.UpdateSelectedPorkemon(currentSelectedPorkemon);
+
+        if (Input.GetAxisRaw("Submit") != 0)
+        {
+            timeSinceLastClick = 0;
+            var selectedPorkemon = playerParty.Porkemons[currentSelectedPorkemon];
+            if (selectedPorkemon.HP <= 0)
+            {
+                partyHUD.SetMessage("No puedes sacar a un porkémon debilitado");
+                return;
+            }
+            else if (selectedPorkemon == playerUnit.Porkemon)
+            {
+                partyHUD.SetMessage("Tu porkémon ya está en combate!");
+                return;
+            }
+            StartCoroutine(SwitchPorkemon(selectedPorkemon));
+        }
 
         if (Input.GetAxisRaw("Cancel") != 0)
         {
+            partyHUD.gameObject.SetActive(false);
             PlayerAction();
         }
+    }
+
+    IEnumerator SwitchPorkemon(Porkemon newPorkemon)
+    {
+        yield return battleDialogueBox.SetDialog($"Vuelve, {playerUnit.Porkemon.Base.Name}!");
+        playerUnit.PlayFaintAnimation();
+        yield return new WaitForSeconds(1.5f);
+
+        playerUnit.SetUpPorkemon(newPorkemon);
+        playerHUD.SetPorkemonData(newPorkemon);
+
+        battleDialogueBox.SetPorkemonsMovements(newPorkemon.Moves);
+        yield return battleDialogueBox.SetDialog($"Adelante, {newPorkemon.Base.Name}");
+
+        partyHUD.gameObject.SetActive(false);
+        state = BattleState.Busy;
+        StartCoroutine(EnemyAction());
     }
 }

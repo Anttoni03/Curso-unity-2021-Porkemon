@@ -9,7 +9,6 @@ public class PorkemonParty : MonoBehaviour
     public List<Porkemon> Porkemons
     {
         get => porkemons;
-        set => porkemons = value;
     }
 
     private void Start()
