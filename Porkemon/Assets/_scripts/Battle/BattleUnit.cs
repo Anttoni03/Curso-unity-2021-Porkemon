@@ -9,13 +9,23 @@ public class BattleUnit : MonoBehaviour
 {
     public PokemonBasic _base;
     public int _level;
-    public bool isPlayer;
+    [SerializeField] private bool isPlayer;
+    public bool IsPlayer
+    {
+        get => IsPlayer;
+    }
+    [SerializeField] private BattleHUD hud;
+    public BattleHUD Hud
+    {
+        get => hud;
+    }
 
     public Porkemon Porkemon { get; set; }
 
     private Image porkemonImage;
     private Vector3 initialPosition;
     private Color initialColor;
+    private float capturedTimeAnim = .4f;
 
     [SerializeField] private float startTimeAnim = 1f, attackTimeAnim = .3f, 
         dieTimeAnim = 1f, hitTimeAnim = .1f;
@@ -35,6 +45,7 @@ public class BattleUnit : MonoBehaviour
         porkemonImage.sprite = (isPlayer ? Porkemon.Base.BackSprite : Porkemon.Base.FrontSprite);
         porkemonImage.color = initialColor;
         porkemonImage.transform.position = initialPosition;
+        hud.SetPorkemonData(porkemon);
         PlayStartAnimation();
     }
 
@@ -69,5 +80,25 @@ public class BattleUnit : MonoBehaviour
         var seq = DOTween.Sequence();
         seq.Append(porkemonImage.transform.DOLocalMoveY(initialPosition.y-100,dieTimeAnim));
         seq.Join(porkemonImage.DOFade(0, dieTimeAnim));
+    }
+
+    public IEnumerator PlayCapturedAnimation()
+    {
+        var seq = DOTween.Sequence();
+        seq.Append(porkemonImage.DOFade(0, capturedTimeAnim));
+        seq.Join(transform.DOScale(new Vector3(.2f, .2f,.2f),capturedTimeAnim));
+        seq.Join(transform.DOLocalMoveY(initialPosition.y + 50, capturedTimeAnim));
+
+        yield return seq.WaitForCompletion();
+    }
+
+    public IEnumerator PlayBreackOutAnimation()
+    {
+        var seq = DOTween.Sequence();
+        seq.Append(porkemonImage.DOFade(1, capturedTimeAnim));
+        seq.Join(transform.DOScale(new Vector3(1, 1, 1), capturedTimeAnim));
+        seq.Join(transform.DOLocalMoveY(initialPosition.y, capturedTimeAnim));
+
+        yield return seq.WaitForCompletion();
     }
 }

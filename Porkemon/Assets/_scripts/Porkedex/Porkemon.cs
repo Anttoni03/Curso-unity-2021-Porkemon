@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -130,6 +131,12 @@ public class Porkemon
 
     public Move RandomMove()
     {
+        var movesWithPP = Moves.Where(m => m.PP > 0).ToList();
+        if (movesWithPP.Count > 0)
+        {
+            int randId = UnityEngine.Random.Range(0, movesWithPP.Count);
+            return movesWithPP[randId];
+        }
         int randID = UnityEngine.Random.Range(0, Moves.Count);
         return Moves[randID];
     }

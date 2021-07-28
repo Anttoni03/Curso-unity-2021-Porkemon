@@ -85,6 +85,8 @@ public class BattleDialogueBox : MonoBehaviour
             movementTexts[i].color = ((i == selectedMovement) ? selectedColor : Color.black);
         }
         ppText.text = $"PP {move.PP}/{move.Base.PP}";
+
+        ppText.color = (move.PP <= 0 ? Color.red : Color.black);
         
         if (move.Base.Category == MoveBasic.MovementCategory.Status)
             powerText.text = $"Poder ---".ToUpper();

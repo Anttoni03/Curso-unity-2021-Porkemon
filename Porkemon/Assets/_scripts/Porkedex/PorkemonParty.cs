@@ -24,4 +24,16 @@ public class PorkemonParty : MonoBehaviour
         return porkemons.Where(p => p.HP > 0).FirstOrDefault();
     }
 
+    public int GetPositionFirstNonFaintedPorkemon(Porkemon porkemon)
+    {
+        for (int i = 0; i < Porkemons.Count; i++)
+        {
+            if (porkemon == Porkemons[i])
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }

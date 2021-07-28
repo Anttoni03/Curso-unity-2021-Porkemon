@@ -22,7 +22,7 @@ public class BattleHUD : MonoBehaviour
         pokemonLevel.text = $"lv. {porkemon.Level}";
         
         healthBar.SetHP((float) _porkemon.HP / _porkemon.MaxHP);
-        UpdatePokemonData(porkemon.HP);
+        StartCoroutine(UpdatePokemonData(porkemon.HP));
         
         //Quitar si innecesario
         /*StartCoroutine(healthBar.SetSmoothHP(porkemon.HP/porkemon.MaxHP));
@@ -30,11 +30,11 @@ public class BattleHUD : MonoBehaviour
         UpdatePokemonData(porkemon.HP);*/
     }
 
-    public void UpdatePokemonData(int oldHPVal)
+    public IEnumerator UpdatePokemonData(int oldHPVal)
     {
         StartCoroutine(healthBar.SetSmoothHP((float)_porkemon.HP / _porkemon.MaxHP));
         StartCoroutine(DecreaseHealthPoints(oldHPVal));
-        
+        yield return null;
         //Quitar si innecesario
         //pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
     }

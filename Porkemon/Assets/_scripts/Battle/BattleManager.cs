@@ -2,29 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
 
 public enum BattleState
 {
     StartBattle,
-    PlayerSelectAction,
-    PlayerSelectMove,
-    EnemyMove,
+    ActionSelection,
+    MovementSelection,
+    PerformMovement,
     Busy,
-    PartySelectScreen
+    PartySelectScreen,
+    ItemsSelectScreen,
+    FinishBattle,
+    LoseTurn
 }
 
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private BattleUnit playerUnit;
-    [SerializeField] private BattleHUD playerHUD;
 
     [SerializeField] private BattleUnit enemyUnit;
-    [SerializeField] private BattleHUD enemyHUD;
 
     [SerializeField] private BattleDialogueBox battleDialogueBox;
 
     [SerializeField] private PartyHUD partyHUD;
+    [SerializeField] private float TimeBetweenClicks = .15f;
+    [SerializeField] private GameObject porkeball;
 
     public BattleState state;
 
@@ -33,6 +37,12 @@ public class BattleManager : MonoBehaviour
     private PorkemonParty playerParty;
 
     private Porkemon wildPorkemon;
+
+    private int currentSelectedPorkemon;
+
+    private int currentSelectedAction;
+    private float timeSinceLastClick;
+    private int currentSelectedMovement;
 
     public void HandleStartBattle(PorkemonParty playerParty, Porkemon wildPorkemon)
     {
@@ -47,12 +57,10 @@ public class BattleManager : MonoBehaviour
         state = BattleState.StartBattle;
 
         playerUnit.SetUpPorkemon(playerParty.GetFirstNonFaintedPorkemon());
-        playerHUD.SetPorkemonData(playerUnit.Porkemon);
 
         battleDialogueBox.SetPorkemonsMovements(playerUnit.Porkemon.Moves);
 
         enemyUnit.SetUpPorkemon(wildPorkemon);
-        enemyHUD.SetPorkemonData(enemyUnit.Porkemon);
 
         partyHUD.InitPartyHUD();
 
@@ -60,18 +68,27 @@ public class BattleManager : MonoBehaviour
 
         if (enemyUnit.Porkemon.Speed > playerUnit.Porkemon.Speed)
         {
+            battleDialogueBox.ToggleDialogText(true);
+            battleDialogueBox.ToggleMovements(false);
+            battleDialogueBox.ToggleActions(false);
             //StartCoroutine(battleDialogueBox.SetDialog("El enemigo ataca primero"));
-            EnemyAction();
+            yield return PerformEnemyMovement();
         }
         else
         {
-            PlayerAction();
+            PlayerActionSelection();
         }
     }
 
-    void PlayerAction()
+    void BattleFinish(bool playerHasWon)
     {
-        state = BattleState.PlayerSelectAction;
+        state = BattleState.FinishBattle;
+        OnBattleFinish(playerHasWon);
+    }
+
+    void PlayerActionSelection()
+    {
+        state = BattleState.ActionSelection;
         StartCoroutine(battleDialogueBox.SetDialog("Selecciona una acción"));
         battleDialogueBox.ToggleDialogText(true);
         battleDialogueBox.ToggleActions(true);
@@ -80,9 +97,9 @@ public class BattleManager : MonoBehaviour
         battleDialogueBox.SelectedAction(currentSelectedAction);
     }
 
-    void PlayerMovement()
+    void PlayerMovementSelection()
     {
-        state = BattleState.PlayerSelectMove;
+        state = BattleState.MovementSelection;
         battleDialogueBox.ToggleDialogText(false);
         battleDialogueBox.ToggleActions(false);
         battleDialogueBox.ToggleMovements(true);
@@ -90,52 +107,20 @@ public class BattleManager : MonoBehaviour
         battleDialogueBox.SelectedMovement(currentSelectedMovement, playerUnit.Porkemon.Moves[currentSelectedMovement]);
     }
 
-    IEnumerator EnemyAction()
+    void OpenPartySelectionScreen()
     {
-        state = BattleState.EnemyMove;
-        Move move = enemyUnit.Porkemon.RandomMove();
-        move.PP--;
-        yield return battleDialogueBox.SetDialog($"{enemyUnit.Porkemon.Base.Name} ha usado {move.Base.Name}.");
+        state = BattleState.PartySelectScreen;
+        partyHUD.SetPartyData(playerParty.Porkemons);
+        partyHUD.gameObject.SetActive(true);
+        //currentSelectedPorkemon = playerParty.GetFirstNonFaintedPorkemon(playerUnit.Porkemon)
+        //Una linea más
+    }
 
-        var oldHpValue = playerUnit.Porkemon.HP;
-
-        enemyUnit.PlayAttackAnimation();
-        yield return new WaitForSeconds(1f);
-        playerUnit.PlayReceiveAttackAnimation();
-
-        var damageDesc = playerUnit.Porkemon.ReceiveDamage(enemyUnit.Porkemon, move);
-        playerHUD.UpdatePokemonData(oldHpValue);
-        yield return ShowDamageDescription(damageDesc);
-
-        if (damageDesc.Fainted)
-        {
-            yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} se ha debilitado");
-            playerUnit.PlayFaintAnimation();
-            
-            yield return new WaitForSeconds(1.5f);
-
-            var nextPorkemon = playerParty.GetFirstNonFaintedPorkemon();
-            if (nextPorkemon == null)
-            {
-                //No quedan porkémons sanos
-                OnBattleFinish(false);
-            }
-            else
-            {
-                //Quedan porkémons sanos. Sacar otro
-                playerUnit.SetUpPorkemon(nextPorkemon);
-                playerHUD.SetPorkemonData(nextPorkemon);
-                battleDialogueBox.SetPorkemonsMovements(nextPorkemon.Moves);
-                yield return battleDialogueBox.SetDialog($"Adelante {nextPorkemon.Base.Name}!");
-
-                PlayerAction();
-            }
-        }
-        else
-        {
-            PlayerAction();
-        }
-
+    void OpenInventoryScreen()
+    {
+        //TODO: Inventario e ítems
+        print("Abrir inventario");
+        StartCoroutine(ThrowPorkeball());
     }
 
     public void HandleUpdate()
@@ -147,11 +132,11 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        if (state == BattleState.PlayerSelectAction)
+        if (state == BattleState.ActionSelection)
         {
             HandlePlayerActionSelection();
         }
-        else if (state == BattleState.PlayerSelectMove)
+        else if (state == BattleState.MovementSelection)
         {
             HandlePlayerMovementSelection();
         }
@@ -159,11 +144,12 @@ public class BattleManager : MonoBehaviour
         {
             HandlePlayerPartySelection();
         }
+        else if (state == BattleState.LoseTurn)
+        {
+            StartCoroutine(PerformEnemyMovement());
+        }
     }
 
-    private int currentSelectedAction;
-    private float timeSinceLastClick;
-    public float TimeBetweenClicks = .15f;
     
     private void HandlePlayerActionSelection()
     {
@@ -191,12 +177,11 @@ public class BattleManager : MonoBehaviour
             timeSinceLastClick = 0;
             if (currentSelectedAction == 0)
             {
-                PlayerMovement();
+                PlayerMovementSelection();
             }
             else if (currentSelectedAction == 1)
             {
                 OpenPartySelectionScreen();
-                //TODO: Implementar los porkémon
             }
             else if (currentSelectedAction == 2)
             {
@@ -209,8 +194,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private int currentSelectedMovement;
-    
     void HandlePlayerMovementSelection()
     {
         if (timeSinceLastClick < TimeBetweenClicks)
@@ -255,77 +238,10 @@ public class BattleManager : MonoBehaviour
 
         if (Input.GetAxisRaw("Cancel") != 0)
         {
-            PlayerAction();
+            PlayerActionSelection();
         }
     }
 
-    IEnumerator PerformPlayerMovement()
-    {
-        Move move = playerUnit.Porkemon.Moves[currentSelectedMovement];
-        move.PP--;
-        yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha usado {move.Base.Name}");
-
-        var oldHpValue = playerUnit.Porkemon.HP;
-
-        playerUnit.PlayAttackAnimation();
-        yield return new WaitForSeconds(1f);
-        enemyUnit.PlayReceiveAttackAnimation();
-
-        var damageDesc = enemyUnit.Porkemon.ReceiveDamage(playerUnit.Porkemon, move);
-        enemyHUD.UpdatePokemonData(oldHpValue);
-        yield return ShowDamageDescription(damageDesc);
-
-        if (damageDesc.Fainted)
-        {
-            yield return battleDialogueBox.SetDialog($"{enemyUnit.Porkemon.Base.Name} se ha debilitado.");
-            enemyUnit.PlayFaintAnimation();
-            yield return new WaitForSeconds(1.5f);
-            
-            OnBattleFinish(true);
-        }
-        else
-        {
-            StartCoroutine(EnemyAction());
-        }
-    }
-
-    IEnumerator ShowDamageDescription(DamageDescription desc)
-    {
-        if (desc.Critical > 1f)
-        {
-            yield return battleDialogueBox.SetDialog("¡Un golpe crítico!");
-        }
-        if (desc.Type > 1)
-        {
-            yield return battleDialogueBox.SetDialog("¡Es súper efectivo!");
-        }
-        else if (desc.Type < 1)
-        {
-            yield return battleDialogueBox.SetDialog("No es muy efectivo.");
-        }
-    }
-
-    void OpenPartySelectionScreen()
-    {
-        state = BattleState.PartySelectScreen;
-        partyHUD.SetPartyData(playerParty.Porkemons);
-        partyHUD.gameObject.SetActive(true);
-        currentSelectedPorkemon = 0;
-        for (int i = 0; i < playerParty.Porkemons.Count; i++)
-        {
-            if (playerUnit.Porkemon == playerParty.Porkemons[i])
-            {
-                currentSelectedPorkemon = i;
-            }
-        }
-
-        /*if (Input.GetAxisRaw("Cancel") != 0)
-        {
-            PlayerAction();
-        }*/                                     //Borrar???
-    }
-
-    private int currentSelectedPorkemon;
     void HandlePlayerPartySelection()
     {
         if (timeSinceLastClick < TimeBetweenClicks)
@@ -336,7 +252,7 @@ public class BattleManager : MonoBehaviour
         if (Input.GetAxisRaw("Vertical") != 0)
         {
             timeSinceLastClick = 0;
-            currentSelectedPorkemon -= 2*(int)Input.GetAxisRaw("Vertical");
+            currentSelectedPorkemon -= 2 * (int)Input.GetAxisRaw("Vertical");
         }
         else if (Input.GetAxisRaw("Horizontal") != 0)
         {
@@ -367,24 +283,189 @@ public class BattleManager : MonoBehaviour
         if (Input.GetAxisRaw("Cancel") != 0)
         {
             partyHUD.gameObject.SetActive(false);
-            PlayerAction();
+            PlayerActionSelection();
+        }
+    }
+
+    IEnumerator PerformPlayerMovement()
+    {
+        state = BattleState.PerformMovement;
+        Move move = playerUnit.Porkemon.Moves[currentSelectedMovement];
+        if (move.PP <= 0)
+        {
+            yield break;
+        }
+
+        yield return RunMovement(playerUnit, enemyUnit, move);
+
+        if (state == BattleState.PerformMovement)
+        {
+            StartCoroutine(PerformEnemyMovement());
+        }
+    }
+
+    IEnumerator PerformEnemyMovement()
+    {
+        state = BattleState.PerformMovement;
+        Move move = enemyUnit.Porkemon.RandomMove();
+        if (move.PP <= 0)
+        {
+            yield break;
+        }
+
+        yield return RunMovement(enemyUnit, playerUnit, move);
+        if (state == BattleState.PerformMovement)
+        {
+            PlayerActionSelection();
+        }
+    }
+
+    IEnumerator RunMovement(BattleUnit attacker, BattleUnit target, Move move)
+    {
+        move.PP--;
+        yield return battleDialogueBox.SetDialog($"{attacker.Porkemon.Base.Name} ha usado {move.Base.Name}");
+
+        var oldHpValue = target.Porkemon.HP;
+
+        attacker.PlayAttackAnimation();
+        yield return new WaitForSeconds(1f);
+        target.PlayReceiveAttackAnimation();
+
+        var damageDesc = target.Porkemon.ReceiveDamage(attacker.Porkemon, move);
+        yield return target.Hud.UpdatePokemonData(oldHpValue);
+        yield return ShowDamageDescription(damageDesc);
+
+        if (damageDesc.Fainted)
+        {
+            yield return battleDialogueBox.SetDialog($"{target.Porkemon.Base.Name} se ha debilitado.");
+            target.PlayFaintAnimation();
+            yield return new WaitForSeconds(1.5f);
+
+            CheckForBattleFinish(target);
+        }
+    }
+
+    void CheckForBattleFinish(BattleUnit faitedUnit)
+    {
+        if (faitedUnit.IsPlayer)
+        {
+            var nexPorkemon = playerParty.GetFirstNonFaintedPorkemon();
+            if (nexPorkemon != null)
+                OpenPartySelectionScreen();
+            else
+                BattleFinish(false);
+        }
+        else
+        {
+            BattleFinish(true);
+        }
+    }
+
+    IEnumerator ShowDamageDescription(DamageDescription desc)
+    {
+        if (desc.Critical > 1f)
+        {
+            yield return battleDialogueBox.SetDialog("¡Un golpe crítico!");
+        }
+        if (desc.Type > 1)
+        {
+            yield return battleDialogueBox.SetDialog("¡Es súper efectivo!");
+        }
+        else if (desc.Type < 1)
+        {
+            yield return battleDialogueBox.SetDialog("No es muy efectivo.");
         }
     }
 
     IEnumerator SwitchPorkemon(Porkemon newPorkemon)
     {
+        if (playerUnit.Porkemon.HP > 0)
+        {
         yield return battleDialogueBox.SetDialog($"Vuelve, {playerUnit.Porkemon.Base.Name}!");
         playerUnit.PlayFaintAnimation();
         yield return new WaitForSeconds(1.5f);
+        }
 
         playerUnit.SetUpPorkemon(newPorkemon);
-        playerHUD.SetPorkemonData(newPorkemon);
-
         battleDialogueBox.SetPorkemonsMovements(newPorkemon.Moves);
+
         yield return battleDialogueBox.SetDialog($"Adelante, {newPorkemon.Base.Name}");
 
         partyHUD.gameObject.SetActive(false);
         state = BattleState.Busy;
-        StartCoroutine(EnemyAction());
+        StartCoroutine(PerformEnemyMovement());
+    }
+
+    IEnumerator ThrowPorkeball()
+    {
+        state = BattleState.Busy;
+        yield return battleDialogueBox.SetDialog($"Has lanzado una {(porkeball.name).ToLower()}");
+
+        var porkeballInst = Instantiate(porkeball, playerUnit.transform.position - 
+            new Vector3(2,2), Quaternion.identity);
+
+        var porkeballSpt = porkeballInst.GetComponent<SpriteRenderer>();
+        yield return porkeballSpt.transform.DOLocalJump(enemyUnit.transform.position + 
+            new Vector3(0,2),2,1,.6f).WaitForCompletion();
+
+        yield return enemyUnit.PlayCapturedAnimation();
+
+        yield return porkeballSpt.transform.DOLocalMoveY(enemyUnit.transform.position.y - 1.6f,.2f).WaitForCompletion();
+
+        var numberOfShakes = TryToCatchPorkemon(enemyUnit.Porkemon);
+        for (int i = 0; i < Mathf.Min(numberOfShakes,3); i++)
+        {
+            yield return new WaitForSeconds(.4f);
+            yield return porkeballSpt.transform.DOPunchRotation(new Vector3(0,0,13f),0.8f).WaitForCompletion();
+        }
+
+        if (numberOfShakes == 4)
+        {
+            yield return battleDialogueBox.SetDialog($"Has capturado un {enemyUnit.Porkemon.Base.Name}!");
+            yield return porkeballSpt.DOFade(0, 1f).WaitForCompletion();
+
+            Destroy(porkeballInst);
+            BattleFinish(true);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.4f);
+            porkeballSpt.DOFade(0, 0.2f);
+            yield return enemyUnit.PlayBreackOutAnimation();
+
+            if (numberOfShakes <= 2)
+                yield return battleDialogueBox.SetDialog($"{enemyUnit.Porkemon.Base.Name} ha escapado!");
+            else
+                yield return battleDialogueBox.SetDialog("Casi lo has atrapado!");
+            Destroy(porkeballInst);
+
+            state = BattleState.LoseTurn;
+        }
+    }
+
+    int TryToCatchPorkemon(Porkemon porkemon)
+    {
+        float bonusPorkeball = 1;
+        float bonusStat = 1;
+        float a = (3 * porkemon.MaxHP / 2 * porkemon.HP) * porkemon.Base.CatchRate * 
+            bonusPorkeball * bonusStat / (3 * porkemon.MaxHP);
+
+        if (a >= 255)
+            return 4;
+
+        float b = (1048560 / Mathf.Sqrt(Mathf.Sqrt(16711680 / a)));
+
+        int shakeCount = 0;
+
+        while (shakeCount < 4)
+        {
+            if (UnityEngine.Random.Range(0, 65535) >= b)
+            {
+                break;
+            }
+            else
+                shakeCount++;
+        }
+        return shakeCount;
     }
 }

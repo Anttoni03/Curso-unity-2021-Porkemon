@@ -38,9 +38,6 @@ public class HealthBar : MonoBehaviour
     {
         healthBar.transform.localScale = new Vector3(-normilizedValue, 1f);
         healthBar.GetComponent<Image>().color = barColor;
-        
-        //Quitar si innecesario
-        //_barImage.color = barColor;
     }
 
     public IEnumerator SetSmoothHP(float normalizedValue)
@@ -56,5 +53,4 @@ public class HealthBar : MonoBehaviour
         }
         healthBar.transform.localScale = new Vector3(normalizedValue, 1);
     }
-
 }

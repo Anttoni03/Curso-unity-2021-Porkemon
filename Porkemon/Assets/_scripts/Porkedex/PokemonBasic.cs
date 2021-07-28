@@ -41,6 +41,9 @@ public class PokemonBasic : ScriptableObject
     [SerializeField] private int speed;
     public int Speed => speed;
 
+    [SerializeField] private int catchRate = 255;
+    public int CatchRate => catchRate;
+
 
     [SerializeField] private List<LearnableMove> learnableMoves;
     public List<LearnableMove> LearnableMoves => learnableMoves;

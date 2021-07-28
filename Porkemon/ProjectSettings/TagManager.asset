@@ -62,3 +62,6 @@ TagManager:
   - name: Foreground front
     uniqueID: 888726887
     locked: 0
+  - name: Battle
+    uniqueID: 197238229
+    locked: 0
