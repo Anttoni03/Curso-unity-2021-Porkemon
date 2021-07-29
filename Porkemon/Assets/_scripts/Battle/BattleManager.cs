@@ -552,7 +552,32 @@ public class BattleManager : MonoBehaviour
             int wonExp = Mathf.FloorToInt(expBase * level * multiplier / 7);
             playerUnit.Porkemon.Experience += wonExp;
             yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.name} ha ganado {wonExp} puntos de experiencia.");
+            yield return playerUnit.Hud.SetExperienceSmooth();
+            yield return new WaitForSeconds(1f);
+
             //TODO: Check level
+            while (playerUnit.Porkemon.NeedsToLevelUp())
+            {
+                playerUnit.Hud.SetLevelText();
+                yield return playerUnit.Hud.UpdatePokemonData(playerUnit.Porkemon.HP);
+                yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha subido de nivel");
+
+                //TODO: Intentar aprender nuevo movimiento
+
+                var newLearneableMove = playerUnit.Porkemon.GetLearnableMoveAtCurrentLevel();
+                if (newLearneableMove != null)
+                {
+                    if (playerUnit.Porkemon.Moves.Count < 4)
+                    {
+                        //Aprender
+                    }
+                    else
+                    {
+                        //Olvidar uno anterior
+                    }
+                }
+                yield return playerUnit.Hud.SetExperienceSmooth(true);
+            }
         }
 
         CheckForBattleFinish(faintedUnit);

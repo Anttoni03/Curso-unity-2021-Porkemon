@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class BattleHUD : MonoBehaviour
 {
@@ -9,9 +10,10 @@ public class BattleHUD : MonoBehaviour
     [SerializeField] private Text pokemonLevel;
     [SerializeField] private HealthBar healthBar;
     [SerializeField] private Text pokemonHealth;
+    [SerializeField] private GameObject expBar;
 
     private Porkemon _porkemon;
-   
+
 
     public void SetPorkemonData(Porkemon porkemon)
     {
@@ -19,11 +21,12 @@ public class BattleHUD : MonoBehaviour
         _porkemon = porkemon;
 
         pokemonName.text = porkemon.Base.Name;
-        pokemonLevel.text = $"lv. {porkemon.Level}";
-        
-        healthBar.SetHP((float) _porkemon.HP / _porkemon.MaxHP);
+        SetLevelText();
+
+        healthBar.SetHP((float)_porkemon.HP / _porkemon.MaxHP);
+        SetXP();
         StartCoroutine(UpdatePokemonData(porkemon.HP));
-        
+
         //Quitar si innecesario
         /*StartCoroutine(healthBar.SetSmoothHP(porkemon.HP/porkemon.MaxHP));
         pokemonHealth.text = $"{porkemon.HP} / {porkemon.MaxHP}";
@@ -48,5 +51,41 @@ public class BattleHUD : MonoBehaviour
             yield return new WaitForSeconds(.1f);
         }
         pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
+    }
+
+    public void SetXP()
+    {
+        if (expBar == null)
+            return;
+
+        expBar.transform.localScale = new Vector3(NormalizedExp(), 1, 1);
+    }
+
+    public IEnumerator SetExperienceSmooth(bool needsToResestBar = false)
+    {
+        if (expBar == null)
+            yield break;
+
+        if (needsToResestBar)
+        {
+            expBar.transform.localScale = new Vector3(0, 1, 1);
+        }
+
+        expBar.transform.DOScaleX(NormalizedExp(), 1f).WaitForCompletion();
+
+    }
+
+    float NormalizedExp()
+    {
+        float currentLevelExp = _porkemon.Base.GetNecessaryExperienceForLevel(_porkemon.Level);
+        float nextLevelExp = _porkemon.Base.GetNecessaryExperienceForLevel(_porkemon.Level + 1);
+        float normalizedExp = (_porkemon.Experience - currentLevelExp) / (nextLevelExp - currentLevelExp);
+
+        return Mathf.Clamp01(normalizedExp);
+    }
+
+    public void SetLevelText()
+    {
+        pokemonLevel.text = $"Lv {_porkemon.Level}";
     }
 }

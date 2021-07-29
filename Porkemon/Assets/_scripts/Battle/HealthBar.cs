@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private GameObject healthBar;
 
-    public Color barColor
+    public Color barColor(float finalScale)
     {
-        get
         {
-            var localScale = healthBar.transform.localScale.x;
-            if (localScale < 0.15f)
+            if (finalScale < 0.15f)
             {
                 return new Color((float)193 / 255, 45 / 255, 45 / 255);
             }
-            else if (localScale < 0.5f)
+            else if (finalScale < 0.5f)
             {
                 return new Color((float)211 / 255, 212 / 255, 29 / 255);
             }
@@ -37,11 +36,12 @@ public class HealthBar : MonoBehaviour
     public void SetHP(float normilizedValue)
     {
         healthBar.transform.localScale = new Vector3(-normilizedValue, 1f);
-        healthBar.GetComponent<Image>().color = barColor;
+        healthBar.GetComponent<Image>().color = barColor(normilizedValue);
     }
 
     public IEnumerator SetSmoothHP(float normalizedValue)
     {
+        /*
         float currentScale = healthBar.transform.localScale.x;
         float updateQuantity = currentScale - normalizedValue;
         while (currentScale - normalizedValue > Mathf.Epsilon)
@@ -51,6 +51,12 @@ public class HealthBar : MonoBehaviour
             healthBar.GetComponent<Image>().color = barColor;
             yield return null;
         }
-        healthBar.transform.localScale = new Vector3(normalizedValue, 1);
+        healthBar.transform.localScale = new Vector3(normalizedValue, 1);*/
+
+        var seq = DOTween.Sequence();
+        seq.Append(healthBar.transform.DOScaleX(normalizedValue, 1f));
+        seq.Join(healthBar.GetComponent<Image>().DOColor(barColor(normalizedValue), 1f));
+        yield return seq.WaitForCompletion();
+
     }
 }

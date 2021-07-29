@@ -52,7 +52,11 @@ public class Porkemon
     public int HP
     {
         get => _hp;
-        set => _hp = value;
+        set
+        {
+            _hp = value;
+            _hp = Mathf.FloorToInt(Mathf.Clamp(_hp, 0, 1));
+        }
     }
 
     private int _experience;
@@ -155,7 +159,31 @@ public class Porkemon
         int randID = UnityEngine.Random.Range(0, Moves.Count);
         return Moves[randID];
     }
+
+    public bool NeedsToLevelUp()
+    {
+        if (Experience > Base.GetNecessaryExperienceForLevel(_level+1))
+        {
+            int currentMaxHP = MaxHP;
+            _level++;
+            HP += (MaxHP - currentMaxHP);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public LearnableMove GetLearnableMoveAtCurrentLevel()
+    {
+        //TODO: Arreglar
+        //return Base.LearnableMoves.Where();
+        return null;
+    }
 }
+
+
 
 public class DamageDescription
 {
