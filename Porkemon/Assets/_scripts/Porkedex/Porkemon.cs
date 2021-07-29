@@ -55,6 +55,20 @@ public class Porkemon
         set => _hp = value;
     }
 
+    private int _experience;
+    public int Experience
+    {
+        get => _experience;
+        set => _experience = value;
+    }
+
+    public Porkemon(PokemonBasic pBase, int level)
+    {
+        _base = pBase;
+        _level = level;
+        InitPorkemon();
+    }
+
     /// <summary>
     /// Constructor
     /// </summary>
@@ -63,6 +77,7 @@ public class Porkemon
     public void InitPorkemon()
     {
         _hp = MaxHP;
+        _experience = Base.GetNecessaryExperienceForLevel(_level);
 
         _moves = new List<Move>();
 

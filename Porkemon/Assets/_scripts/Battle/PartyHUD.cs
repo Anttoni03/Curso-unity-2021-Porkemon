@@ -12,7 +12,7 @@ public class PartyHUD : MonoBehaviour
     private List<Porkemon> porkemons;
     public void InitPartyHUD()
     {
-        memberHuds = GetComponentsInChildren<PartyMemberHUD>();
+        memberHuds = GetComponentsInChildren<PartyMemberHUD>(true);
     }
 
     public void SetPartyData(List<Porkemon> porkemons)

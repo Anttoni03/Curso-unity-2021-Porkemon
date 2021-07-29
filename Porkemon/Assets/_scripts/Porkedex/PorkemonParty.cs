@@ -6,6 +6,9 @@ using UnityEngine;
 public class PorkemonParty : MonoBehaviour
 {
     [SerializeField] private List<Porkemon> porkemons;
+    public const int NUM_MAX_PORKEMON_IN_PARTY = 6;
+
+    private List<List<Porkemon>> billBoxes = new List<List<Porkemon>>();
     public List<Porkemon> Porkemons
     {
         get => porkemons;
@@ -16,6 +19,12 @@ public class PorkemonParty : MonoBehaviour
         foreach (var porkemon in porkemons)
         {
             porkemon.InitPorkemon();
+        }
+
+        var box =new List<Porkemon>(13);
+        for (int i = 0; i < 6; i++)
+        {
+            //pcBillBoxes = 
         }
     }
 
@@ -36,4 +45,17 @@ public class PorkemonParty : MonoBehaviour
         return -1;
     }
 
+    public bool AddPorkemonToParty(Porkemon porkemon)
+    {
+        if (porkemons.Count < NUM_MAX_PORKEMON_IN_PARTY)
+        {
+            porkemons.Add(porkemon);
+            return true;
+        }
+        else
+        {
+            //TODO: Añadir funcionalidad del pc
+            return false;
+        }
+    }
 }

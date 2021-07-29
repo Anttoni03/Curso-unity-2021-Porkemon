@@ -46,6 +46,7 @@ public class BattleUnit : MonoBehaviour
         porkemonImage.color = initialColor;
         porkemonImage.transform.position = initialPosition;
         hud.SetPorkemonData(porkemon);
+        transform.localScale = new Vector3(1, 1, 1);
         PlayStartAnimation();
     }
 

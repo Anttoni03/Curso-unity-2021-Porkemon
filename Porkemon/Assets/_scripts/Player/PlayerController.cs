@@ -71,9 +71,10 @@ public class PlayerController : MonoBehaviour
         CheckForPokemon();
     }
 
+    [SerializeField] private float verticalOffset = 0.2f;
     void CheckForPokemon()
     {
-        if (Physics2D.OverlapCircle(transform.position,0.2f,pokemonLayer) != null)
+        if (Physics2D.OverlapCircle(transform.position - new Vector3(0, verticalOffset, 0), 0.2f, pokemonLayer) != null)
         {
             if (Random.Range(0,100) < 17)
             {

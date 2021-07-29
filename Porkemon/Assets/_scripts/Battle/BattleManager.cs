@@ -18,6 +18,12 @@ public enum BattleState
     LoseTurn
 }
 
+public enum BattleType
+{
+    WildPorkemon,
+    Trainer,
+    Leader
+}
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private BattleUnit playerUnit;
@@ -31,6 +37,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject porkeball;
 
     public BattleState state;
+    public BattleType type;
 
     public event Action<bool> OnBattleFinish;
 
@@ -46,9 +53,17 @@ public class BattleManager : MonoBehaviour
 
     public void HandleStartBattle(PorkemonParty playerParty, Porkemon wildPorkemon)
     {
+        type = BattleType.WildPorkemon;
+        escapeAttempts = 0;
         this.playerParty = playerParty;
         this.wildPorkemon = wildPorkemon;
         StartCoroutine(SetupBattle());
+    }
+
+    public void HandleStartTrainerBattle(PorkemonParty porkemonParty, PorkemonParty trainerParty, bool isLeader)
+    {
+        type = (isLeader ? BattleType.Leader : BattleType.Trainer);
+        //TODO: Adaptar batalla para entrenador
     }
 
     public IEnumerator SetupBattle()
@@ -121,6 +136,7 @@ public class BattleManager : MonoBehaviour
         //TODO: Inventario e ítems
         print("Abrir inventario");
         StartCoroutine(ThrowPorkeball());
+        battleDialogueBox.ToggleDialogText(false);
     }
 
     public void HandleUpdate()
@@ -190,6 +206,7 @@ public class BattleManager : MonoBehaviour
             else if (currentSelectedAction == 3)
             {
                 //TODO: Implementar la huida
+                StartCoroutine(TryToEscapeFromBattle());
             }
         }
     }
@@ -337,11 +354,7 @@ public class BattleManager : MonoBehaviour
 
         if (damageDesc.Fainted)
         {
-            yield return battleDialogueBox.SetDialog($"{target.Porkemon.Base.Name} se ha debilitado.");
-            target.PlayFaintAnimation();
-            yield return new WaitForSeconds(1.5f);
-
-            CheckForBattleFinish(target);
+            yield return HandlePorkemonFainted(target);
         }
     }
 
@@ -357,6 +370,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
+
             BattleFinish(true);
         }
     }
@@ -399,6 +413,15 @@ public class BattleManager : MonoBehaviour
     IEnumerator ThrowPorkeball()
     {
         state = BattleState.Busy;
+
+        if (type != BattleType.WildPorkemon)
+        {
+            yield return battleDialogueBox.SetDialog("No puedes robar porkémons de otros entrenadores");
+            state = BattleState.LoseTurn;
+            yield break;
+        }
+
+
         yield return battleDialogueBox.SetDialog($"Has lanzado una {(porkeball.name).ToLower()}");
 
         var porkeballInst = Instantiate(porkeball, playerUnit.transform.position - 
@@ -423,6 +446,11 @@ public class BattleManager : MonoBehaviour
         {
             yield return battleDialogueBox.SetDialog($"Has capturado un {enemyUnit.Porkemon.Base.Name}!");
             yield return porkeballSpt.DOFade(0, 1f).WaitForCompletion();
+
+            if (playerParty.AddPorkemonToParty(enemyUnit.Porkemon))
+                yield return battleDialogueBox.SetDialog($"{enemyUnit.Porkemon.Base.Name} se ha añadido a tu equipo!");
+            else
+                yield return battleDialogueBox.SetDialog("En algún momento se mandará al pc. Espere por favor");
 
             Destroy(porkeballInst);
             BattleFinish(true);
@@ -467,5 +495,66 @@ public class BattleManager : MonoBehaviour
                 shakeCount++;
         }
         return shakeCount;
+    }
+
+    private int escapeAttempts;
+    IEnumerator TryToEscapeFromBattle()
+    {
+        state = BattleState.Busy;
+        if (type != BattleType.WildPorkemon)
+        {
+            yield return battleDialogueBox.SetDialog("No puedes huir de combates contra entrenadores");
+            state = BattleState.LoseTurn;
+            yield break;
+        }
+
+        escapeAttempts++;
+
+        int playerSpeed = playerUnit.Porkemon.Speed;
+        int enemySPeed = enemyUnit.Porkemon.Speed;
+
+        if (playerSpeed >= enemySPeed)
+        {
+            yield return battleDialogueBox.SetDialog("Has huido con éxito.");
+            yield return new WaitForSeconds(0.8f);
+            OnBattleFinish(true);
+        }
+        else
+        {
+            int oddsEscape = (Mathf.FloorToInt(playerSpeed * 128 / enemySPeed) + 30 * escapeAttempts) % 256;
+            if (UnityEngine.Random.Range(0,256) < oddsEscape)
+            {
+                yield return battleDialogueBox.SetDialog("Has huido con éxito.");
+                yield return new WaitForSeconds(0.8f);
+                OnBattleFinish(true);
+            }
+            else
+            {
+                yield return battleDialogueBox.SetDialog("No has podido escapar!");
+
+            }
+        }
+    }
+
+    IEnumerator HandlePorkemonFainted(BattleUnit faintedUnit)
+    {
+        yield return battleDialogueBox.SetDialog($"{faintedUnit.Porkemon.Base.Name} se ha debilitado.");
+        faintedUnit.PlayFaintAnimation();
+        yield return new WaitForSeconds(1.5f);
+
+        if (!faintedUnit.IsPlayer)
+        {
+            //TODO: Gain exp + check new level
+            int expBase = faintedUnit.Porkemon.Base.ExpBase;
+            int level = faintedUnit.Porkemon.Level;
+            float multiplier = (type == BattleType.WildPorkemon ? 1f : 1.5f);
+
+            int wonExp = Mathf.FloorToInt(expBase * level * multiplier / 7);
+            playerUnit.Porkemon.Experience += wonExp;
+            yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.name} ha ganado {wonExp} puntos de experiencia.");
+            //TODO: Check level
+        }
+
+        CheckForBattleFinish(faintedUnit);
     }
 }

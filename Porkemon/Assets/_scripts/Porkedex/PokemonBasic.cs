@@ -44,9 +44,78 @@ public class PokemonBasic : ScriptableObject
     [SerializeField] private int catchRate = 255;
     public int CatchRate => catchRate;
 
+    [SerializeField] private int expBase;
+    public int ExpBase => expBase;
+    [SerializeField] private GrowthRate growthRate;
+    public GrowthRate GrowthRate => growthRate;
+
 
     [SerializeField] private List<LearnableMove> learnableMoves;
     public List<LearnableMove> LearnableMoves => learnableMoves;
+
+
+
+    public int GetNecessaryExperienceForLevel(int level)
+    {
+        switch (growthRate)
+        {
+            case global::GrowthRate.Erratic:
+                if (level < 50)
+                {
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (100 - level) / 50);
+                }
+                else if (level < 78)
+                {
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (150 - level) / 50);
+                }
+                else if (level < 98)
+                {
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * Mathf.FloorToInt((1911 - 10*level) / 3)/500);
+                }
+                else
+                {
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (160 - level) / 100);
+                }
+                break;
+            case global::GrowthRate.Fast:
+                return Mathf.FloorToInt(4 * Mathf.Pow(level, 3) / 5);
+                break;
+            case global::GrowthRate.MediumFast:
+                return Mathf.FloorToInt(Mathf.Pow(level, 3));
+                break;
+            case global::GrowthRate.MediumSlow:
+                return Mathf.FloorToInt(6*Mathf.Pow(level, 3)/5 - 15*Mathf.Pow(level,2) + 100*level - 140);
+                break;
+            case global::GrowthRate.Slow:
+                //TODO: Arreglar
+                return -1;
+                break;
+            case global::GrowthRate.Fluctuating:
+                if (level < 15)
+                {
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (Mathf.FloorToInt(level + 1 / 3) + 2));
+                }
+                else if (level < 36)
+                {
+                    //TODO: Arreglar
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (Mathf.FloorToInt(level + 1 / 3) + 2));
+                }
+                else
+                {
+                    //TODO: Arreglar
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (Mathf.FloorToInt(level + 1 / 3) + 2));
+                }
+                break;
+            default:
+                return -1;
+                break;
+        }
+    }
+}
+
+public enum GrowthRate
+{
+    Erratic, Fast, MediumFast,MediumSlow,Slow, Fluctuating
 }
 
 public enum pokemonType
@@ -110,6 +179,39 @@ public class TypeMatrix
         return matrix[row - 1][col - 1];
     }
 }
+
+/*public class TypeColor
+{
+    private static Color[] colors = new
+        Color.white, // None
+        new Color(0.8193042f, 0.9333333f, 0.5254902f), // Bug
+        new Color(0.735849f, 0.6178355f, 0.5588287f), // Dark
+        new Color(0.6556701f, 0.5568628f, 0.7647059f), // Dragon
+        new Color(0.9942768f, 1f, 0.5707547f), // Electric
+        new Color(0.9339623f, 0.7621484f, 0.9339623f), // Fairy
+        new Color(0.735849f, 0.5600574f, 0.5310609f), // Fight
+        new Color(0.990566f, 0.5957404f, 0.5279903f), // Fire
+        new Color(0.7358491f, 0.7708895f, 0.9811321f), // Flying
+        new Color(0.6094251f, 0.6094251f, 0.7830189f), // Ghost
+        new Color(0.4103774f, 1, 0.6846618f), // Grass
+        new Color(0.9433962f, 0.7780005f, 0.5562478f), // Ground
+        new Color(0.7216981f, 0.9072328f, 1), // Ice
+        new Color(0.8734059f, 0.8773585f, 0.8235582f), // Normal
+        new Color(0.6981132f, 0.4774831f, 0.6539872f), // Poison
+        new Color(1, 0.6650944f, 0.7974522f), // Psychic
+        new Color(0.8584906f, 0.8171859f, 0.6519669f), // Rock
+        new Color(0.7889819f, 0.7889819f, 0.8490566f), // Steel
+        new Color(0.5613208f, 0.7828107f, 1) // Water
+    };
+
+
+
+public Color GetColorFromType(pokemonType type)
+    {
+        return colors[(int)type];
+    }
+}*/
+
 
 [Serializable]
 public class LearnableMove

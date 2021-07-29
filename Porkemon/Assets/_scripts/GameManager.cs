@@ -48,7 +48,9 @@ public class GameManager : MonoBehaviour
 
         var playerParty = playerController.GetComponent<PorkemonParty>();
         var wildPorkemon = FindObjectOfType<PorkemonMapArea>().GetComponent<PorkemonMapArea>().GetRandomWildPorkemon();
-        battleManager.HandleStartBattle(playerParty, wildPorkemon);
+        var wildPorkemonCopy = new Porkemon(wildPorkemon.Base, wildPorkemon.Level);
+
+        battleManager.HandleStartBattle(playerParty, wildPorkemonCopy);
     }
 
     public void FinishPorkemonBattle(bool playerHasWon)

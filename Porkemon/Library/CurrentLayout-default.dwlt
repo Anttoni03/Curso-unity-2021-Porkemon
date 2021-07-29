@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 602, y: 492}
   m_MaxSize: {x: 12002, y: 14042}
   vertical: 1
-  controlID: 34
+  controlID: 136
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -166,11 +166,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1184
-    height: 459.2
+    height: 459
   m_MinSize: {x: 602, y: 221}
   m_MaxSize: {x: 12002, y: 4021}
   vertical: 0
-  controlID: 78
+  controlID: 137
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -188,8 +188,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 218.4
-    height: 459.2
+    width: 218
+    height: 459
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
@@ -213,10 +213,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 218.4
+    x: 218
     y: 0
-    width: 505.6
-    height: 459.2
+    width: 506
+    height: 459
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
@@ -245,7 +245,7 @@ MonoBehaviour:
     x: 724
     y: 0
     width: 460
-    height: 459.2
+    height: 459
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 13}
@@ -270,9 +270,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 459.2
+    y: 459
     width: 1184
-    height: 271.8
+    height: 272
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 21}
@@ -334,7 +334,7 @@ MonoBehaviour:
     x: 724
     y: 73.6
     width: 458
-    height: 438.2
+    height: 438
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
   m_SerializedViewValues: []
@@ -379,9 +379,9 @@ MonoBehaviour:
       x: 0
       y: 21
       width: 458
-      height: 417.2
-    m_Scale: {x: 0.715625, y: 0.715625}
-    m_Translation: {x: 229, y: 208.6}
+      height: 417
+    m_Scale: {x: 0.715625, y: 0.7156249}
+    m_Translation: {x: 229, y: 208.49998}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -389,12 +389,12 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -320
-      y: -291.49347
+      y: -291.35373
       width: 640
-      height: 582.98694
+      height: 582.70746
     m_MinimalGUI: 1
   m_defaultScale: 0.715625
-  m_LastWindowPixelSize: {x: 572.5, y: 547.75}
+  m_LastWindowPixelSize: {x: 572.5, y: 547.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -422,8 +422,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73.6
-    width: 217.4
-    height: 438.2
+    width: 217
+    height: 438
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
@@ -503,8 +503,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 218.40001
     y: 73.6
-    width: 503.6
-    height: 438.2
+    width: 504
+    height: 438
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
   m_WindowGUID: cc27987af1a868c49b0894db9c0f5429
@@ -798,9 +798,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 532.8
+    y: 532
     width: 1183
-    height: 250.79999
+    height: 251
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -815,22 +815,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_scripts/Porkedex/Porkemons
+    - Assets/_scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 82
   m_LastFolders:
-  - Assets/_scripts/Porkedex/Porkemons
+  - Assets/_scripts
   m_LastFoldersGridSize: 82
   m_LastProjectPath: C:\Users\tonif\Documents\Projectos_unity_2021\Curso-unity-2021-2D-bueno\Porkemon
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: c48f0000
-    m_LastClickedID: 36804
-    m_ExpandedIDs: 00000000988e00009a8e0000a08e0000c28f000000ca9a3b
+    m_SelectedIDs: a08e0000
+    m_LastClickedID: 36512
+    m_ExpandedIDs: 00000000988e00009a8e0000a08e0000bc8e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -910,7 +910,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 39.200012}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 82
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
@@ -936,7 +936,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 532
-    width: 1136
+    width: 1183
     height: 251
   m_ViewDataDictionary: {fileID: 0}
 --- !u!114 &23
