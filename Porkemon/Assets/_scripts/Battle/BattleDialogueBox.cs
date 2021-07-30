@@ -11,29 +11,29 @@ public class BattleDialogueBox : MonoBehaviour
     [SerializeField] private GameObject movementSelect;
     [SerializeField] private GameObject movementDescription;
 
-    [SerializeField] private List<Text> movementTexts;
     [SerializeField] private List<Text> actionTexts;
+    [SerializeField] private List<Text> movementTexts;
 
     [SerializeField] private Text ppText;
-    [SerializeField] private Text powerText;
     [SerializeField] private Text typeText;
-
-    [SerializeField] private Color selectedColor = Color.yellow;
-
-    public float charactersPerSecond = 10F;
+    [SerializeField] private Text powerText;
     public float timeToWaitAfterText = 1f;
+    public float charactersPerSecond = 10f;
+    [SerializeField] private Color selectedColor = Color.yellow;
 
     public bool isWriting = false;
 
     public IEnumerator SetDialog(string message)
     {
         isWriting = true;
+
         dialogueText.text = "";
         foreach (var character in message)
         {
             dialogueText.text += character;
             yield return new WaitForSeconds(1 / charactersPerSecond);
         }
+
         yield return new WaitForSeconds(timeToWaitAfterText);
         isWriting = false;
     }
@@ -64,7 +64,6 @@ public class BattleDialogueBox : MonoBehaviour
 
     public void SetPorkemonsMovements(List<Move> moves)
     {
-        //Debug.Log(moves.Count);
         for (int i = 0; i < movementTexts.Count; i++)
         {
             if (i < moves.Count)
@@ -84,15 +83,17 @@ public class BattleDialogueBox : MonoBehaviour
         {
             movementTexts[i].color = ((i == selectedMovement) ? selectedColor : Color.black);
         }
-        ppText.text = $"PP {move.PP}/{move.Base.PP}";
 
-        ppText.color = (move.PP <= 0 ? Color.red : Color.black);
-        
+        ppText.text = $"PP {move.PP}/{move.Base.PP}";
+        typeText.text = move.Base.Type.ToString().ToUpper();
+
+        #region cosa mía para la categoría
         if (move.Base.Category == MoveBasic.MovementCategory.Status)
             powerText.text = $"Poder ---".ToUpper();
         else
             powerText.text = $"Poder {move.Base.Power}".ToUpper();
+        #endregion
 
-        typeText.text = move.Base.Type.ToString().ToUpper();
+        ppText.color = (move.PP <= 0 ? Color.red : Color.black);
     }
 }

@@ -6,13 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Porkemon", menuName = "Porkemon/New porkemon")]
 public class PokemonBasic : ScriptableObject
 {
+    [SerializeField] private int ID;
+
+
     [SerializeField] private string pName;
     public string Name => pName;
+
+
     [TextArea] [SerializeField] private string description;
     public string Description => description;
 
-
-    [SerializeField] private int ID;
 
     [SerializeField] private Sprite frontSprite;
     public Sprite FrontSprite => frontSprite;
@@ -20,12 +23,14 @@ public class PokemonBasic : ScriptableObject
     public Sprite BackSprite => backSprite;
 
 
-
     [SerializeField] private pokemonType type1;
     public pokemonType Type1 => type1;
     [SerializeField] private pokemonType type2;
     public pokemonType Type2 => type2;
 
+
+    [SerializeField] private int catchRate = 255;
+    public int CatchRate => catchRate;
 
 
     [SerializeField] private int maxHP;
@@ -40,10 +45,6 @@ public class PokemonBasic : ScriptableObject
     public int SPDefense => sPDefense;
     [SerializeField] private int speed;
     public int Speed => speed;
-
-    [SerializeField] private int catchRate = 255;
-    public int CatchRate => catchRate;
-
     [SerializeField] private int expBase;
     public int ExpBase => expBase;
     [SerializeField] private GrowthRate growthRate;
@@ -59,57 +60,56 @@ public class PokemonBasic : ScriptableObject
     {
         switch (growthRate)
         {
-            case global::GrowthRate.Erratic:
+            case GrowthRate.Fast:
+                return Mathf.FloorToInt(4 * Mathf.Pow(level, 3) / 5);
+                break;
+            case GrowthRate.MediumFast:
+                return Mathf.FloorToInt(Mathf.Pow(level, 3));
+                break;
+            case GrowthRate.MediumSlow:
+                return Mathf.FloorToInt(6 * Mathf.Pow(level, 3) / 5 - 15 * Mathf.Pow(level, 2) +
+                                        100 * level - 140);
+                break;
+            case GrowthRate.Slow:
+                return Mathf.FloorToInt(5 * Mathf.Pow(level, 3) / 4);
+            case GrowthRate.Erratic:
                 if (level < 50)
                 {
                     return Mathf.FloorToInt(Mathf.Pow(level, 3) * (100 - level) / 50);
+
                 }
-                else if (level < 78)
+                else if (level < 68)
                 {
-                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (150 - level) / 50);
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (150 - level) / 100);
+
                 }
                 else if (level < 98)
                 {
-                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * Mathf.FloorToInt((1911 - 10*level) / 3)/500);
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) *
+                        Mathf.FloorToInt((1911 - 10 * level) / 3) / 500);
                 }
                 else
                 {
                     return Mathf.FloorToInt(Mathf.Pow(level, 3) * (160 - level) / 100);
                 }
                 break;
-            case global::GrowthRate.Fast:
-                return Mathf.FloorToInt(4 * Mathf.Pow(level, 3) / 5);
-                break;
-            case global::GrowthRate.MediumFast:
-                return Mathf.FloorToInt(Mathf.Pow(level, 3));
-                break;
-            case global::GrowthRate.MediumSlow:
-                return Mathf.FloorToInt(6*Mathf.Pow(level, 3)/5 - 15*Mathf.Pow(level,2) + 100*level - 140);
-                break;
-            case global::GrowthRate.Slow:
-                //TODO: Arreglar
-                return -1;
-                break;
-            case global::GrowthRate.Fluctuating:
+            case GrowthRate.Fluctuating:
                 if (level < 15)
                 {
-                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (Mathf.FloorToInt(level + 1 / 3) + 2));
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (Mathf.FloorToInt((level + 1) / 3) + 24) / 50);
                 }
                 else if (level < 36)
                 {
-                    //TODO: Arreglar
-                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (Mathf.FloorToInt(level + 1 / 3) + 2));
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (level + 14) / 50);
                 }
                 else
                 {
-                    //TODO: Arreglar
-                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (Mathf.FloorToInt(level + 1 / 3) + 2));
+                    return Mathf.FloorToInt(Mathf.Pow(level, 3) * (Mathf.FloorToInt(level / 2) + 32) / 50);
                 }
                 break;
-            default:
-                return -1;
-                break;
         }
+
+        return -1;
     }
 }
 
@@ -121,68 +121,70 @@ public enum GrowthRate
 public enum pokemonType
 {
     None,
-    Normal,
-    Fire,
-    Water,
-    Electric,
-    Grass,
-    Ice,
-    Fight,
-    Poisson,
-    Ground,
-    Flying,
-    Psychic,
     Bug,
-    Rock,
-    Ghost,
-    Dragon,
     Dark,
+    Dragon,
+    Electric,
+    Fairy,
+    Fight,
+    Fire,
+    Flying,
+    Ghost,
+    Grass,
+    Ground,
+    Ice,
+    Normal,
+    Poison,
+    Psychic,
+    Rock,
     Steel,
-    Fairy
+    Water
 }
 
 public class TypeMatrix
 {
-    static float[][] matrix =
+    private static float[][] matrix =
     {
-        //               NOR  FIR  WAT  ELE  GRA  ICE  FIG  POI  GRO  FLY  PSY  BUG  ROC  GHO  DRA  DAR  STE  FAI
-    /*NOR*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , .5F, 1F , 1F , 1F , .5F, 1F },
-    /*FIR*/new float [] { 1F , .5F, .5F, 1F , 2F , 2F , 1F , 1F , 1F , 1F , 1F , 2F , .5F, 1F , .5F, 1F , 2F , 1F },
-    /*WAT*/new float [] { 1F , 2F , .5F, 1F , .5F, 1F , 1F , 1F , 2F , 1F , 1F , 1F , 2F , 1F , .5F, 1F , 1F , 1F },
-    /*ELE*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*GRA*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*ICE*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*FIG*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*POI*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*GRO*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*FLY*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*PSY*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*BUG*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*ROC*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*GHO*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*DRA*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*DAR*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*STE*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F },
-    /*FAI*/new float [] { 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F , 1F }
+    //                   NON   BUG   DAR   DRA   ELE   FAI   FIG   FIR   FLY   GHO   GRA   GRO   ICE   NOR   POI   PSY   ROC   STE   WAT
+    /*NON*/ new float[] {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+    /*BUG*/ new float[] {1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 2.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f, 1.0f, 0.5f, 1.0f},
+    /*DAR*/ new float[] {1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 0.5f, 0.5f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f},
+    /*DRA*/ new float[] {1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f},
+    /*ELE*/ new float[] {1.0f, 1.0f, 1.0f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f},
+    /*FAI*/ new float[] {1.0f, 1.0f, 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 0.5f, 1.0f},
+    /*FIG*/ new float[] {1.0f, 0.5f, 2.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 0.5f, 0.0f, 1.0f, 1.0f, 2.0f, 2.0f, 0.5f, 0.5f, 2.0f, 2.0f, 1.0f},
+    /*FIR*/ new float[] {1.0f, 2.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 2.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f, 0.5f},
+    /*FLY*/ new float[] {1.0f, 2.0f, 1.0f, 1.0f, 0.5f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 0.5f, 1.0f},
+    /*GHO*/ new float[] {1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f},
+    /*GRA*/ new float[] {1.0f, 0.5f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 2.0f, 1.0f, 1.0f, 0.5f, 1.0f, 2.0f, 0.5f, 2.0f},
+    /*GRO*/ new float[] {1.0f, 0.5f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 2.0f, 0.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 2.0f, 2.0f, 1.0f},
+    /*ICE*/ new float[] {1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f, 1.0f, 2.0f, 2.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 0.5f},
+    /*NOR*/ new float[] {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 0.5f, 1.0f},
+    /*POI*/ new float[] {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f, 0.5f, 1.0f, 1.0f, 0.5f, 1.0f, 0.5f, 0.0f, 1.0f},
+    /*PSY*/ new float[] {1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 0.5f, 1.0f, 0.5f, 1.0f},
+    /*ROC*/ new float[] {1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f, 2.0f, 1.0f, 1.0f, 0.5f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f},
+    /*STE*/ new float[] {1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 2.0f, 0.5f, 0.5f},
+    /*WAT*/ new float[] {1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 1.0f, 0.5f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 0.5f}
     };
-    //TODO: Tabla de tipos
 
     public static float GetMultiplierEffectiveness(pokemonType attackType, pokemonType porkemonDefenderType)
     {
-        if (attackType == pokemonType.None || porkemonDefenderType == pokemonType.None)
+        /*if (attackType == pokemonType.None || porkemonDefenderType == pokemonType.None)
         {
             return 1f;
-        }
+        }*/
+
         int row = (int)attackType;
         int col = (int)porkemonDefenderType;
 
-        return matrix[row - 1][col - 1];
+        return matrix[row][col];
     }
 }
 
-/*public class TypeColor
+public class TypeColor
 {
-    private static Color[] colors = new
+    private static Color[] colors =
+    {
         Color.white, // None
         new Color(0.8193042f, 0.9333333f, 0.5254902f), // Bug
         new Color(0.735849f, 0.6178355f, 0.5588287f), // Dark
@@ -204,13 +206,11 @@ public class TypeMatrix
         new Color(0.5613208f, 0.7828107f, 1) // Water
     };
 
-
-
-public Color GetColorFromType(pokemonType type)
+    public static Color GetColorFromType(pokemonType type)
     {
         return colors[(int)type];
     }
-}*/
+}
 
 
 [Serializable]

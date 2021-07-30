@@ -8,9 +8,10 @@ public class PartyMemberHUD : MonoBehaviour
     [SerializeField] private Text nameText, levelText, typeText, hpText;
     [SerializeField] private HealthBar healthBar;
     [SerializeField] private Image porkemonImage;
-    [SerializeField] private Color color = new Color(.2f, .4f, .9f);
 
     private Porkemon _porkemon;
+
+    [SerializeField] private Color selectedColor = new Color(.2f, .4f, .9f);
 
     public void SetPorkemonData(Porkemon porkemon)
     {
@@ -18,17 +19,29 @@ public class PartyMemberHUD : MonoBehaviour
 
         nameText.text = porkemon.Base.Name;
         levelText.text = $"lv. {porkemon.Level}";
-        //typeText.text = porkemon.Base.Type1.ToString();       Si hay que poner el tipo
+
+        //Si hay que poner el tipo
+        /*if (porkemon.Base.Type2 == pokemonType.None)
+        {
+            typeText.text = porkemon.Base.Type1.ToString().ToUpper();
+        }
+        else
+        {
+            typeText.text = $"{porkemon.Base.Type1.ToString().ToUpper()} - {porkemon.Base.Type2.ToString().ToUpper()}";
+        }*/
+
         hpText.text = $"{porkemon.HP}/{porkemon.MaxHP}";
         healthBar.SetHP((float)porkemon.HP/porkemon.MaxHP);
         porkemonImage.sprite = porkemon.Base.FrontSprite;
+
+        GetComponent<Image>().color = TypeColor.GetColorFromType(porkemon.Base.Type1);
     }
 
     public void SetSelectedPorkemon(bool selected)
     {
         if (selected)
         {
-            nameText.color = color;
+            nameText.color = selectedColor;
         }
         else
         {

@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class PartyHUD : MonoBehaviour
 {
+    [SerializeField] private Text messageText;
     private PartyMemberHUD[] memberHuds;
 
-    [SerializeField] private Text messageText;
-
     private List<Porkemon> porkemons;
+
     public void InitPartyHUD()
     {
         memberHuds = GetComponentsInChildren<PartyMemberHUD>(true);
@@ -19,8 +19,9 @@ public class PartyHUD : MonoBehaviour
     {
 
         this.porkemons = porkemons;
-
-        //messageText.text = "Selecciona un porkémon";                  Para poner un texto
+        
+        if (messageText != null)
+            messageText.text = "Selecciona un porkémon";
 
         for (int i = 0; i < memberHuds.Length; i++)
         {
@@ -44,6 +45,7 @@ public class PartyHUD : MonoBehaviour
 
     public void SetMessage(string message)
     {
-        //messageText.text = message;                                   Para poner texto
+        if (messageText != null)
+            messageText.text = message;
     }
 }

@@ -7,19 +7,16 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private LayerMask solidObjectsLayer, pokemonLayer;
-
     private bool isMoving;
 
-    [SerializeField]
-    private float speed;
-
-    public event Action OnPorkemonEncounter;
-
+    [SerializeField] private float speed;
     private Vector2 input;
 
     private Animator _animator;
+
+    [SerializeField] private LayerMask solidObjectsLayer, pokemonLayer;
+
+    public event Action OnPorkemonEncounter;
 
     private void Awake()
     {
@@ -65,24 +62,11 @@ public class PlayerController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
             yield return null;
         }
+
         transform.position = destination;
         isMoving = false;
 
         CheckForPokemon();
-    }
-
-    [SerializeField] private float verticalOffset = 0.2f;
-    void CheckForPokemon()
-    {
-        if (Physics2D.OverlapCircle(transform.position - new Vector3(0, verticalOffset, 0), 0.2f, pokemonLayer) != null)
-        {
-            if (Random.Range(0,100) < 17)
-            {
-                isMoving = false;
-                Debug.Log("Hay pokemon. Jaja cagaste!!");
-                OnPorkemonEncounter();
-            }
-        }
     }
 
     /// <summary>
@@ -92,9 +76,22 @@ public class PlayerController : MonoBehaviour
     /// <returns><i>True</i> si el target está disponible, <i>false</i> en caso contrario</returns>
     private bool IsAvailable(Vector3 target)
     {
-        if (Physics2D.OverlapCircle(target, .1f, solidObjectsLayer) != null)
+        if (Physics2D.OverlapCircle(target, .2f, solidObjectsLayer) != null)
             return false;
 
         return true;
+    }
+
+    [SerializeField] private float verticalOffset = 0.2f;
+
+    void CheckForPokemon()
+    {
+        if (Physics2D.OverlapCircle(transform.position - new Vector3(0, verticalOffset), 0.2f, pokemonLayer) != null)
+        {
+            if (Random.Range(0,100) < 17)
+            {
+                OnPorkemonEncounter();
+            }
+        }
     }
 }

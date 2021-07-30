@@ -10,25 +10,18 @@ public class BattleUnit : MonoBehaviour
     public PokemonBasic _base;
     public int _level;
     [SerializeField] private bool isPlayer;
-    public bool IsPlayer
-    {
-        get => IsPlayer;
-    }
+    public bool IsPlayer => IsPlayer;
     [SerializeField] private BattleHUD hud;
-    public BattleHUD Hud
-    {
-        get => hud;
-    }
+    public BattleHUD Hud => hud;
 
     public Porkemon Porkemon { get; set; }
 
     private Image porkemonImage;
     private Vector3 initialPosition;
     private Color initialColor;
-    private float capturedTimeAnim = .4f;
 
     [SerializeField] private float startTimeAnim = 1f, attackTimeAnim = .3f, 
-        dieTimeAnim = 1f, hitTimeAnim = .1f;
+        dieTimeAnim = 1f, hitTimeAnim = .1f, capturedTimeAnim = .4f;
 
     private void Awake()
     {
@@ -44,9 +37,13 @@ public class BattleUnit : MonoBehaviour
 
         porkemonImage.sprite = (isPlayer ? Porkemon.Base.BackSprite : Porkemon.Base.FrontSprite);
         porkemonImage.color = initialColor;
-        porkemonImage.transform.position = initialPosition;
+
+        //Borrar si innecesario
+        //porkemonImage.transform.position = initialPosition;
+
         hud.SetPorkemonData(porkemon);
         transform.localScale = new Vector3(1, 1, 1);
+
         PlayStartAnimation();
     }
 
@@ -89,17 +86,15 @@ public class BattleUnit : MonoBehaviour
         seq.Append(porkemonImage.DOFade(0, capturedTimeAnim));
         seq.Join(transform.DOScale(new Vector3(.2f, .2f,.2f),capturedTimeAnim));
         seq.Join(transform.DOLocalMoveY(initialPosition.y + 50, capturedTimeAnim));
-
         yield return seq.WaitForCompletion();
     }
 
-    public IEnumerator PlayBreackOutAnimation()
+    public IEnumerator PlayBreakOutAnimation()
     {
         var seq = DOTween.Sequence();
         seq.Append(porkemonImage.DOFade(1, capturedTimeAnim));
         seq.Join(transform.DOScale(new Vector3(1, 1, 1), capturedTimeAnim));
         seq.Join(transform.DOLocalMoveY(initialPosition.y, capturedTimeAnim));
-
         yield return seq.WaitForCompletion();
     }
 }

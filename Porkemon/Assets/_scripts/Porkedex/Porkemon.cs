@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public class Porkemon
@@ -35,10 +36,6 @@ public class Porkemon
     /// </summary>
     private List<Move> _moves;
     /// <summary>
-    /// Puntos de vida en tiempo real del porkémon
-    /// </summary>
-    private int _hp;
-    /// <summary>
     /// Lista de movimientos del porkémon
     /// </summary>
     public List<Move> Moves
@@ -49,13 +46,17 @@ public class Porkemon
     /// <summary>
     /// Puntos de vida en tiempo real del porkémon
     /// </summary>
+    private int _hp;
+    /// <summary>
+    /// Puntos de vida en tiempo real del porkémon
+    /// </summary>
     public int HP
     {
         get => _hp;
         set
         {
             _hp = value;
-            _hp = Mathf.FloorToInt(Mathf.Clamp(_hp, 0, 1));
+            _hp = Mathf.FloorToInt(Mathf.Clamp(_hp, 0, MaxHP));
         }
     }
 
@@ -66,10 +67,10 @@ public class Porkemon
         set => _experience = value;
     }
 
-    public Porkemon(PokemonBasic pBase, int level)
+    public Porkemon(PokemonBasic pBase, int plevel)
     {
         _base = pBase;
-        _level = level;
+        _level = plevel;
         InitPorkemon();
     }
 
@@ -109,7 +110,7 @@ public class Porkemon
     public DamageDescription ReceiveDamage(Porkemon attacker, Move move)
     {
         float critical = 1f;
-        if (UnityEngine.Random.Range(0, 100f) < 8)
+        if (Random.Range(0, 100f) < 8f)
             critical = 2f;
 
         float type1 = TypeMatrix.GetMultiplierEffectiveness(move.Base.Type, this.Base.Type1);
@@ -125,12 +126,9 @@ public class Porkemon
         float attack = (move.Base.IsSpecialMove ? attacker.SPAttack : attacker.Attack);
         float defense = (move.Base.IsSpecialMove ? this.SPDefense : this.Attack);
 
-        //TODO: Acabar fórmula de daño
-        float modifiers = UnityEngine.Random.Range(0.85f, 1f) * type1 * type2 * critical;
-
+        float modifiers = Random.Range(0.85f, 1f) * type1 * type2 * critical;
         float baseDamage = (2 * attacker.Level / 5f + 2) * move.Base.Power 
             * (attack / (float)defense) / 50f + 2;
-
         int totalDamage = Mathf.FloorToInt(baseDamage * modifiers);
 
         #region Cosa mía(sin daño si movimiento de estado)
@@ -153,16 +151,16 @@ public class Porkemon
         var movesWithPP = Moves.Where(m => m.PP > 0).ToList();
         if (movesWithPP.Count > 0)
         {
-            int randId = UnityEngine.Random.Range(0, movesWithPP.Count);
+            int randId = Random.Range(0, movesWithPP.Count);
             return movesWithPP[randId];
         }
-        int randID = UnityEngine.Random.Range(0, Moves.Count);
-        return Moves[randID];
+
+        return null;
     }
 
     public bool NeedsToLevelUp()
     {
-        if (Experience > Base.GetNecessaryExperienceForLevel(_level+1))
+        if (Experience > Base.GetNecessaryExperienceForLevel(_level + 1))
         {
             int currentMaxHP = MaxHP;
             _level++;
@@ -177,9 +175,7 @@ public class Porkemon
 
     public LearnableMove GetLearnableMoveAtCurrentLevel()
     {
-        //TODO: Arreglar
-        //return Base.LearnableMoves.Where();
-        return null;
+        return Base.LearnableMoves.Where(lm => lm.Level == _level).FirstOrDefault();
     }
 }
 

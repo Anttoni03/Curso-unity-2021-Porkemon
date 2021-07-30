@@ -17,20 +17,13 @@ public class BattleHUD : MonoBehaviour
 
     public void SetPorkemonData(Porkemon porkemon)
     {
-
         _porkemon = porkemon;
 
         pokemonName.text = porkemon.Base.Name;
         SetLevelText();
-
         healthBar.SetHP((float)_porkemon.HP / _porkemon.MaxHP);
         SetXP();
         StartCoroutine(UpdatePokemonData(porkemon.HP));
-
-        //Quitar si innecesario
-        /*StartCoroutine(healthBar.SetSmoothHP(porkemon.HP/porkemon.MaxHP));
-        pokemonHealth.text = $"{porkemon.HP} / {porkemon.MaxHP}";
-        UpdatePokemonData(porkemon.HP);*/
     }
 
     public IEnumerator UpdatePokemonData(int oldHPVal)
@@ -38,11 +31,9 @@ public class BattleHUD : MonoBehaviour
         StartCoroutine(healthBar.SetSmoothHP((float)_porkemon.HP / _porkemon.MaxHP));
         StartCoroutine(DecreaseHealthPoints(oldHPVal));
         yield return null;
-        //Quitar si innecesario
-        //pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
     }
 
-    public IEnumerator DecreaseHealthPoints(int oldHpValue)
+    private IEnumerator DecreaseHealthPoints(int oldHpValue)
     {
         while (oldHpValue > _porkemon.HP)
         {
@@ -61,18 +52,17 @@ public class BattleHUD : MonoBehaviour
         expBar.transform.localScale = new Vector3(NormalizedExp(), 1, 1);
     }
 
-    public IEnumerator SetExperienceSmooth(bool needsToResestBar = false)
+    public IEnumerator SetExperienceSmooth(bool needsToResetBar = false)
     {
         if (expBar == null)
             yield break;
 
-        if (needsToResestBar)
+        if (needsToResetBar)
         {
             expBar.transform.localScale = new Vector3(0, 1, 1);
         }
 
-        expBar.transform.DOScaleX(NormalizedExp(), 1f).WaitForCompletion();
-
+        yield return expBar.transform.DOScaleX(NormalizedExp(), 2f).WaitForCompletion();
     }
 
     float NormalizedExp()

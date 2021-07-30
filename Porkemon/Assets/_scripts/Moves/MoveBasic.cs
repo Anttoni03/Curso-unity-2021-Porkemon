@@ -34,10 +34,7 @@ public class MoveBasic : ScriptableObject
     {
         get
         {
-            if (Type == pokemonType.Fire || Type == pokemonType.Water ||
-                Type == pokemonType.Grass || Type == pokemonType.Ice ||
-                Type == pokemonType.Electric || Type == pokemonType.Dragon ||
-                Type == pokemonType.Dark || Type == pokemonType.Psychic)
+            if (category == MovementCategory.Special)
             {
                 return true;
             }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum GameState
 {
@@ -27,27 +28,15 @@ public class GameManager : MonoBehaviour
         battleManager.OnBattleFinish += FinishPorkemonBattle;
     }
 
-    private void Update()
-    {
-        if (_gameState == GameState.Travel)
-        {
-            playerController.HandleUpdate();
-        }
-        else if (_gameState == GameState.Battle)
-        {
-            battleManager.HandleUpdate();
-        }
-    }
-
     public void StartPorkemonBattle()
     {
         _gameState = GameState.Battle;
-
         battleManager.gameObject.SetActive(true);
         worldMainCamera.gameObject.SetActive(false);
 
         var playerParty = playerController.GetComponent<PorkemonParty>();
         var wildPorkemon = FindObjectOfType<PorkemonMapArea>().GetComponent<PorkemonMapArea>().GetRandomWildPorkemon();
+        
         var wildPorkemonCopy = new Porkemon(wildPorkemon.Base, wildPorkemon.Level);
 
         battleManager.HandleStartBattle(playerParty, wildPorkemonCopy);
@@ -61,6 +50,18 @@ public class GameManager : MonoBehaviour
         if (!playerHasWon)
         {
             //TODO: Victoria y derrota
+        }
+    }
+
+    private void Update()
+    {
+        if (_gameState == GameState.Travel)
+        {
+            playerController.HandleUpdate();
+        }
+        else if (_gameState == GameState.Battle)
+        {
+            battleManager.HandleUpdate();
         }
     }
 }

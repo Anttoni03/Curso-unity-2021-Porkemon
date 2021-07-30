@@ -12055,10 +12055,10 @@ RectTransform:
   m_Father: {fileID: 1062986025}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 72.5, y: -75}
+  m_SizeDelta: {x: 145, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &174405711
 MonoBehaviour:
@@ -12213,10 +12213,10 @@ RectTransform:
   m_Father: {fileID: 1062986025}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 72.5, y: -145}
+  m_SizeDelta: {x: 145, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &181439615
 MonoBehaviour:
@@ -12276,7 +12276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &240032413
 Transform:
   m_ObjectHideFlags: 0
@@ -12309,10 +12309,10 @@ MonoBehaviour:
   enemyUnit: {fileID: 617553669}
   battleDialogueBox: {fileID: 646117564}
   partyHUD: {fileID: 1865059995}
-  TimeBetweenClicks: 0.15
   porkeball: {fileID: 7262873080715858311, guid: 1d8a42158eeed134bab70c3de8135ecd, type: 3}
   state: 0
   type: 0
+  TimeBetweenClicks: 0.15
 --- !u!1001 &430556096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35309,7 +35309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 12.19, y: -34.1}
+  m_AnchoredPosition: {x: 12.190002, y: -34.1}
   m_SizeDelta: {x: -107.09, y: 17.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &519420028
@@ -35559,6 +35559,7 @@ MonoBehaviour:
   attackTimeAnim: 0.3
   dieTimeAnim: 0.7
   hitTimeAnim: 0.1
+  capturedTimeAnim: 0.4
 --- !u!114 &617553670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35776,22 +35777,22 @@ MonoBehaviour:
   actionSelect: {fileID: 1062986024}
   movementSelect: {fileID: 1626973406}
   movementDescription: {fileID: 11599238}
-  movementTexts:
-  - {fileID: 1069500779}
-  - {fileID: 1842794231}
-  - {fileID: 177690261}
-  - {fileID: 807581456}
   actionTexts:
   - {fileID: 174405711}
   - {fileID: 2039540658}
   - {fileID: 181439615}
   - {fileID: 1205106808}
+  movementTexts:
+  - {fileID: 1069500779}
+  - {fileID: 1842794231}
+  - {fileID: 177690261}
+  - {fileID: 807581456}
   ppText: {fileID: 1902363763}
-  powerText: {fileID: 1337141616}
   typeText: {fileID: 1147491913}
-  selectedColor: {r: 0.8786937, g: 0.9150943, b: 0.14158057, a: 1}
-  charactersPerSecond: 35
+  powerText: {fileID: 1337141616}
   timeToWaitAfterText: 0.9
+  charactersPerSecond: 35
+  selectedColor: {r: 0.8786937, g: 0.9150943, b: 0.14158057, a: 1}
   isWriting: 0
 --- !u!1 &655793817
 GameObject:
@@ -36347,7 +36348,7 @@ MonoBehaviour:
   pokemonLevel: {fileID: 1446454368}
   healthBar: {fileID: 657265862}
   pokemonHealth: {fileID: 655793819}
-  expBar: {fileID: 0}
+  expBar: {fileID: 2133391578}
 --- !u!114 &1021621830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36843,10 +36844,10 @@ RectTransform:
   m_Father: {fileID: 1062986025}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 217.5, y: -145}
+  m_SizeDelta: {x: 145, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1205106808
 MonoBehaviour:
@@ -37064,13 +37065,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7988c0cf1e5b74a8a55107e41a1aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 4
   solidObjectsLayer:
     serializedVersion: 2
     m_Bits: 8
   pokemonLayer:
     serializedVersion: 2
     m_Bits: 448
-  speed: 4
   verticalOffset: 0.2
 --- !u!95 &1252666825
 Animator:
@@ -41644,6 +41645,7 @@ MonoBehaviour:
   attackTimeAnim: 0.3
   dieTimeAnim: 0.7
   hitTimeAnim: 0.1
+  capturedTimeAnim: 0.4
 --- !u!1 &1902363761
 GameObject:
   m_ObjectHideFlags: 0
@@ -43174,10 +43176,10 @@ RectTransform:
   m_Father: {fileID: 1062986025}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 217.5, y: -75}
+  m_SizeDelta: {x: 145, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2039540658
 MonoBehaviour:

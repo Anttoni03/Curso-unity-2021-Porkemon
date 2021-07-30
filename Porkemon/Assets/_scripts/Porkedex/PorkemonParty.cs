@@ -8,7 +8,8 @@ public class PorkemonParty : MonoBehaviour
     [SerializeField] private List<Porkemon> porkemons;
     public const int NUM_MAX_PORKEMON_IN_PARTY = 6;
 
-    private List<List<Porkemon>> billBoxes = new List<List<Porkemon>>();
+    //private List<List<Porkemon>> billBoxes;
+
     public List<Porkemon> Porkemons
     {
         get => porkemons;
@@ -21,11 +22,11 @@ public class PorkemonParty : MonoBehaviour
             porkemon.InitPorkemon();
         }
 
-        var box =new List<Porkemon>(13);
+        /*var box =new List<Porkemon>(13);
         for (int i = 0; i < 6; i++)
         {
             //pcBillBoxes = 
-        }
+        }*/
     }
 
     public Porkemon GetFirstNonFaintedPorkemon()
@@ -33,7 +34,7 @@ public class PorkemonParty : MonoBehaviour
         return porkemons.Where(p => p.HP > 0).FirstOrDefault();
     }
 
-    public int GetPositionFirstNonFaintedPorkemon(Porkemon porkemon)
+    public int GetPositionFromPorkemon(Porkemon porkemon)
     {
         for (int i = 0; i < Porkemons.Count; i++)
         {
