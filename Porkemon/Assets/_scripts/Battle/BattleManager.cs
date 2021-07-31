@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 using Random = UnityEngine.Random;
-
+using System.Linq;
 
 public enum BattleState
 {
@@ -15,8 +15,9 @@ public enum BattleState
     Busy,
     PartySelectScreen,
     ItemsSelectScreen,
+    LoseTurn,
     FinishBattle,
-    LoseTurn
+    ForgetMovement
 }
 
 public enum BattleType
@@ -35,6 +36,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private BattleDialogueBox battleDialogueBox;
 
     [SerializeField] private PartyHUD partyHUD;
+
+    [SerializeField] private SelectionMovementUI selectionMovementUI;
 
     [SerializeField] private GameObject porkeball;
 
@@ -55,6 +58,9 @@ public class BattleManager : MonoBehaviour
     private int currentSelectedPorkemon;
 
     private int escapeAttempts;
+    private MoveBasic moveToLearn;
+
+    public AudioClip attackClip, damageClip, levelUpClip, endBattleClip, porkeballClip;
 
     public void HandleStartBattle(PorkemonParty playerParty, Porkemon wildPorkemon)
     {
@@ -101,6 +107,7 @@ public class BattleManager : MonoBehaviour
 
     void BattleFinish(bool playerHasWon)
     {
+        SoundManager.SharedInstance.PlaySound(endBattleClip);
         state = BattleState.FinishBattle;
         OnBattleFinish(playerHasWon);
     }
@@ -147,7 +154,7 @@ public class BattleManager : MonoBehaviour
     {
         timeSinceLastClick += Time.deltaTime;
 
-        if (battleDialogueBox.isWriting)
+        if ((timeSinceLastClick < TimeBetweenClicks) || battleDialogueBox.isWriting)
         {
             return;
         }
@@ -168,16 +175,43 @@ public class BattleManager : MonoBehaviour
         {
             StartCoroutine(PerformEnemyMovement());
         }
+        else if (state == BattleState.ForgetMovement)
+        {
+            selectionMovementUI.HandleForgetMoveSelection((moveIndex) => 
+            {
+                if (moveIndex < 0)
+                {
+                    timeSinceLastClick = 0;
+                    return;
+                }
+
+                StartCoroutine(ForgetOldMove(moveIndex));
+            });
+        }
     }
 
-    
-    private void HandlePlayerActionSelection()
+    IEnumerator ForgetOldMove(int moveIndex)
     {
-        if (timeSinceLastClick < TimeBetweenClicks)
+        selectionMovementUI.gameObject.SetActive(false);
+        if (moveIndex == PokemonBasic.NUMBER_OF_LEARNABLE_MOVES)
         {
-            return;
+            StartCoroutine(battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} no ha aprendido {moveToLearn.Name}"));
+        }
+        else
+        {
+            //Olvidación del movimiento seleccionado en pos del nuevo
+            var selectedMove = playerUnit.Porkemon.Moves[moveIndex].Base;
+            yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha olvidado {selectedMove.Name} aprendió {moveToLearn.Name}");
+            playerUnit.Porkemon.Moves[moveIndex] = new Move(moveToLearn);
         }
 
+        moveToLearn = null;
+        //TODO: Revisar para cuando haya entrenadores
+        state = BattleState.FinishBattle;
+    }
+
+    private void HandlePlayerActionSelection()
+    {
         if (Input.GetAxisRaw("Vertical") != 0)
         {
             timeSinceLastClick = 0;
@@ -218,11 +252,6 @@ public class BattleManager : MonoBehaviour
 
     void HandlePlayerMovementSelection()
     {
-        if (timeSinceLastClick < TimeBetweenClicks)
-        {
-            return;
-        }
-
         if (Input.GetAxisRaw("Vertical") != 0)
         {
             timeSinceLastClick = 0;
@@ -262,11 +291,6 @@ public class BattleManager : MonoBehaviour
 
     void HandlePlayerPartySelection()
     {
-        if (timeSinceLastClick < TimeBetweenClicks)
-        {
-            return;
-        }
-
         if (Input.GetAxisRaw("Vertical") != 0)
         {
             timeSinceLastClick = 0;
@@ -330,7 +354,7 @@ public class BattleManager : MonoBehaviour
         state = BattleState.PerformMovement;
 
         Move move = enemyUnit.Porkemon.RandomMove();
-
+        
         yield return RunMovement(enemyUnit, playerUnit, move);
 
         if (state == BattleState.PerformMovement)
@@ -347,7 +371,9 @@ public class BattleManager : MonoBehaviour
         var oldHpValue = target.Porkemon.HP;
 
         attacker.PlayAttackAnimation();
+        SoundManager.SharedInstance.PlayMusic(attackClip);
         yield return new WaitForSeconds(1f);
+        SoundManager.SharedInstance.PlayMusic(damageClip);
         target.PlayReceiveAttackAnimation();
 
         var damageDesc = target.Porkemon.ReceiveDamage(attacker.Porkemon, move);
@@ -559,6 +585,7 @@ public class BattleManager : MonoBehaviour
             //TODO: Check level
             while (playerUnit.Porkemon.NeedsToLevelUp())
             {
+                SoundManager.SharedInstance.PlaySound(levelUpClip);
                 playerUnit.Hud.SetLevelText();
                 yield return playerUnit.Hud.UpdatePokemonData(playerUnit.Porkemon.HP);
                 yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha subido de nivel");
@@ -568,18 +595,34 @@ public class BattleManager : MonoBehaviour
                 var newLearneableMove = playerUnit.Porkemon.GetLearnableMoveAtCurrentLevel();
                 if (newLearneableMove != null)
                 {
-                    if (playerUnit.Porkemon.Moves.Count < 4)
+                    if (playerUnit.Porkemon.Moves.Count < PokemonBasic.NUMBER_OF_LEARNABLE_MOVES)
                     {
-                        //Aprender
+                        playerUnit.Porkemon.LearnMove(newLearneableMove);
+                        yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha aprendido {newLearneableMove.Move.Name}");
+                        battleDialogueBox.SetPorkemonsMovements(playerUnit.Porkemon.Moves);
                     }
                     else
                     {
-                        //Olvidar uno anterior
+                        yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} quiere aprender {newLearneableMove.Move.Name}");
+                        yield return battleDialogueBox.SetDialog($"Pero no puede aprender más de 4 movimientos");
+                        yield return ChooseMovementToForget(playerUnit.Porkemon, newLearneableMove.Move);
+                        yield return new WaitUntil(() => state != BattleState.ForgetMovement);
                     }
                 }
                 yield return playerUnit.Hud.SetExperienceSmooth(true);
             }
         }
         CheckForBattleFinish(faintedUnit);
+    }
+
+    IEnumerator ChooseMovementToForget(Porkemon learner, MoveBasic newMove)
+    {
+        //TODO: Asegurar que es busy
+        state = BattleState.Busy;
+        yield return battleDialogueBox.SetDialog($"Selecciona el movimiento que {learner.Base.Name} va a olvidar");
+        selectionMovementUI.gameObject.SetActive(true);
+        selectionMovementUI.SetMovements(learner.Moves.Select(mv => mv.Base).ToList(), newMove);
+        moveToLearn = newMove;
+        state = BattleState.ForgetMovement;
     }
 }

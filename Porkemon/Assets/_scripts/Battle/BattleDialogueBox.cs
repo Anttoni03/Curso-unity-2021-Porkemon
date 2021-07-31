@@ -23,6 +23,8 @@ public class BattleDialogueBox : MonoBehaviour
 
     public bool isWriting = false;
 
+    public AudioClip[] characterSounds;
+
     public IEnumerator SetDialog(string message)
     {
         isWriting = true;
@@ -30,6 +32,9 @@ public class BattleDialogueBox : MonoBehaviour
         dialogueText.text = "";
         foreach (var character in message)
         {
+            if (character != ' ')
+                SoundManager.SharedInstance.PlayMusic(characterSounds);
+
             dialogueText.text += character;
             yield return new WaitForSeconds(1 / charactersPerSecond);
         }

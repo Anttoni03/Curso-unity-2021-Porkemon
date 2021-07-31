@@ -91,7 +91,7 @@ public class Porkemon
             if (movement.Level <= _level)
                 _moves.Add(new Move(movement.Move));
 
-            if (_moves.Count >= 4)
+            if (_moves.Count >= PokemonBasic.NUMBER_OF_LEARNABLE_MOVES)
                 break;
         }
     }
@@ -176,6 +176,16 @@ public class Porkemon
     public LearnableMove GetLearnableMoveAtCurrentLevel()
     {
         return Base.LearnableMoves.Where(lm => lm.Level == _level).FirstOrDefault();
+    }
+
+    public void LearnMove(LearnableMove learlableMove)
+    {
+        if (Moves.Count >= PokemonBasic.NUMBER_OF_LEARNABLE_MOVES)
+        {
+            return;
+        }
+
+        Moves.Add(new Move(learlableMove.Move));
     }
 }
 
