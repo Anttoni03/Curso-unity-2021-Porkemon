@@ -10,7 +10,7 @@ public class BattleUnit : MonoBehaviour
     public PokemonBasic _base;
     public int _level;
     [SerializeField] private bool isPlayer;
-    public bool IsPlayer => IsPlayer;
+    public bool IsPlayer => isPlayer;
     [SerializeField] private BattleHUD hud;
     public BattleHUD Hud => hud;
 
@@ -37,9 +37,6 @@ public class BattleUnit : MonoBehaviour
 
         porkemonImage.sprite = (isPlayer ? Porkemon.Base.BackSprite : Porkemon.Base.FrontSprite);
         porkemonImage.color = initialColor;
-
-        //Borrar si innecesario
-        //porkemonImage.transform.position = initialPosition;
 
         hud.SetPorkemonData(porkemon);
         transform.localScale = new Vector3(1, 1, 1);

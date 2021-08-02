@@ -17,17 +17,17 @@ MonoBehaviour:
   description: Porkemon que calma
   frontSprite: {fileID: 21300000, guid: 80ac39c27e67aee44941a64ac62b8c5c, type: 3}
   backSprite: {fileID: 21300000, guid: 168ae4a0d3ef08d4ca9496ac14657fce, type: 3}
-  type1: 2
-  type2: 18
-  catchRate: 255
+  type1: 18
+  type2: 0
+  catchRate: 45
   maxHP: 44
   attack: 48
   defense: 65
-  sPAttack: 40
-  sPDefense: 40
+  sPAttack: 50
+  sPDefense: 64
   speed: 43
-  expBase: 45
-  growthRate: 0
+  expBase: 63
+  growthRate: 3
   learnableMoves:
   - move: {fileID: 11400000, guid: e7cf3103089c90942bb16570acdd4e4a, type: 2}
     level: 1
@@ -35,3 +35,7 @@ MonoBehaviour:
     level: 5
   - move: {fileID: 11400000, guid: a157f0e18f486204ca256efe072ea287, type: 2}
     level: 7
+  - move: {fileID: 11400000, guid: 11e49717f50effe499b16baf74700a24, type: 2}
+    level: 10
+  - move: {fileID: 11400000, guid: f0403a07b6a2ed14e8484484c716e4b7, type: 2}
+    level: 13

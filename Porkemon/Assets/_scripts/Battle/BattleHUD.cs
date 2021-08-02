@@ -20,10 +20,15 @@ public class BattleHUD : MonoBehaviour
         _porkemon = porkemon;
 
         pokemonName.text = porkemon.Base.Name;
+
         SetLevelText();
+
         healthBar.SetHP((float)_porkemon.HP / _porkemon.MaxHP);
+
         SetXP();
+
         StartCoroutine(UpdatePokemonData(porkemon.HP));
+
     }
 
     public IEnumerator UpdatePokemonData(int oldHPVal)

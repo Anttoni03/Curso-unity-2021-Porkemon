@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 644_Zekrom
   m_EditorClassIdentifier: 
-  name: Zekrom
-  description: "Un legendario drag\xF3n con rayitos :/"
   ID: 644
+  pName: Zekrom
+  description: "Un legendario drag\xF3n con rayitos :/"
   frontSprite: {fileID: 21300000, guid: 28e1a0e940fdcf14a9d140b715e55283, type: 3}
-  backSprite: {fileID: 21300000, guid: 28e1a0e940fdcf14a9d140b715e55283, type: 3}
-  type1: 14
+  backSprite: {fileID: 21300000, guid: b6ebd55377712f94cbfeb1bdc9ae77b9, type: 3}
+  type1: 3
   type2: 4
+  catchRate: 3
   maxHP: 100
   attack: 150
   defense: 120
-  SPAttack: 120
-  SPDefense: 100
+  sPAttack: 120
+  sPDefense: 100
   speed: 90
+  expBase: 306
+  growthRate: 4
+  learnableMoves: []

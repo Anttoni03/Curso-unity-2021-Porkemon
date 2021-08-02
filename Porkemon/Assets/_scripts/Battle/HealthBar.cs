@@ -33,7 +33,7 @@ public class HealthBar : MonoBehaviour
     /// <param name="normilizedValue">Valor de la vida normalizado entre 0 y 1</param>
     public void SetHP(float normilizedValue)
     {
-        healthBar.transform.localScale = new Vector3(-normilizedValue, 1f);
+        healthBar.transform.localScale = new Vector3(normilizedValue, 1f);
         healthBar.GetComponent<Image>().color = BarColor(normilizedValue);
     }
 

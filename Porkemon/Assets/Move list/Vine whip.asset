@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: "L\xE1tigo cepa"
   description: "Acata con l\xE1tigo hasta hacer gemir"
-  type: 3
+  type: 10
   category: 0
   power: 45
   accuracy: 100

@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 009_Blastoise
   m_EditorClassIdentifier: 
-  name: Blastoise
-  description: "Una pinche tortuga de guerra que tambi\xE9n es bombera. Lanza agua"
   ID: 9
+  pName: Blastoise
+  description: "Una pinche tortuga de guerra que tambi\xE9n es bombera. Lanza agua"
   frontSprite: {fileID: 21300000, guid: 8ba019fc8e9db1c4abb1374439d67cb7, type: 3}
   backSprite: {fileID: 21300000, guid: 2ac38897c98a70e4c99d0176cfa8357b, type: 3}
-  type1: 2
-  type2: 18
+  type1: 18
+  type2: 0
+  catchRate: 45
   maxHP: 79
   attack: 83
   defense: 100
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 85
+  sPDefense: 105
   speed: 78
+  expBase: 239
+  growthRate: 3
+  learnableMoves: []

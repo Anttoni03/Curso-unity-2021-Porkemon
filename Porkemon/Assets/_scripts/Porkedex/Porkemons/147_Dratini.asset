@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 147_Dratini
   m_EditorClassIdentifier: 
-  name: Dratini
-  description: "Una serpiente con escamas de drag\xF3n WTF?"
   ID: 147
+  pName: Dratini
+  description: "Una serpiente con escamas de drag\xF3n WTF?"
   frontSprite: {fileID: 21300000, guid: 2d1876a07f79c3f41bdc5128d24383c3, type: 3}
   backSprite: {fileID: 21300000, guid: d8dc3b4277e01534d94b4c0a145f6934, type: 3}
-  type1: 14
-  type2: 18
+  type1: 3
+  type2: 0
+  catchRate: 45
   maxHP: 41
   attack: 64
   defense: 45
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 50
+  sPDefense: 50
   speed: 50
+  expBase: 60
+  growthRate: 4
+  learnableMoves: []

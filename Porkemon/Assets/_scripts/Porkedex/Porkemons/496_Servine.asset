@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
+  m_Name: 496_Servine
+  m_EditorClassIdentifier: 
+  ID: 496
+  pName: Servine
+  description: Una serpiente mediana de hierba
+  frontSprite: {fileID: 21300000, guid: 2e0e0d4d689971c48916c3b514fa2ac3, type: 3}
+  backSprite: {fileID: 21300000, guid: 2043e9740b16cb649be4c4d4aee3e713, type: 3}
+  type1: 0
+  type2: 0
+  catchRate: 255
+  maxHP: 0
+  attack: 0
+  defense: 0
+  sPAttack: 0
+  sPDefense: 0
+  speed: 0
+  expBase: 0
+  growthRate: 0
+  learnableMoves: []

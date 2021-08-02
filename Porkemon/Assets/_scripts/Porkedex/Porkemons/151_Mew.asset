@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 151_Mew
   m_EditorClassIdentifier: 
-  name: mew
-  description: "Un peque\xF1o bichito que ayud\xF3 a Dios. Es Jesucristo"
   ID: 151
+  pName: Mew
+  description: "Un peque\xF1o bichito que ayud\xF3 a Dios. Es Jesucristo"
   frontSprite: {fileID: 21300000, guid: defbf6855ab1fdf4289ad8ffb14e2fea, type: 3}
   backSprite: {fileID: 21300000, guid: 1be4c74f749042d4dbbc19a1af1af792, type: 3}
-  type1: 11
-  type2: 18
+  type1: 15
+  type2: 0
+  catchRate: 45
   maxHP: 100
   attack: 100
   defense: 100
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 100
+  sPDefense: 100
   speed: 100
+  expBase: 270
+  growthRate: 3
+  learnableMoves: []

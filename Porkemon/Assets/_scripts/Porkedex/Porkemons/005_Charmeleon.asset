@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: 005_Charmeleon
   m_EditorClassIdentifier: 
   ID: 5
-  pName: 
+  pName: Charmeleon
   description: "Es m\xE1s dif\xEDcil que se le apague el fueguito"
   frontSprite: {fileID: 21300000, guid: 4dc506ec84b23fa43bba7b11e8eaeb5b, type: 3}
   backSprite: {fileID: 21300000, guid: bdfb4fbd603fcb141a1f69566f5bd31c, type: 3}
-  type1: 1
-  type2: 18
-  catchRate: 255
+  type1: 7
+  type2: 0
+  catchRate: 45
   maxHP: 58
   attack: 64
   defense: 58
-  sPAttack: 50
-  sPDefense: 50
+  sPAttack: 80
+  sPDefense: 65
   speed: 80
-  expBase: 45
-  growthRate: 0
+  expBase: 124
+  growthRate: 3
   learnableMoves: []

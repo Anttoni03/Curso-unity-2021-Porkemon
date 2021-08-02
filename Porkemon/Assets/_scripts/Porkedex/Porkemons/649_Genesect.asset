@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
+  m_Name: 649_Genesect
+  m_EditorClassIdentifier: 
+  ID: 649
+  pName: Genesect
+  description: Un bicho del pasado revivido como un transformer
+  frontSprite: {fileID: 21300000, guid: aa40bd490677b164eb02af54e3dbda01, type: 3}
+  backSprite: {fileID: 21300000, guid: b8786eb171d5f4d449f40021a9c2867c, type: 3}
+  type1: 1
+  type2: 17
+  catchRate: 3
+  maxHP: 125
+  attack: 130
+  defense: 90
+  sPAttack: 130
+  sPDefense: 90
+  speed: 95
+  expBase: 297
+  growthRate: 4
+  learnableMoves: []

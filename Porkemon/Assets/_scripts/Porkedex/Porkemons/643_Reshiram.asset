@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 643_Reshiram
   m_EditorClassIdentifier: 
-  name: Reshiram
-  description: "Un legendario drag\xF3n y con fueguito :/"
   ID: 643
+  pName: Reshiram
+  description: "Un legendario drag\xF3n y con fueguito :/"
   frontSprite: {fileID: 21300000, guid: b557c76a862f6024e862393fed293dbc, type: 3}
-  backSprite: {fileID: 21300000, guid: b557c76a862f6024e862393fed293dbc, type: 3}
-  type1: 14
-  type2: 1
+  backSprite: {fileID: 21300000, guid: b14c287dfaff38f439cabbd5da97792f, type: 3}
+  type1: 3
+  type2: 7
+  catchRate: 3
   maxHP: 100
   attack: 120
   defense: 100
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 150
+  sPDefense: 120
   speed: 90
+  expBase: 306
+  growthRate: 4
+  learnableMoves: []

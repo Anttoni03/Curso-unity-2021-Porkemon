@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: Ascuas
   description: "Unas peque\xF1as ascuas calcinan al enemigo un pou\xA1quito"
-  type: 1
+  type: 7
   category: 1
   power: 40
   accuracy: 100

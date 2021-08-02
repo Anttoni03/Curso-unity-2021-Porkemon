@@ -80,9 +80,9 @@ public class BattleManager : MonoBehaviour
     public IEnumerator SetupBattle()
     {
         state = BattleState.StartBattle;
-
+        print("1");
         playerUnit.SetUpPorkemon(playerParty.GetFirstNonFaintedPorkemon());
-
+        print("2");
         battleDialogueBox.SetPorkemonsMovements(playerUnit.Porkemon.Moves);
 
         enemyUnit.SetUpPorkemon(wildPorkemon);
@@ -107,7 +107,7 @@ public class BattleManager : MonoBehaviour
 
     void BattleFinish(bool playerHasWon)
     {
-        SoundManager.SharedInstance.PlaySound(endBattleClip);
+        //SoundManager.SharedInstance.PlaySound(endBattleClip);
         state = BattleState.FinishBattle;
         OnBattleFinish(playerHasWon);
     }
@@ -371,9 +371,9 @@ public class BattleManager : MonoBehaviour
         var oldHpValue = target.Porkemon.HP;
 
         attacker.PlayAttackAnimation();
-        SoundManager.SharedInstance.PlayMusic(attackClip);
+        //SoundManager.SharedInstance.PlayMusic(attackClip);
         yield return new WaitForSeconds(1f);
-        SoundManager.SharedInstance.PlayMusic(damageClip);
+        //SoundManager.SharedInstance.PlayMusic(damageClip);
         target.PlayReceiveAttackAnimation();
 
         var damageDesc = target.Porkemon.ReceiveDamage(attacker.Porkemon, move);
@@ -578,14 +578,14 @@ public class BattleManager : MonoBehaviour
             float multiplier = (type == BattleType.WildPorkemon ? 1f : 1.5f);
             int wonExp = Mathf.FloorToInt(expBase * level * multiplier / 7);
             playerUnit.Porkemon.Experience += wonExp;
-            yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.name} ha ganado {wonExp} puntos de experiencia.");
+            yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha ganado {wonExp} puntos de experiencia.");
             yield return playerUnit.Hud.SetExperienceSmooth();
             yield return new WaitForSeconds(1f);
 
             //TODO: Check level
             while (playerUnit.Porkemon.NeedsToLevelUp())
             {
-                SoundManager.SharedInstance.PlaySound(levelUpClip);
+                //SoundManager.SharedInstance.PlaySound(levelUpClip);
                 playerUnit.Hud.SetLevelText();
                 yield return playerUnit.Hud.UpdatePokemonData(playerUnit.Porkemon.HP);
                 yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha subido de nivel");

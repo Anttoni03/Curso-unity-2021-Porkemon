@@ -17,14 +17,14 @@ MonoBehaviour:
   description: "Te hace l\xE1tigo cepa y te quedas loko"
   frontSprite: {fileID: 21300000, guid: ae3ad52882f939744a24374cf7e6baa8, type: 3}
   backSprite: {fileID: 21300000, guid: 6def38a920091ad419cedb4d3deb5ff0, type: 3}
-  type1: 3
-  type2: 7
+  type1: 10
+  type2: 14
   catchRate: 255
   maxHP: 45
   attack: 49
   defense: 49
-  sPAttack: 40
-  sPDefense: 40
+  sPAttack: 65
+  sPDefense: 65
   speed: 45
   expBase: 45
   growthRate: 0
@@ -33,5 +33,7 @@ MonoBehaviour:
     level: 1
   - move: {fileID: 11400000, guid: fd08f073de63e7b4aa007fa300e9f77c, type: 2}
     level: 5
+  - move: {fileID: 11400000, guid: c8ffdedd3e1f14d41b3688d6ee42fbf2, type: 2}
+    level: 7
   - move: {fileID: 11400000, guid: c8ffdedd3e1f14d41b3688d6ee42fbf2, type: 2}
     level: 7

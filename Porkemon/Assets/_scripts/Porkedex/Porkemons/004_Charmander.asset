@@ -17,17 +17,17 @@ MonoBehaviour:
   description: Tiene una llama en la cola y si no la tiene c muere
   frontSprite: {fileID: 21300000, guid: fc7ba9fd3c04d9e4aa927d6c7fdf2551, type: 3}
   backSprite: {fileID: 21300000, guid: d76b5ad5f17387b4eb62f0afe8d07157, type: 3}
-  type1: 1
-  type2: 18
-  catchRate: 255
+  type1: 7
+  type2: 0
+  catchRate: 45
   maxHP: 39
   attack: 52
   defense: 43
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 60
+  sPDefense: 50
   speed: 65
-  expBase: 0
-  growthRate: 0
+  expBase: 62
+  growthRate: 3
   learnableMoves:
   - move: {fileID: 11400000, guid: 11e49717f50effe499b16baf74700a24, type: 2}
     level: 1

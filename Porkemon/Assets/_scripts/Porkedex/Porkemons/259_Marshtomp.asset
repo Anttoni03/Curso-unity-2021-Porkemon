@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
+  m_Name: 259_Marshtomp
+  m_EditorClassIdentifier: 
+  ID: 259
+  pName: Marshtomp
+  description: "El bicho que era pero m\xE1s grande y menos adorable"
+  frontSprite: {fileID: 21300000, guid: 664eca8e68d64aa46b304ebeb919565c, type: 3}
+  backSprite: {fileID: 21300000, guid: a66eab75c1abb0f4ebf6a2c27db87546, type: 3}
+  type1: 18
+  type2: 11
+  catchRate: 255
+  maxHP: 0
+  attack: 0
+  defense: 0
+  sPAttack: 0
+  sPDefense: 0
+  speed: 0
+  expBase: 0
+  growthRate: 0
+  learnableMoves: []

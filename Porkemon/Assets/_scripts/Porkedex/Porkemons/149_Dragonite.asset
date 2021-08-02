@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 149_Dragonite
   m_EditorClassIdentifier: 
-  name: Dragonite
-  description: "Un drag\xF3n un tanto espa\xF1ol"
   ID: 149
+  pName: Dragonite
+  description: "Un drag\xF3n un tanto espa\xF1ol"
   frontSprite: {fileID: 21300000, guid: dec405c9705fc5241ad4e091fddfe360, type: 3}
   backSprite: {fileID: 21300000, guid: f69e7635f3f04834a8d96d1318ab6ad2, type: 3}
-  type1: 14
-  type2: 9
+  type1: 3
+  type2: 8
+  catchRate: 45
   maxHP: 91
   attack: 134
   defense: 95
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 100
+  sPDefense: 100
   speed: 80
+  expBase: 270
+  growthRate: 4
+  learnableMoves: []

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: Hoja afilada
   description: Hojas muy afiladas cortan al rival
-  type: 3
+  type: 10
   category: 0
   power: 55
   accuracy: 95

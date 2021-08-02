@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 646_Kyurem
   m_EditorClassIdentifier: 
-  name: Kyurem
-  description: "Un legendario drag\xF3n con hielito"
   ID: 646
+  pName: Kyurem
+  description: "Un legendario drag\xF3n con hielito"
   frontSprite: {fileID: 21300000, guid: 3575c73c1a7e7d34eb4a737bb4f145f3, type: 3}
-  backSprite: {fileID: 21300000, guid: 3575c73c1a7e7d34eb4a737bb4f145f3, type: 3}
-  type1: 14
-  type2: 5
+  backSprite: {fileID: 21300000, guid: 2726123851459854d802d07e0adc1463, type: 3}
+  type1: 3
+  type2: 12
+  catchRate: 3
   maxHP: 125
   attack: 130
   defense: 90
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 130
+  sPDefense: 90
   speed: 95
+  expBase: 297
+  growthRate: 4
+  learnableMoves: []

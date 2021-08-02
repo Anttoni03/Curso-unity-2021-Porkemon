@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 003_Venusaur
   m_EditorClassIdentifier: 
-  name: Venusaur
-  description: "Te hace el l\xE1tigo cepa intensamente"
   ID: 3
+  pName: Venusaur
+  description: "Te hace el l\xE1tigo cepa intensamente"
   frontSprite: {fileID: 21300000, guid: b674ecf40de795e459277bb15203224c, type: 3}
   backSprite: {fileID: 21300000, guid: 7823db99b27b47d49978425649838e93, type: 3}
-  type1: 3
-  type2: 7
+  type1: 10
+  type2: 14
+  catchRate: 45
   maxHP: 80
-  attack: 100
-  defense: 123
-  sPAttack: 0
-  sPDefense: 0
+  attack: 82
+  defense: 83
+  sPAttack: 100
+  sPDefense: 100
   speed: 80
+  expBase: 236
+  growthRate: 3
+  learnableMoves: []

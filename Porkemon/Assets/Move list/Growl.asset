@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: "Gru\xF1ido"
   description: "Gru\xF1e para bajar la defensa"
-  type: 0
+  type: 13
   category: 2
   power: 0
   accuracy: 100

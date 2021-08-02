@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 150_Mewtwo
   m_EditorClassIdentifier: 
-  name: Mewtwo
-  description: "Una creaci\xF3n humana un tanto estra\xF1a"
   ID: 150
+  pName: Mewtwo
+  description: "Una creaci\xF3n humana un tanto estra\xF1a"
   frontSprite: {fileID: 21300000, guid: 24a247a074766a64a9913aa55a748bc2, type: 3}
   backSprite: {fileID: 21300000, guid: 39fc10bde61ae3943bcd5c12f56269f5, type: 3}
-  type1: 11
-  type2: 18
+  type1: 15
+  type2: 0
+  catchRate: 3
   maxHP: 106
   attack: 110
   defense: 90
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 154
+  sPDefense: 90
   speed: 130
+  expBase: 306
+  growthRate: 4
+  learnableMoves: []

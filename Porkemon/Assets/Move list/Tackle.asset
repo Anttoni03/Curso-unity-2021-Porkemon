@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: Placaje
   description: Embiste al enemigo con el cuepo. Es un placaje
-  type: 0
+  type: 13
   category: 0
   power: 40
   accuracy: 100

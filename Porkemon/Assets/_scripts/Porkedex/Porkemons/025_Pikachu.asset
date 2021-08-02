@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 025_Pikachu
   m_EditorClassIdentifier: 
-  name: Pikachu
-  description: Una rata amarilla con rallitos
   ID: 25
+  pName: Pikachu
+  description: Una rata amarilla con rallitos
   frontSprite: {fileID: 21300000, guid: ed7c1c201aaf54c4784788dc61c0dca4, type: 3}
   backSprite: {fileID: 21300000, guid: 08b92f10342cfdd4eb40517a30cb92b6, type: 3}
   type1: 4
-  type2: 18
+  type2: 0
+  catchRate: 190
   maxHP: 35
   attack: 55
-  defense: 40
-  SPAttack: 50
-  SPDefense: 50
+  defense: 30
+  sPAttack: 50
+  sPDefense: 40
   speed: 90
+  expBase: 112
+  growthRate: 2
+  learnableMoves: []

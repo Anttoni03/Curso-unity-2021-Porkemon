@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 148_Dragonair
   m_EditorClassIdentifier: 
-  name: Dragonair
-  description: "Una serpiente con escamas de drag\xF3n en la pubertad"
   ID: 148
+  pName: Dragonair
+  description: "Una serpiente con escamas de drag\xF3n en la pubertad"
   frontSprite: {fileID: 21300000, guid: f768605561c376544b1f4eaafe609f73, type: 3}
   backSprite: {fileID: 21300000, guid: bf8d6a8c506fef341a39044c9fb470cf, type: 3}
-  type1: 14
-  type2: 18
+  type1: 3
+  type2: 0
+  catchRate: 45
   maxHP: 61
   attack: 84
   defense: 65
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 70
+  sPDefense: 70
   speed: 70
+  expBase: 147
+  growthRate: 4
+  learnableMoves: []

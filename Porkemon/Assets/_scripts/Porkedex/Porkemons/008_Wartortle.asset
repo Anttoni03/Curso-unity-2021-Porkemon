@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f2c06cf9263242b61cbad221b2f82, type: 3}
   m_Name: 008_Wartortle
   m_EditorClassIdentifier: 
-  name: Wartortle
-  description: Una tortuga azul cumbiona
   ID: 8
+  pName: Wartortle
+  description: Una tortuga azul cumbiona
   frontSprite: {fileID: 21300000, guid: f4dfc85bb57b05b419a9650a47ca60dc, type: 3}
   backSprite: {fileID: 21300000, guid: 9a3221c93b3341a4b8552ee4732f7566, type: 3}
-  type1: 2
-  type2: 18
+  type1: 18
+  type2: 0
+  catchRate: 45
   maxHP: 59
   attack: 63
   defense: 80
-  sPAttack: 0
-  sPDefense: 0
+  sPAttack: 65
+  sPDefense: 80
   speed: 58
+  expBase: 142
+  growthRate: 3
+  learnableMoves: []
