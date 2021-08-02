@@ -33,7 +33,7 @@ public class BattleDialogueBox : MonoBehaviour
         foreach (var character in message)
         {
             if (character != ' ')
-                SoundManager.SharedInstance.PlayMusic(characterSounds);
+                SoundManager.SharedInstance.RandomSoundEffect(characterSounds);
 
             dialogueText.text += character;
             yield return new WaitForSeconds(1 / charactersPerSecond);
