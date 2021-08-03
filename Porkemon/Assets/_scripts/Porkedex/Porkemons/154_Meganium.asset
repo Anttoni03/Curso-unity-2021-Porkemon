@@ -28,4 +28,10 @@ MonoBehaviour:
   speed: 0
   expBase: 0
   growthRate: 0
-  learnableMoves: []
+  learnableMoves:
+  - move: {fileID: 11400000, guid: d605f9c8e166bed4985c7a8365fb9fb2, type: 2}
+    level: 36
+  - move: {fileID: 11400000, guid: 65d72cf78609f9c489de8b366e31b0a0, type: 2}
+    level: 46
+  - move: {fileID: 11400000, guid: f0403a07b6a2ed14e8484484c716e4b7, type: 2}
+    level: 66

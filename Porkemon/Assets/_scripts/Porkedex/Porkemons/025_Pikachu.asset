@@ -28,4 +28,18 @@ MonoBehaviour:
   speed: 90
   expBase: 112
   growthRate: 2
-  learnableMoves: []
+  learnableMoves:
+  - move: {fileID: 11400000, guid: 05cead181cb35884aa35de7eec763fd3, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: fd08f073de63e7b4aa007fa300e9f77c, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: f210b6afb02058e4bb6ccc76f72a79bf, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 1ff498eb70efdc442927d56fe9f56fd0, type: 2}
+    level: 12
+  - move: {fileID: 11400000, guid: 548336f439972c54692ee6b1a8b2be04, type: 2}
+    level: 28
+  - move: {fileID: 11400000, guid: 04e4f3a477814f346ae212ba77e66b1a, type: 2}
+    level: 36
+  - move: {fileID: 11400000, guid: af9942c19e9d7e246a0816a03a15ed6c, type: 2}
+    level: 44
