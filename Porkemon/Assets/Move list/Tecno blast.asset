@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: Tecno shock
   description: "Causa un shok por la tecnolog\xEDa. Concretamente el 5G"
-  type: 0
+  type: 13
   category: 1
   power: 120
   accuracy: 100

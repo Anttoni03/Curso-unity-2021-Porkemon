@@ -80,9 +80,7 @@ public class BattleManager : MonoBehaviour
     public IEnumerator SetupBattle()
     {
         state = BattleState.StartBattle;
-        print("1");
         playerUnit.SetUpPorkemon(playerParty.GetFirstNonFaintedPorkemon());
-        print("2");
         battleDialogueBox.SetPorkemonsMovements(playerUnit.Porkemon.Moves);
 
         enemyUnit.SetUpPorkemon(wildPorkemon);
@@ -434,10 +432,6 @@ public class BattleManager : MonoBehaviour
 
         yield return battleDialogueBox.SetDialog($"Adelante, {newPorkemon.Base.Name}");
 
-        //Borrar si innecesario
-        /*partyHUD.gameObject.SetActive(false);
-        state = BattleState.Busy;*/
-
         StartCoroutine(PerformEnemyMovement());
     }
 
@@ -452,6 +446,8 @@ public class BattleManager : MonoBehaviour
             yield break;
         }
 
+        //Línea mía
+        battleDialogueBox.ToggleDialogText(true);
 
         yield return battleDialogueBox.SetDialog($"Has lanzado una {(porkeball.name).ToLower()}");
 
@@ -506,8 +502,8 @@ public class BattleManager : MonoBehaviour
     {
         float bonusPorkeball = 1;
         float bonusStat = 1;
-        float a = (3 * porkemon.MaxHP / 2 * porkemon.HP) * porkemon.Base.CatchRate * 
-            bonusPorkeball * bonusStat / (3 * porkemon.MaxHP);
+        float a = ((3 * porkemon.MaxHP - 2 * porkemon.HP) * porkemon.Base.CatchRate * 
+            bonusPorkeball * bonusStat ) / (3 * porkemon.MaxHP);
 
         if (a >= 255)
             return 4;

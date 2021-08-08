@@ -17,15 +17,31 @@ MonoBehaviour:
   description: Una serpiente mediana de hierba
   frontSprite: {fileID: 21300000, guid: 2e0e0d4d689971c48916c3b514fa2ac3, type: 3}
   backSprite: {fileID: 21300000, guid: 2043e9740b16cb649be4c4d4aee3e713, type: 3}
-  type1: 0
+  type1: 10
   type2: 0
-  catchRate: 255
-  maxHP: 0
-  attack: 0
-  defense: 0
-  sPAttack: 0
-  sPDefense: 0
-  speed: 0
-  expBase: 0
-  growthRate: 0
-  learnableMoves: []
+  catchRate: 45
+  maxHP: 60
+  attack: 60
+  defense: 75
+  sPAttack: 60
+  sPDefense: 75
+  speed: 83
+  expBase: 145
+  growthRate: 3
+  learnableMoves:
+  - move: {fileID: 11400000, guid: e7cf3103089c90942bb16570acdd4e4a, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: c8ffdedd3e1f14d41b3688d6ee42fbf2, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: b0bdae98cf846a5449b1914ec6c5aced, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 7e445028a67ab0e45aed9cf624319637, type: 2}
+    level: 16
+  - move: {fileID: 11400000, guid: b3c4cee675d743d449809058ae2faab4, type: 2}
+    level: 20
+  - move: {fileID: 11400000, guid: 10b1cf7ab633cdd45a32558fa16267df, type: 2}
+    level: 24
+  - move: {fileID: 11400000, guid: 548336f439972c54692ee6b1a8b2be04, type: 2}
+    level: 28
+  - move: {fileID: 11400000, guid: c076395333574c84db2553f5a04ebf2e, type: 2}
+    level: 32

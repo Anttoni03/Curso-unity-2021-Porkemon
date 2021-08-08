@@ -28,4 +28,28 @@ MonoBehaviour:
   speed: 90
   expBase: 306
   growthRate: 4
-  learnableMoves: []
+  learnableMoves:
+  - move: {fileID: 11400000, guid: cc265806ee2788245ab055bfe30b373e, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 9b3af3363f7c3da40b0ad711523b770d, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: c5423876cb1e2f947be21bc6cc46c46d, type: 2}
+    level: 8
+  - move: {fileID: 11400000, guid: d928856a2651a574b8fa1278ea7e7903, type: 2}
+    level: 16
+  - move: {fileID: 11400000, guid: 413b35d3858e4d84fb27591ae63ba5e6, type: 2}
+    level: 24
+  - move: {fileID: 11400000, guid: 39760bcf4bb2d8f47942d847a0d40df1, type: 2}
+    level: 32
+  - move: {fileID: 11400000, guid: 04e4f3a477814f346ae212ba77e66b1a, type: 2}
+    level: 40
+  - move: {fileID: 11400000, guid: 69ad8752f8a231049b44f8beaf1abd77, type: 2}
+    level: 48
+  - move: {fileID: 11400000, guid: af0bc2d4260b5cb43a4986872b48bd82, type: 2}
+    level: 56
+  - move: {fileID: 11400000, guid: af9942c19e9d7e246a0816a03a15ed6c, type: 2}
+    level: 64
+  - move: {fileID: 11400000, guid: 11da343e4757ced46b420707c5c59c4f, type: 2}
+    level: 80
+  - move: {fileID: 11400000, guid: d98467f9fe54d3c4691b9c24cb2fe912, type: 2}
+    level: 88

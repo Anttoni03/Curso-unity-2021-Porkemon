@@ -20,13 +20,9 @@ public class BattleHUD : MonoBehaviour
         _porkemon = porkemon;
 
         pokemonName.text = porkemon.Base.Name;
-
         SetLevelText();
-
         healthBar.SetHP((float)_porkemon.HP / _porkemon.MaxHP);
-
         SetXP();
-
         StartCoroutine(UpdatePokemonData(porkemon.HP));
 
     }
@@ -40,11 +36,14 @@ public class BattleHUD : MonoBehaviour
 
     private IEnumerator DecreaseHealthPoints(int oldHpValue)
     {
+        //Línea mía (más función para ajustar el tiempo a bajar la vida[l. 50])
+        float originOldValue = oldHpValue;
+
         while (oldHpValue > _porkemon.HP)
         {
             oldHpValue--;
             pokemonHealth.text = $"{oldHpValue}/{_porkemon.MaxHP}";
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(1f / (originOldValue - _porkemon.HP));
         }
         pokemonHealth.text = $"{_porkemon.HP}/{_porkemon.MaxHP}";
     }

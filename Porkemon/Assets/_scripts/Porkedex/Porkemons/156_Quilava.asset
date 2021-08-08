@@ -19,15 +19,21 @@ MonoBehaviour:
   backSprite: {fileID: 21300000, guid: 97ba7b34b398f9f4f948be08cd2b7566, type: 3}
   type1: 7
   type2: 0
-  catchRate: 255
-  maxHP: 0
-  attack: 0
-  defense: 0
-  sPAttack: 0
-  sPDefense: 0
-  speed: 0
-  expBase: 0
-  growthRate: 0
+  catchRate: 45
+  maxHP: 58
+  attack: 64
+  defense: 58
+  sPAttack: 80
+  sPDefense: 65
+  speed: 80
+  expBase: 142
+  growthRate: 3
   learnableMoves:
+  - move: {fileID: 11400000, guid: e7cf3103089c90942bb16570acdd4e4a, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 5b558666595d66b44ae7f00029eec6eb, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: f210b6afb02058e4bb6ccc76f72a79bf, type: 2}
+    level: 13
   - move: {fileID: 11400000, guid: a104c40bbc134e548a0a7bd394d52035, type: 2}
     level: 20

@@ -29,5 +29,15 @@ MonoBehaviour:
   expBase: 239
   growthRate: 3
   learnableMoves:
+  - move: {fileID: 11400000, guid: e7cf3103089c90942bb16570acdd4e4a, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: cc89252b5cb7a9044a12967710bc0546, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: ae2e348b57b4d22468537bd5f344c746, type: 2}
+    level: 12
+  - move: {fileID: 11400000, guid: 7343ad9ab363d3a4b8524b00423cad9b, type: 2}
+    level: 15
+  - move: {fileID: 11400000, guid: 4ca2a80374a25f84bb42c5440c3baf07, type: 2}
+    level: 30
   - move: {fileID: 11400000, guid: 2cb838943f0e60a458be2dca1f2cff04, type: 2}
     level: 49

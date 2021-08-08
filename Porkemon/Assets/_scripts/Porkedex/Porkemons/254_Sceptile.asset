@@ -20,13 +20,37 @@ MonoBehaviour:
   backSprite: {fileID: 21300000, guid: b77ce404919b1e14489e5cbf921c5839, type: 3}
   type1: 10
   type2: 0
-  catchRate: 255
-  maxHP: 0
-  attack: 0
-  defense: 0
-  sPAttack: 0
-  sPDefense: 0
-  speed: 0
-  expBase: 0
-  growthRate: 0
-  learnableMoves: []
+  catchRate: 45
+  maxHP: 70
+  attack: 85
+  defense: 65
+  sPAttack: 105
+  sPDefense: 85
+  speed: 120
+  expBase: 239
+  growthRate: 3
+  learnableMoves:
+  - move: {fileID: 11400000, guid: c45b527c6f10fab46a95b003bdb1ae50, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 21af97adbd4113c45bb3ef79ed2795b5, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 9d9be919d32f44f47b2a51d57bab59ed, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 3948ee6742f130a489a9ada94ae2e742, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 44e2014cad56421478f96bc45fe231aa, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: f210b6afb02058e4bb6ccc76f72a79bf, type: 2}
+    level: 1
+  - move: {fileID: 11400000, guid: 10b1cf7ab633cdd45a32558fa16267df, type: 2}
+    level: 5
+  - move: {fileID: 11400000, guid: 6bfab9c0bdfd7614393ff79e77854d30, type: 2}
+    level: 20
+  - move: {fileID: 11400000, guid: 548336f439972c54692ee6b1a8b2be04, type: 2}
+    level: 30
+  - move: {fileID: 11400000, guid: f89da3ce1b1a5924089a7157f8d3cbeb, type: 2}
+    level: 36
+  - move: {fileID: 11400000, guid: c076395333574c84db2553f5a04ebf2e, type: 2}
+    level: 42
+  - move: {fileID: 11400000, guid: b7eed16908b3fd04c8e88c9e6d366a25, type: 2}
+    level: 63

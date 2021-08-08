@@ -30,14 +30,20 @@ MonoBehaviour:
   growthRate: 4
   learnableMoves:
   - move: {fileID: 11400000, guid: 4969369fba4bb364e8722badaa702150, type: 2}
-    level: 55
+    level: 1
   - move: {fileID: 11400000, guid: b0bdae98cf846a5449b1914ec6c5aced, type: 2}
-    level: 55
+    level: 1
   - move: {fileID: 11400000, guid: d684dcd0b73bcb34aa7e0a30c663945c, type: 2}
-    level: 55
-  - move: {fileID: 11400000, guid: e56909c41191fb7409e054d1eb30f7f5, type: 2}
-    level: 55
+    level: 1
+  - move: {fileID: 11400000, guid: d79bafa42af0cc34c9d277410c6c249f, type: 2}
+    level: 15
+  - move: {fileID: 11400000, guid: 548336f439972c54692ee6b1a8b2be04, type: 2}
+    level: 25
+  - move: {fileID: 11400000, guid: 4ca2a80374a25f84bb42c5440c3baf07, type: 2}
+    level: 33
+  - move: {fileID: 11400000, guid: 24ca51f89266c054ba709b75a65cf1f0, type: 2}
+    level: 39
   - move: {fileID: 11400000, guid: 11da343e4757ced46b420707c5c59c4f, type: 2}
-    level: 61
+    level: 41
   - move: {fileID: 11400000, guid: 39d7e104b6494cd4b9ae7561e452cfb4, type: 2}
     level: 80
