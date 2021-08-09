@@ -45,7 +45,7 @@ public class SelectionMovementUI : MonoBehaviour
     {
         for (int i = 0; i <= PokemonBasic.NUMBER_OF_LEARNABLE_MOVES; i++)
         {
-            movementTexts[i].color = (i == currentSelectedMovement ? selectedColor : Color.black);
+            movementTexts[i].color = (i == selectedMove ? selectedColor : Color.black);
         }
     }
 }

@@ -60,7 +60,7 @@ public class BattleManager : MonoBehaviour
     private int escapeAttempts;
     private MoveBasic moveToLearn;
 
-    public AudioClip attackClip, damageClip, levelUpClip, endBattleClip, porkeballClip;
+    public AudioClip attackClip, damageClip, levelUpClip, endBattleClip, porkeballClip, faintedClip;
 
     public void HandleStartBattle(PorkemonParty playerParty, Porkemon wildPorkemon)
     {
@@ -105,7 +105,7 @@ public class BattleManager : MonoBehaviour
 
     void BattleFinish(bool playerHasWon)
     {
-        //SoundManager.SharedInstance.PlaySound(endBattleClip);
+        SoundManager.SharedInstance.PlaySound(endBattleClip);
         state = BattleState.FinishBattle;
         OnBattleFinish(playerHasWon);
     }
@@ -143,7 +143,6 @@ public class BattleManager : MonoBehaviour
     void OpenInventoryScreen()
     {
         //TODO: Inventario e ítems
-        print("Abrir inventario");
         battleDialogueBox.ToggleDialogText(false);
         StartCoroutine(ThrowPorkeball());
     }
@@ -369,10 +368,11 @@ public class BattleManager : MonoBehaviour
         var oldHpValue = target.Porkemon.HP;
 
         attacker.PlayAttackAnimation();
-        //SoundManager.SharedInstance.PlayMusic(attackClip);
+        SoundManager.SharedInstance.PlaySound(attackClip);
         yield return new WaitForSeconds(1f);
-        //SoundManager.SharedInstance.PlayMusic(damageClip);
         target.PlayReceiveAttackAnimation();
+        SoundManager.SharedInstance.PlaySound(damageClip);
+        yield return new WaitForSeconds(.5f);
 
         var damageDesc = target.Porkemon.ReceiveDamage(attacker.Porkemon, move);
         yield return target.Hud.UpdatePokemonData(oldHpValue);
@@ -564,6 +564,7 @@ public class BattleManager : MonoBehaviour
     {
         yield return battleDialogueBox.SetDialog($"{faintedUnit.Porkemon.Base.Name} se ha debilitado.");
         faintedUnit.PlayFaintAnimation();
+        SoundManager.SharedInstance.PlaySound(faintedClip);
         yield return new WaitForSeconds(1.5f);
 
         if (!faintedUnit.IsPlayer)
@@ -572,7 +573,7 @@ public class BattleManager : MonoBehaviour
             int expBase = faintedUnit.Porkemon.Base.ExpBase;
             int level = faintedUnit.Porkemon.Level;
             float multiplier = (type == BattleType.WildPorkemon ? 1f : 1.5f);
-            int wonExp = Mathf.FloorToInt(expBase * level * multiplier / 7);
+            int wonExp = Mathf.FloorToInt((expBase * level * multiplier / 7) * 50);
             playerUnit.Porkemon.Experience += wonExp;
             yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha ganado {wonExp} puntos de experiencia.");
             yield return playerUnit.Hud.SetExperienceSmooth();
@@ -581,10 +582,12 @@ public class BattleManager : MonoBehaviour
             //TODO: Check level
             while (playerUnit.Porkemon.NeedsToLevelUp())
             {
-                //SoundManager.SharedInstance.PlaySound(levelUpClip);
+                SoundManager.SharedInstance.PlaySound(levelUpClip);
                 playerUnit.Hud.SetLevelText();
                 yield return playerUnit.Hud.UpdatePokemonData(playerUnit.Porkemon.HP);
+                yield return new WaitForSeconds(1f);
                 yield return battleDialogueBox.SetDialog($"{playerUnit.Porkemon.Base.Name} ha subido de nivel");
+
 
                 //TODO: Intentar aprender nuevo movimiento
 

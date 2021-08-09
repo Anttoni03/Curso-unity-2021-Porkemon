@@ -22,18 +22,18 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _gameState = GameState.Travel;
-        //SoundManager.SharedInstance.PlayMusic(worldClip);
     }
 
     private void Start()
     {
+        SoundManager.SharedInstance.PlayMusic(worldClip);
         playerController.OnPorkemonEncounter += StartPorkemonBattle;
         battleManager.OnBattleFinish += FinishPorkemonBattle;
     }
 
     public void StartPorkemonBattle()
     {
-        //SoundManager.SharedInstance.PlayMusic(battleClip);
+        SoundManager.SharedInstance.PlayMusic(battleClip);
 
         _gameState = GameState.Battle;
         battleManager.gameObject.SetActive(true);
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     public void FinishPorkemonBattle(bool playerHasWon)
     {
-        //SoundManager.SharedInstance.PlayMusic(worldClip);
+        SoundManager.SharedInstance.PlayMusic(worldClip);
 
         _gameState = GameState.Travel;
         battleManager.gameObject.SetActive(false);
