@@ -18079,7 +18079,10 @@ MonoBehaviour:
   levelUpClip: {fileID: 8300000, guid: 1a358488dbc0038479a3a64bb09d7090, type: 3}
   endBattleClip: {fileID: 8300000, guid: d5cf78dd74f78cc4d988480d28ce024a, type: 3}
   porkeballClip: {fileID: 8300000, guid: 26fdf572d8ba64140aecd1cf2d4a2897, type: 3}
-  faintedClip: {fileID: 8300000, guid: d7550df87e06fba479f77c93f02e5a58, type: 3}
+  faintedClip: {fileID: 8300000, guid: 720c11d6687323047ab8e37c3d66eab2, type: 3}
+  catchClip: {fileID: 8300000, guid: 6109ac8f5341aa04f844a15060f89ca1, type: 3}
+  failCatchClip: {fileID: 8300000, guid: b3154ad3fc60e2c4882ce0ed8be589b3, type: 3}
+  moveBallClip: {fileID: 8300000, guid: 3bc305db53e774b469c31a481fab6fae, type: 3}
 --- !u!1 &244862880
 GameObject:
   m_ObjectHideFlags: 0
@@ -68573,11 +68576,10 @@ MonoBehaviour:
   typeText: {fileID: 1147491913}
   powerText: {fileID: 1337141616}
   timeToWaitAfterText: 0.9
-  charactersPerSecond: 30
+  charactersPerSecond: 21
   isWriting: 0
   characterSounds:
-  - {fileID: 8300000, guid: 4cd9bacaab545b7468257b1c60624c02, type: 3}
-  - {fileID: 8300000, guid: 0b6c9c514023e524594a171a8f4bca92, type: 3}
+  - {fileID: 8300000, guid: 303c4feede19cdd46860c61a620c95b9, type: 3}
 --- !u!1 &655793817
 GameObject:
   m_ObjectHideFlags: 0
@@ -87105,7 +87107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectsSource: {fileID: 605979885}
   musicSource: {fileID: 1725145159}
-  pitchRange: {x: 2, y: 3}
+  pitchRange: {x: 3, y: 4}
 --- !u!4 &1818711823
 Transform:
   m_ObjectHideFlags: 0

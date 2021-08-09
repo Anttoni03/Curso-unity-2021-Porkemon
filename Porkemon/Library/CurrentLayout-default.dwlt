@@ -19,9 +19,9 @@ MonoBehaviour:
     width: 2560
     height: 1357
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 2560
     height: 1357
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 30
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 881, y: 492}
   m_MaxSize: {x: 16006, y: 14042}
   vertical: 0
-  controlID: 54
+  controlID: 28
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 605, y: 492}
   m_MaxSize: {x: 12005, y: 14042}
   vertical: 1
-  controlID: 132
+  controlID: 33
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_MinSize: {x: 605, y: 221}
   m_MaxSize: {x: 12005, y: 4021}
   vertical: 0
-  controlID: 133
+  controlID: 34
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -285,7 +285,7 @@ MonoBehaviour:
   - {fileID: 28}
   - {fileID: 13}
   m_Selected: 0
-  m_LastSelected: 1
+  m_LastSelected: 5
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -333,15 +333,15 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1280
-    y: 819
-    width: 942
-    height: 540
+    x: 0
+    y: 937
+    width: 1902
+    height: 422
   m_ViewDataDictionary: {fileID: 0}
   m_MixersTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: -34618
+    m_SelectedIDs: 92930000
+    m_LastClickedID: 37778
     m_ExpandedIDs: 12eb343c
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -457,12 +457,12 @@ MonoBehaviour:
       oldMaxSizes: 
       oldSplitSize: 0
     m_HorizontalSplitter:
-      ID: 76
+      ID: 1011
       splitterInitialOffset: 0
       currentActiveSplitter: -1
       realSizes:
-      - 283
-      - 659
+      - 571
+      - 1331
       relativeSizes:
       - 0.3
       - 0.7
@@ -472,7 +472,7 @@ MonoBehaviour:
       maxSizes:
       - 0
       - 0
-      lastTotalSize: 942
+      lastTotalSize: 1902
       splitSize: 6
       xOffset: 0
       m_Version: 1
@@ -552,9 +552,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 4c590000
-      m_LastClickedID: 22860
-      m_ExpandedIDs: 42fbffffbc580000e45800005c5900007659000088590000305a0000465a0000625a0000085b0000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 42fbffff845800009a5a0000ac5a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -641,9 +641,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.9694641, y: 8.092886, z: -6.9816837}
+    m_Target: {x: -2.730338, y: 10.343464, z: -225.25543}
     speed: 2
-    m_Value: {x: 2.362549, y: 7.766403, z: -6.897164}
+    m_Value: {x: -2.6620655, y: 10.214611, z: -225.17764}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -692,11 +692,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: 2.3283064e-10, y: -2.3283064e-10, z: -9.094947e-13, w: -1}
   m_Size:
-    m_Target: 22.421215
+    m_Target: 18.06513
     speed: 2
-    m_Value: 23.477713
+    m_Value: 17.287207
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -714,7 +714,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: 0.002690806, y: -0.0039030937, z: -0.00001018425, w: -0.9999859}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -1090,13 +1090,13 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_scripts/Managers
+    - Assets/Audio
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 82
   m_LastFolders:
-  - Assets/_scripts/Managers
+  - Assets/Audio
   m_LastFoldersGridSize: 82
   m_LastProjectPath: D:\Carpeta unity 3d\Curso-unity-2021-2D-bueno\Porkemon
   m_LockTracker:
@@ -1105,7 +1105,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: bc930000
     m_LastClickedID: 37820
-    m_ExpandedIDs: 00000000a2930000a4930000a6930000a893000000ca9a3b
+    m_ExpandedIDs: 00000000a2930000a4930000a6930000a8930000bc930000bc940000d0940000d494000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2185,7 +2185,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 25618
+  m_LastSelectedObjectID: 22660
 --- !u!114 &29
 MonoBehaviour:
   m_ObjectHideFlags: 52

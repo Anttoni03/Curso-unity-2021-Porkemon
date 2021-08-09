@@ -60,7 +60,7 @@ public class BattleManager : MonoBehaviour
     private int escapeAttempts;
     private MoveBasic moveToLearn;
 
-    public AudioClip attackClip, damageClip, levelUpClip, endBattleClip, porkeballClip, faintedClip;
+    public AudioClip attackClip, damageClip, levelUpClip, endBattleClip, porkeballClip, faintedClip, catchClip, failCatchClip, moveBallClip;
 
     public void HandleStartBattle(PorkemonParty playerParty, Porkemon wildPorkemon)
     {
@@ -519,11 +519,14 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < Mathf.Min(numberOfShakes,3); i++)
         {
             yield return new WaitForSeconds(.4f);
+            SoundManager.SharedInstance.PlaySound(moveBallClip);
             yield return porkeballSpt.transform.DOPunchRotation(new Vector3(0,0,13f),0.8f).WaitForCompletion();
         }
 
         if (numberOfShakes == 4)
         {
+            SoundManager.SharedInstance.PlaySound(catchClip);
+            yield return new WaitForSeconds(1f);
             yield return battleDialogueBox.SetDialog($"Has capturado un {enemyUnit.Porkemon.Base.Name}!");
             yield return porkeballSpt.DOFade(0, 1f).WaitForCompletion();
 
@@ -539,7 +542,9 @@ public class BattleManager : MonoBehaviour
         {
             yield return new WaitForSeconds(.4f);
             porkeballSpt.DOFade(0, 0.2f);
+            SoundManager.SharedInstance.PlaySound(failCatchClip);
             yield return enemyUnit.PlayBreakOutAnimation();
+
 
             if (numberOfShakes <= 2)
                 yield return battleDialogueBox.SetDialog($"{enemyUnit.Porkemon.Base.Name} ha escapado!");
