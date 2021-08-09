@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,12 +53,16 @@
     <UnityVersion>2021.1.12f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\_scripts\Battle\SelectionMovementUI.cs" />
     <Compile Include="Assets\_scripts\Porkedex\PokemonBasic.cs" />
     <Compile Include="Assets\_scripts\Battle\BattleManager.cs" />
     <Compile Include="Assets\_scripts\Moves\Move.cs" />
     <Compile Include="Assets\_scripts\Battle\PartyMemberHUD.cs" />
     <Compile Include="Assets\_scripts\Battle\PartyHUD.cs" />
+    <Compile Include="Assets\_scripts\Managers\ColorManager.cs" />
     <Compile Include="Assets\_scripts\Managers\SoundManager.cs" />
     <Compile Include="Assets\_scripts\Porkedex\PorkemonParty.cs" />
     <Compile Include="Assets\_scripts\Battle\BattleUnit.cs" />
@@ -70,7 +74,6 @@
     <Compile Include="Assets\_scripts\Battle\HealthBar.cs" />
     <Compile Include="Assets\_scripts\Moves\MoveBasic.cs" />
     <Compile Include="Assets\_scripts\Managers\GameManager.cs" />
-    <Compile Include="Assets\_scripts\Managers\ColorManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Audio\8Bit Music Album - 051321\Notes.txt" />
