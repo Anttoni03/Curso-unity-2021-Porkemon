@@ -11,8 +11,6 @@ public class PartyMemberHUD : MonoBehaviour
 
     private Porkemon _porkemon;
 
-    [SerializeField] private Color selectedColor = new Color(.2f, .4f, .9f);
-
     public void SetPorkemonData(Porkemon porkemon)
     {
         _porkemon = porkemon;
@@ -34,14 +32,14 @@ public class PartyMemberHUD : MonoBehaviour
         healthBar.SetHP((float)porkemon.HP/porkemon.MaxHP);
         porkemonImage.sprite = porkemon.Base.FrontSprite;
 
-        GetComponent<Image>().color = TypeColor.GetColorFromType(porkemon.Base.Type1);
+        GetComponent<Image>().color = ColorManager.TypeColor.GetColorFromType(porkemon.Base.Type1);
     }
 
     public void SetSelectedPorkemon(bool selected)
     {
         if (selected)
         {
-            nameText.color = selectedColor;
+            nameText.color = ColorManager.SharedInstance.selectedColor;
         }
         else
         {

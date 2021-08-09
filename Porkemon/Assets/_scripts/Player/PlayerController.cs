@@ -94,4 +94,35 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Método mío para elegir la hierba y porkémon salvajes correspondientes
+    /// </summary>
+    /// <param name="porkemonAreas"></param>
+    /// <returns>Devuelve el objeto que tiene el componente PorkemonMapArea</returns>
+    public GameObject CheckNearestPorkemonArea(GameObject[] porkemonAreas)
+    {
+        GameObject nearest = null, player = FindObjectOfType<PlayerController>().gameObject;
+        float nearestDistance = 100000f, distance;
+
+        foreach (var area in porkemonAreas)
+        {
+            distance = Vector3.Distance(area.gameObject.transform.position, player.transform.position);
+
+            if (distance < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearest = area.GetComponentInParent<PorkemonMapArea>().gameObject;
+            }
+        }
+
+        if (nearest != null)
+        {
+            return nearest;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

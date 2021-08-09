@@ -43,6 +43,12 @@ public class Porkemon
         get => _moves;
         set => _moves = value;
     }
+
+    public Dictionary<Stat, int> Stats { get; private set; }
+    public Dictionary<Stat, int> StatsBoosted { get; private set; }
+
+    public Queue<string> StatusChangeMessages { get; private set; } = new Queue<string>();
+
     /// <summary>
     /// Puntos de vida en tiempo real del porkémon
     /// </summary>
@@ -81,7 +87,6 @@ public class Porkemon
     /// <param name="porkemonLevel"></param>
     public void InitPorkemon()
     {
-        _hp = MaxHP;
         _experience = Base.GetNecessaryExperienceForLevel(_level);
 
         _moves = new List<Move>();
@@ -94,17 +99,82 @@ public class Porkemon
             if (_moves.Count >= PokemonBasic.NUMBER_OF_LEARNABLE_MOVES)
                 break;
         }
+
+        CalculateStats();
+        _hp = MaxHP;
+
+        ResetBostings();
+    }
+
+    void ResetBostings()
+    {
+        StatusChangeMessages = new Queue<string>();
+        StatsBoosted = new Dictionary<Stat, int>()
+        {
+            {Stat.Attack,0 },
+            {Stat.Defense,0 },
+            {Stat.SPAttack,0 },
+            {Stat.SPDefense,0 },
+            {Stat.Speed,0 }
+        };
+    }
+
+    void CalculateStats()
+    {
+        Stats = new Dictionary<Stat, int>();
+        Stats.Add(Stat.Attack, Mathf.FloorToInt((_base.Attack * _level) / 100f) + 2);
+        Stats.Add(Stat.Defense, Mathf.FloorToInt((_base.Defense * _level) / 100f) + 2);
+        Stats.Add(Stat.SPAttack, Mathf.FloorToInt((_base.SPAttack * _level) / 100f) + 2);
+        Stats.Add(Stat.SPDefense, Mathf.FloorToInt((_base.SPDefense * _level) / 100f) + 2);
+        Stats.Add(Stat.Speed, Mathf.FloorToInt((_base.Speed * _level) / 100f) + 2);
+
+        MaxHP = Mathf.FloorToInt((_base.MaxHP * _level) / 20f) + 10;
+    }
+
+    int GetStat(Stat stat)
+    {
+        int statValue = Stats[stat];
+
+        int boost = StatsBoosted[stat];
+        float multiplier = 1f + Mathf.Abs(boost) / 2f;
+
+        if (boost >= 0)
+        {
+            statValue = Mathf.FloorToInt(statValue * multiplier);
+        }
+        else
+        {
+            statValue = Mathf.FloorToInt(statValue / multiplier);
+        }
+        return statValue;
+    }
+
+    public void ApplyBoost(StatBoosting boost)
+    {
+        var stat = boost.stat;
+        var value = boost.boost;
+
+        StatsBoosted[stat] = Mathf.Clamp(StatsBoosted[stat] + value, -6, 6);
+        if (value > 0)
+        {
+            StatusChangeMessages.Enqueue($"{Base.Name} ha incrementado su {stat}");
+        }
+        else
+        {
+            StatusChangeMessages.Enqueue($"{Base.Name} ha reducido su {stat}");
+        }
+        //Debug.Log($"{stat} se ha modificado a {StatsBoosted[stat]}");
     }
 
     /// <summary>
     /// Puntos de vida máximos del porkémon
     /// </summary>
-    public int MaxHP => Mathf.FloorToInt((_base.MaxHP * _level) / 20f) + 10;
-    public int Attack => Mathf.FloorToInt((_base.Attack * _level) / 100f) + 2;
-    public int Defense => Mathf.FloorToInt((_base.Defense * _level) / 100f) + 2;
-    public int SPAttack => Mathf.FloorToInt((_base.SPAttack * _level) / 100f) + 2;
-    public int SPDefense => Mathf.FloorToInt((_base.SPDefense * _level) / 100f) + 2;
-    public int Speed => Mathf.FloorToInt((_base.Speed * _level) / 100f) + 2;
+    public int MaxHP { get; private set; }
+    public int Attack => GetStat(Stat.Attack);
+    public int Defense => GetStat(Stat.Defense);
+    public int SPAttack => GetStat(Stat.SPAttack);
+    public int SPDefense => GetStat(Stat.SPDefense);
+    public int Speed => GetStat(Stat.Speed);
 
 
     public DamageDescription ReceiveDamage(Porkemon attacker, Move move)
@@ -132,7 +202,7 @@ public class Porkemon
         int totalDamage = Mathf.FloorToInt(baseDamage * modifiers);
 
         #region Cosa mía(sin daño si movimiento de estado)
-        if (move.Base.Category == MoveBasic.MovementCategory.Status)
+        if (move.Base.Category == MovementCategory.Status)
             totalDamage = 0;
         #endregion
 
@@ -187,6 +257,12 @@ public class Porkemon
 
         Moves.Add(new Move(learlableMove.Move));
     }
+
+    public void OnBattleFinish()
+    {
+        ResetBostings();
+    }
+
 }
 
 

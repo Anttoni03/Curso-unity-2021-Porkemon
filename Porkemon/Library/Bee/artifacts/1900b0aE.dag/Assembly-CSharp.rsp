@@ -351,7 +351,9 @@
 "Assets/_scripts/Battle/PartyHUD.cs"
 "Assets/_scripts/Battle/PartyMemberHUD.cs"
 "Assets/_scripts/Battle/SelectionMovementUI.cs"
-"Assets/_scripts/GameManager.cs"
+"Assets/_scripts/Managers/ColorManager.cs"
+"Assets/_scripts/Managers/GameManager.cs"
+"Assets/_scripts/Managers/SoundManager.cs"
 "Assets/_scripts/Moves/Move.cs"
 "Assets/_scripts/Moves/MoveBasic.cs"
 "Assets/_scripts/Player/PlayerController.cs"
@@ -359,7 +361,6 @@
 "Assets/_scripts/Porkedex/Porkemon.cs"
 "Assets/_scripts/Porkedex/PorkemonMapArea.cs"
 "Assets/_scripts/Porkedex/PorkemonParty.cs"
-"Assets/_scripts/SoundManager.cs"
 -langversion:8.0
 
 /deterministic

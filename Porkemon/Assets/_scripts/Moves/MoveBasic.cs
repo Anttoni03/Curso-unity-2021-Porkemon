@@ -23,25 +23,40 @@ public class MoveBasic : ScriptableObject
     [SerializeField] private int pp;
     public int PP => pp;
 
-    public enum MovementCategory
-    {
-        Physical,
-        Special,
-        Status
-    }
+    [SerializeField] private MoveStatEffect effects;
+    public MoveStatEffect Effects => effects;
+    [SerializeField] private MoveTarget target;
+    public MoveTarget Target => target;
 
-    public bool IsSpecialMove
-    {
-        get
-        {
-            if (category == MovementCategory.Special)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+
+
+    public bool IsSpecialMove => category == MovementCategory.Special;
+
+}
+
+public enum MovementCategory
+{
+    Physical,
+    Special,
+    Status
+}
+
+[System.Serializable]
+public class MoveStatEffect
+{
+    [SerializeField] private List<StatBoosting> boostings;
+    public List<StatBoosting> Boostings => boostings;
+}
+
+[System.Serializable]
+public class StatBoosting
+{
+    public Stat stat;
+    public int boost;
+    public MoveTarget target;
+}
+
+public enum MoveTarget
+{
+    Self, Other
 }

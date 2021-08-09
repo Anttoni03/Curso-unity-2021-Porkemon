@@ -59,7 +59,7 @@
     <Compile Include="Assets\_scripts\Moves\Move.cs" />
     <Compile Include="Assets\_scripts\Battle\PartyMemberHUD.cs" />
     <Compile Include="Assets\_scripts\Battle\PartyHUD.cs" />
-    <Compile Include="Assets\_scripts\SoundManager.cs" />
+    <Compile Include="Assets\_scripts\Managers\SoundManager.cs" />
     <Compile Include="Assets\_scripts\Porkedex\PorkemonParty.cs" />
     <Compile Include="Assets\_scripts\Battle\BattleUnit.cs" />
     <Compile Include="Assets\_scripts\Battle\BattleDialogueBox.cs" />
@@ -69,7 +69,8 @@
     <Compile Include="Assets\_scripts\Battle\BattleHUD.cs" />
     <Compile Include="Assets\_scripts\Battle\HealthBar.cs" />
     <Compile Include="Assets\_scripts\Moves\MoveBasic.cs" />
-    <Compile Include="Assets\_scripts\GameManager.cs" />
+    <Compile Include="Assets\_scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\_scripts\Managers\ColorManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Audio\8Bit Music Album - 051321\Notes.txt" />

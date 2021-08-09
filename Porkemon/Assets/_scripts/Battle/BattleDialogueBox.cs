@@ -19,7 +19,6 @@ public class BattleDialogueBox : MonoBehaviour
     [SerializeField] private Text powerText;
     public float timeToWaitAfterText = 1f;
     public float charactersPerSecond = 10f;
-    [SerializeField] private Color selectedColor = Color.yellow;
 
     public bool isWriting = false;
 
@@ -63,7 +62,7 @@ public class BattleDialogueBox : MonoBehaviour
     {
         for (int i = 0; i < actionTexts.Count; i++)
         {
-            actionTexts[i].color = ((i == selectedAction) ? selectedColor : Color.black);
+            actionTexts[i].color = ((i == selectedAction) ? ColorManager.SharedInstance.selectedColor : Color.black);
         }
     }
 
@@ -86,19 +85,20 @@ public class BattleDialogueBox : MonoBehaviour
     {
         for (int i = 0; i < movementTexts.Count; i++)
         {
-            movementTexts[i].color = ((i == selectedMovement) ? selectedColor : Color.black);
+            movementTexts[i].color = ((i == selectedMovement) ? ColorManager.SharedInstance.selectedColor : Color.black);
         }
 
         ppText.text = $"PP {move.PP}/{move.Base.PP}";
         typeText.text = move.Base.Type.ToString().ToUpper();
 
         #region cosa mía para la categoría
-        if (move.Base.Category == MoveBasic.MovementCategory.Status)
+        if (move.Base.Category == MovementCategory.Status)
             powerText.text = $"Poder ---".ToUpper();
         else
             powerText.text = $"Poder {move.Base.Power}".ToUpper();
         #endregion
 
-        ppText.color = (move.PP <= 0 ? Color.red : Color.black);
+        ppText.color = ColorManager.SharedInstance.PPColor((float)move.PP/move.Base.PP);
+        typeText.color = ColorManager.TypeColor.GetColorFromType(move.Base.Type);
     }
 }

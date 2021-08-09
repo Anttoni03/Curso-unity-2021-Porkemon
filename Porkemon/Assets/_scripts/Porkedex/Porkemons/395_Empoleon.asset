@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 395_Empoleon
   m_EditorClassIdentifier: 
   ID: 394
-  pName: Prinplup
+  pName: Empoleon
   description: "Un ping\xFCino emperador. Se aleja de Blastoise"
   frontSprite: {fileID: 21300000, guid: 34e3450d380f8f64ba78b5e5019e9058, type: 3}
   backSprite: {fileID: 21300000, guid: 5b17775ee682a384a9177717ba71c6ba, type: 3}

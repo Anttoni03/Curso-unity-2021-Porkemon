@@ -88,13 +88,17 @@ public class BattleManager : MonoBehaviour
         partyHUD.InitPartyHUD();
 
         yield return battleDialogueBox.SetDialog($"Un porkémon salvaje apareció. Es un {enemyUnit.Porkemon.Base.Name}!");
+        
+        yield return ChooseFirstTurn();
+    }
 
+    IEnumerator ChooseFirstTurn()
+    {
         if (enemyUnit.Porkemon.Speed > playerUnit.Porkemon.Speed)
         {
             battleDialogueBox.ToggleDialogText(true);
             battleDialogueBox.ToggleActions(false);
             battleDialogueBox.ToggleMovements(false);
-            //StartCoroutine(battleDialogueBox.SetDialog("El enemigo ataca primero"));
             yield return PerformEnemyMovement();
         }
         else
@@ -107,6 +111,7 @@ public class BattleManager : MonoBehaviour
     {
         SoundManager.SharedInstance.PlaySound(endBattleClip);
         state = BattleState.FinishBattle;
+        playerParty.Porkemons.ForEach(p => p.OnBattleFinish());
         OnBattleFinish(playerHasWon);
     }
 
@@ -365,22 +370,60 @@ public class BattleManager : MonoBehaviour
         move.PP--;
         yield return battleDialogueBox.SetDialog($"{attacker.Porkemon.Base.Name} ha usado {move.Base.Name}");
 
-        var oldHpValue = target.Porkemon.HP;
+        yield return RunMoveAnims(attacker, target);
 
+        if (move.Base.Category == MovementCategory.Status)
+        {
+            yield return RunMoveStatus(attacker.Porkemon, target.Porkemon, move);
+        }
+        else
+        {
+            var oldHpValue = target.Porkemon.HP;
+            var damageDesc = target.Porkemon.ReceiveDamage(attacker.Porkemon, move);
+            yield return target.Hud.UpdatePokemonData(oldHpValue);
+            yield return ShowDamageDescription(damageDesc);
+        }
+
+        if (target.Porkemon.HP <= 0)
+        {
+            yield return HandlePorkemonFainted(target);
+        }
+    }
+
+    IEnumerator RunMoveAnims(BattleUnit attacker, BattleUnit target)
+    {
         attacker.PlayAttackAnimation();
         SoundManager.SharedInstance.PlaySound(attackClip);
         yield return new WaitForSeconds(1f);
         target.PlayReceiveAttackAnimation();
         SoundManager.SharedInstance.PlaySound(damageClip);
         yield return new WaitForSeconds(.5f);
+    }
 
-        var damageDesc = target.Porkemon.ReceiveDamage(attacker.Porkemon, move);
-        yield return target.Hud.UpdatePokemonData(oldHpValue);
-        yield return ShowDamageDescription(damageDesc);
-
-        if (damageDesc.Fainted)
+    IEnumerator RunMoveStatus(Porkemon attacker, Porkemon target, Move move)
+    {
+        foreach (var effect in move.Base.Effects.Boostings)
         {
-            yield return HandlePorkemonFainted(target);
+            if (effect.target == MoveTarget.Self)
+            {
+                attacker.ApplyBoost(effect);
+            }
+            else
+            {
+                target.ApplyBoost(effect);
+            }
+        }
+
+        yield return ShowStatsMessages(attacker);
+        yield return ShowStatsMessages(target);
+    }
+
+    IEnumerator ShowStatsMessages(Porkemon porkemon)
+    {
+        while (porkemon.StatusChangeMessages.Count > 0)
+        {
+            var message = porkemon.StatusChangeMessages.Dequeue();
+            yield return battleDialogueBox.SetDialog(message);
         }
     }
 
@@ -420,8 +463,12 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator SwitchPorkemon(Porkemon newPorkemon)
     {
+
+        bool currentPorkemonFainted = true;
+
         if (playerUnit.Porkemon.HP > 0)
         {
+            currentPorkemonFainted = false;
             yield return battleDialogueBox.SetDialog($"Vuelve, {playerUnit.Porkemon.Base.Name}!");
             playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(1.5f);
@@ -431,8 +478,14 @@ public class BattleManager : MonoBehaviour
         battleDialogueBox.SetPorkemonsMovements(newPorkemon.Moves);
 
         yield return battleDialogueBox.SetDialog($"Adelante, {newPorkemon.Base.Name}");
-
-        StartCoroutine(PerformEnemyMovement());
+        if (currentPorkemonFainted)
+        {
+            yield return ChooseFirstTurn();
+        }
+        else
+        {
+            yield return PerformEnemyMovement();
+        }
     }
 
     IEnumerator ThrowPorkeball()
